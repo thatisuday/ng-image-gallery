@@ -1,0 +1,1 @@
+{"version":3,"names":[],"mappings":"","sources":["main.css"],"sourcesContent":["body{\r\n\t-webkit-transition: all 0.3s;\r\n\ttransition: all 0.3s;\r\n}\n.myclass{\r\n\tborder-radius: 5px;\r\n}"],"file":"main.min.css","sourceRoot":"/source/"}

@@ -1,0 +1,26 @@
+{
+  "name": "angular-image-gallery",
+  "homepage": "https://github.com/thatisuday/angular-image-gallery",
+  "authors": [
+    "Uday Hiwarale <uhiwarale@gmail.com>"
+  ],
+  "description": "AngularJS directive for image gallery modal",
+  "main": ["dist/main.js, dist/main.css"],
+  "keywords": [
+    "directive",
+    "gallery",
+    "image",
+    "modal"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular": "^1.5.7"
+  }
+}

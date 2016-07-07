@@ -1,0 +1,217 @@
+/**
+ * AngularJS modal directive (css stylesheet)
+ * @author Uday Hiwarale <uhiwarale@gmail.com>
+ * https://www.github.com/thatisuday/ngModal
+**/
+
+/* Implement UTF-8 charset */
+@charset "UTF-8";
+
+/* Body overflow hidden when ngModal is active */
+body.ngModalVisible{
+	overflow:hidden!important;
+}
+
+
+.ngModal{
+	position:fixed;
+	left:0;
+	top:0;
+	right:0;
+	bottom:0;
+	color:#111;
+	overflow:auto;
+}
+
+
+
+/**************************************************/
+/************ Modal Button & Icons ****************/
+/**************************************************/
+.ngModal ._close{
+	font-size:18px;
+	color:#fff;
+	position:fixed;
+	top:10px;
+	right:20px;
+	z-index:2;
+	cursor:pointer;
+}
+.ngModal ._prev, .ngModal ._next{
+	padding:10px;
+	color:#fff;
+	font-size:50px;
+	position:fixed;
+	top:50%;
+	z-index:2;
+	cursor:pointer;
+	transform:translateY(-50%);
+	-webkit-transform:translateY(-50%);
+	-moz-transform:translateY(-50%);
+}.ngModal ._prev{
+	left:20px;
+}.ngModal ._next{
+	right:20px;
+}
+
+
+/* Default icons */
+._prev_icon:before{ content:"\276C";}
+._next_icon:before{ content:"\276D";}
+._cross_icon:before{ content:"\26CC";}
+
+
+/**************************************************/
+/*************** Modal Body ***********************/
+/**************************************************/
+
+.ngModal ._body{
+	position:absolute;
+	z-index:1;
+	box-sizing: border-box;
+	overflow:hidden;
+	cursor:default;
+}
+
+
+/**************************************************/
+/**************** Embed Video *********************/
+/**************************************************/
+.ngModal ._body._video iframe{
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	border:none;
+	vertical-align:bottom;
+}
+
+
+
+/**************************************************/
+/************** Modal Gallery *********************/
+/**************************************************/
+.ngModal ._body._gallery img{
+	position:relative;
+	top:50%;
+	display:block;
+	margin-left:auto;
+	margin-right:auto;
+	max-width:100%;
+	max-height:100%;
+	
+	transform : translate3d(0,-50%,0);
+	-webkit-transform : translate3d(0,-50%,0);
+	-moz-transform : translate3d(0,-50%,0);
+}
+.ngModal ._body._gallery img._hidden{
+	display:none;
+}
+
+.ngModal ._thumbnails_conatainer{
+	position:absolute;
+	left:50%;
+	bottom: 15px;
+	width: 100%;
+	height: 30px;
+	font-size:0;
+	overflow:hidden;
+	
+	transform : translateX(-50%);
+	-webkit-transform : translateX(-50%);
+	-moz-transform : translateX(-50%);
+}
+
+.ngModal ._thumbnails{
+	position:relative;
+	width:100%;
+	font-size:0;
+	white-space:nowrap;
+	transition:margin 0.3s ease-in-out;
+	-webkit-transition:margin 0.3s ease-in-out;
+	-moz-transition:margin 0.3s ease-in-out;
+}
+.ngModal ._thumbnails>div{
+	width: 24px;
+	height: 24px;
+	display:inline-block;
+	margin-left:5px;
+	margin-right:5px;
+	cursor:pointer;
+	
+	background-size:cover;
+	background-position:center top;
+	overflow:hidden;
+	border-radius:100%;
+	border:3px solid transparent;
+}
+.ngModal ._thumbnails>div.current{
+	border:3px solid rgba(255,255,255,0.9);
+}
+
+.ngModal ._body._gallery ._spinner{
+	margin-left:auto;
+	margin-right:auto;
+	width:60px;
+	height:60px;
+	background-color: #ccc;
+	position:relative;
+	top:50%;
+	margin-top:-30px;
+	-webkit-animation: sk-rotateplane 1.2s infinite ease-in-out;
+	animation: sk-rotateplane 1.2s infinite ease-in-out;
+	-webkit-animation-delay:0.01s;
+    animation-delay: 0.01s;
+}
+@-webkit-keyframes sk-rotateplane {
+  0% { -webkit-transform: perspective(120px) }
+  50% { -webkit-transform: perspective(120px) rotateY(180deg) }
+  100% { -webkit-transform: perspective(120px) rotateY(180deg)  rotateX(180deg) }
+}
+@keyframes sk-rotateplane {
+  0% { 
+    transform: perspective(120px) rotateX(0deg) rotateY(0deg);
+    -webkit-transform: perspective(120px) rotateX(0deg) rotateY(0deg) 
+  } 50% { 
+    transform: perspective(120px) rotateX(-180.1deg) rotateY(0deg);
+    -webkit-transform: perspective(120px) rotateX(-180.1deg) rotateY(0deg) 
+  } 100% { 
+    transform: perspective(120px) rotateX(-180deg) rotateY(-179.9deg);
+    -webkit-transform: perspective(120px) rotateX(-180deg) rotateY(-179.9deg);
+  }
+}
+
+/**************************************************/
+/*************** Modal Styles *********************/
+/**************************************************/
+
+/* Modal hidden */
+.ngModal._hidden {
+	display:none;
+}
+
+/* Modal active */
+.ngModal._active {
+	display:block;
+}
+
+/* Modal Flat colors */
+.ngModal._flat._red{background-color:#FF5722!important;}
+.ngModal._flat._lynch{background-color:#607D8B!important;}
+.ngModal._flat._brown{background-color:#795548!important;}
+.ngModal._flat._orange{background-color:#FF9800!important;}
+.ngModal._flat._amber{background-color:#FFC107!important;}
+.ngModal._flat._yellow{background-color:#FFEB3B!important;}
+.ngModal._flat._pear{background-color:#CDDC39!important;}
+.ngModal._flat._forest{background-color:#8BC34A!important;}
+.ngModal._flat._green{background-color:#4CAF50!important;}
+.ngModal._flat._persian_green{background-color:#009688!important;}
+.ngModal._flat._egg_blue{background-color:#00BCD4!important;}
+.ngModal._flat._cerulean_cerulean{background-color:#03A9F4!important;}
+.ngModal._flat._dodger_blue{background-color:#2196F3!important;}
+.ngModal._flat._san_marino{background-color:#3F51B5!important;}
+.ngModal._flat._purple{background-color:#673AB7!important;}
+.ngModal._flat._seance{background-color:#9C27B0!important;}
+.ngModal._flat._smaranth{background-color:#E91E63!important;}
+.ngModal._flat._pomegranate{background-color:#F44336!important;}

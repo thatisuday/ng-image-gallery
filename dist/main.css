@@ -1,0 +1,7 @@
+body{
+	-webkit-transition: all 0.3s;
+	transition: all 0.3s;
+}
+.myclass{
+	border-radius: 5px;
+}
