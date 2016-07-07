@@ -1,0 +1,129 @@
+.ng-image-gallery{
+	&.hidden{
+		display: none;
+		opacity: 0;
+	}
+	&.fadeIn{
+		animation: nigFadeIn;
+		animation-duration:0.4s;
+	}
+	&.fadeOut{
+		animation: nigFadeOut;
+		animation-duration:0.4s;
+	}
+	&[ng-cloak]{
+		display: none;
+	}
+
+	position: fixed;
+	z-index: 5000;
+	top:0;
+	right:0;
+	bottom:0;
+	left:0;
+	overflow:hidden;
+
+	.ng-image-gallery-backdrop{
+		background-color : rgba(0,0,0,0.85);
+		position : absolute;
+		top:0;
+		right:0;
+		bottom:0;
+		left:0;
+		z-index: 1;
+	}
+
+	.ng-image-gallery-content{
+		position : absolute;
+		top:0;
+		right:0;
+		bottom:0;
+		left:0;
+		z-index: 2;
+
+		.close{
+			position:absolute;
+			right: 20px;
+			top:20px;
+
+			width:20px;
+			height:20px;
+			background-size:100% 100%;
+			background-repeat:no-repeat;
+			overflow: hidden;
+			background-image:url(../res/icons/close.svg);
+			cursor: pointer;
+		}
+
+		.prev{
+			position:absolute;
+			left: 0px;
+			top:50%;
+			margin-top:-25px;
+
+			width:50px;
+			height:50px;
+			background-size:100% 100%;
+			background-repeat:no-repeat;
+			overflow: hidden;
+			background-image:url(../res/icons/prev.svg);
+			cursor: pointer;
+		}
+
+		.next{
+			position:absolute;
+			right: 0px;
+			top:50%;
+			margin-top:-25px;
+
+			width:50px;
+			height:50px;
+			background-size:100% 100%;
+			background-repeat:no-repeat;
+			overflow: hidden;
+			background-image:url(../res/icons/next.svg);
+			cursor: pointer;
+		}
+
+		.galleria{
+			position:absolute;
+			top:0;
+			bottom:0;
+			left:80px;
+			right:80px;
+			background-color:rgba(100,100,100,0.5);
+			overflow: hidden;
+			display:flex;
+			flex-direction: column;
+
+			.galleria-images{
+				position: relative;
+				display: flex;
+				flex-direction: row;
+				justify-content: center;
+				align-items: center;
+				flex: 1;
+				background-color: rgba(200, 200, 200, 0.7);
+
+				img {
+					flex: 0 0 auto;
+					vertical-align: bottom;
+					max-width: 100%;
+					max-height: 100%;
+
+					position: absolute;
+					left: 0;
+					right: 0;
+					top: 0;
+					bottom: 0;
+					margin: auto;
+				}
+			}
+
+			.galleria-thumbs{
+				flex: 0 0 50px;
+				background-color:rgba(200,200,200,0.3);
+			}
+		}
+	}
+}

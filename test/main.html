@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html ng-app="test">
+	<head>
+		<title>ng-image-gallery</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+		<!-- Dependencies -->
+		<script src="../bower_components/angular/angular.min.js"></script>
+
+		<!-- Module files-->
+		<script src="../dist/main.min.js"></script>
+		<link href="../dist/main.min.css" rel="stylesheet"/>
+	</head>
+	<body ng-controller="main">
+		<h1>ng-image-gallery</h1>
+
+		<button ng-click="openGallery()">Open Gallery</button>
+
+		<ng-image-gallery images="images" methods="methods" on-open="opened();" on-close="closed();"></ng-image-gallery>
+
+		<script>
+			angular
+			.module('test', ['thatisuday.ng-image-gallery'])
+			.controller('main', function($scope, $timeout){
+				$scope.testMsg = 'Hello World!';
+				$scope.images = [
+					{
+						title:'title 1',
+						url : 'https://pixabay.com/static/uploads/photo/2016/06/13/07/32/cactus-1453793_960_720.jpg'
+					},
+					{
+						title:'title 2',
+						url : 'https://pixabay.com/static/uploads/photo/2016/06/10/22/25/ortler-1449018_960_720.jpg'
+					},
+					{
+						title:'title 3',
+						url : 'https://pixabay.com/static/uploads/photo/2016/04/11/18/53/aviator-1322701_960_720.jpg'
+					}
+				];
+
+				$scope.methods = {};
+
+				$scope.openGallery = function(){
+					$scope.methods.open();
+				};
+
+				$scope.opened = function(){
+					alert('Gallery opened!');
+				}
+
+				$scope.closed = function(){
+					alert('Gallery closed!');
+				}
+			})
+			;
+		</script>
+	</body>
+</html>
