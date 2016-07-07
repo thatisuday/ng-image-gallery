@@ -149,7 +149,12 @@
           right: 0;
           top: 0;
           bottom: 0;
-          margin: auto; }
+          margin: auto;
+          -webkit-touch-callout: none;
+          -webkit-user-select: none;
+          -moz-user-select: none;
+          -ms-user-select: none;
+          user-select: none; }
       .ng-image-gallery .ng-image-gallery-content .galleria .galleria-thumbs {
         -webkit-box-flex: 0;
             -ms-flex: 0 0 50px;

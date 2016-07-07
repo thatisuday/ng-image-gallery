@@ -117,6 +117,14 @@
 					top: 0;
 					bottom: 0;
 					margin: auto;
+
+					// Prevent user selection and highlighting
+					-webkit-touch-callout: none;
+					-webkit-user-select: none;
+					-khtml-user-select: none;
+					-moz-user-select: none;
+					-ms-user-select: none;
+					user-select: none;
 				}
 			}
 
