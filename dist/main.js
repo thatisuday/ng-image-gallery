@@ -1,9 +1,17 @@
  (function(){
 	'use strict';
+	
+	// Key codes
+	var keys = {
+		enter : 13,
+		esc   : 27,
+		left  : 37,
+		right : 39
+	};
 
 	angular
 	.module('thatisuday.ng-image-gallery', [])
-	.directive('ngImageGallery', ['$timeout', function($timeout){
+	.directive('ngImageGallery', ['$timeout', '$document', function($timeout, $document){
 		return {
 			replace : true,
 			transclude : false,
@@ -71,7 +79,7 @@
 						scope.activeImageIndex = 0;
 					}
 					else{
-						scope.activeImageIndex++;
+						scope.activeImageIndex = scope.activeImageIndex + 1;
 					}
 				}
 
@@ -90,7 +98,23 @@
 				/*
 				 *	Interactions
 				**/
-
+				$document.bind('keyup', function(event){
+					if(event.which == keys.right){
+						$timeout(function(){
+							scope.methods.next();
+						});
+					}
+					else if(event.which == keys.left){
+						$timeout(function(){
+							scope.methods.prev();
+						});
+					}
+					else if(event.which == keys.esc){
+						$timeout(function(){
+							scope.methods.close();
+						});
+					}
+				});
 
 
 			}
