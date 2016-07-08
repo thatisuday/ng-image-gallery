@@ -157,12 +157,13 @@ Similar to `on-open` attribute but will be called when gallery modal closes.
 7. Responsive (using css flexbox).
 8. 4kb gzipped (css+js)
 9. Total control on gallery from outside world.
-10. Made by awesome guy ;) - just kidding (about `awesome`)
+10. Inline + Modal gallery, convert on a click :)
 
 ***
 
 # Build on your own
 You can build this directive with your own customization using gulp.
+
 1. Go to repository's parent directory and install all node dev dependencies using `npm install`.
 2. Make sure you have gulp install globally. Else use `npm install -g gulp` to install gulp globally.
 3. All css for this repository has been generated using sass (.scss), so you need to spend 5 mins to learn basis of sass.
