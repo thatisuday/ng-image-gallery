@@ -6,6 +6,7 @@
 
 		<!-- Dependencies -->
 		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular.min.js"></script>
+		<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-animate.js"></script>
 		<!-- <script src="../bower_components/angular/angular.min.js"></script> -->
 
 		<!-- Module files-->
@@ -16,8 +17,12 @@
 		<h1>ng-image-gallery</h1>
 
 		<button ng-click="openGallery()">Open Gallery</button>
+		
+		<br/>
+		<br/>
+		<br/>
 
-		<ng-image-gallery images="images" methods="methods" on-open="opened();" on-close="closed();"></ng-image-gallery>
+		<ng-image-gallery images="images" methods="methods" thumbnails="false" on-open="opened();" on-close="closed();"></ng-image-gallery>
 
 		<script>
 			angular
@@ -46,11 +51,11 @@
 				};
 
 				$scope.opened = function(){
-					alert('Gallery opened!');
+					//alert('Gallery opened!');
 				}
 
 				$scope.closed = function(){
-					alert('Gallery closed!');
+					//alert('Gallery closed!');
 				}
 			})
 			;

@@ -5,7 +5,9 @@
     "Uday Hiwarale <uhiwarale@gmail.com>"
   ],
   "description": "AngularJS directive for image gallery modal",
-  "main": ["dist/main.js, dist/main.css"],
+  "main": [
+    "dist/main.js, dist/main.css"
+  ],
   "keywords": [
     "directive",
     "gallery",
@@ -21,6 +23,7 @@
     "tests"
   ],
   "dependencies": {
-    "angular": "^1.5.7"
+    "angular": "^1.5.7",
+    "angular-animate": "1.5.7"
   }
 }
