@@ -126,7 +126,7 @@ Similar to `on-open` attribute but will be called when gallery modal closes.
 5. Smooth animations.
 6. Keypress support.
 7. Responsive (using css flexbox).
-
+8. 4kb gzipped (css+js)
 
 ***
 
