@@ -13,18 +13,31 @@ Angular directive for image gallery in **modal** with **thumbnails**
 ***
 
 # Install
-## using bower
+## Download
+### → using bower
 ```
 bower install --save ng-image-gallery
 ```
 
 > Include `angular.min.js` and `angular-animate.min.js` from bower components.
 >
-> Include `main.min.js` and `main.min.css` from `dist` folder of tis repository.
+> Include `main.min.js` and `main.min.css` from `dist` folder of this repository.
+>
+> Include `icons` from `res` folder of this repository.
 
-## Manual 
+### → Manual 
 1. Install AngularJS or include `<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular.min.js"></script>`
 2. Install ngAnimate or include `<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular-animate.js"></script>`
+3. Include `main.min.js` and `main.min.css` from `dist` folder of this repository.
+4. Include `icons` from `res` folder of this repository.
+
+## Configure
+Add `thatisuday.ng-image-gallery` module to your app's dependencies.
+
+```
+var myTestApp = angular.module('test', ['thatisuday.ng-image-gallery']);
+```
+
 
 ***
 
@@ -118,7 +131,7 @@ Similar to `on-open` attribute but will be called when gallery modal closes.
 
 ***
 
-# Features
+# Traits
 1. Provide support for thumbnail generation.
 2. Dynamic population of images at any time.
 3. Lazy-loading of images, meaning... loading animation will be showed in the gallery until image is downloaded.
@@ -126,10 +139,12 @@ Similar to `on-open` attribute but will be called when gallery modal closes.
 5. Smooth animations.
 6. Keypress support.
 7. Responsive (using css flexbox).
-
+8. 4kb gzipped (css+js)
+9. Total control on gallery from outsite world.
+10. Made by awesome guy ;) - just kidding (about `awesome`)
 
 ***
 
-# Contributions and bug report
+# Contributions and Bug reports
 1. Please create an issue if you need some help or report a bug.
 2. Take a pull request to add more features or fix the bugs. Please mention your changes in the PR.
