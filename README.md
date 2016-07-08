@@ -21,7 +21,7 @@ bower install --save ng-image-gallery
 
 > Include `angular.min.js` and `angular-animate.min.js` from bower components.
 >
-> Include `main.min.js` and `main.min.css` from `dist` folder of tis repository.
+> Include `main.min.js` and `main.min.css` from `dist` folder of this repository.
 >
 > Include `icons` from `res` folder of this repository.
 
