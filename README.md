@@ -118,7 +118,7 @@ Similar to `on-open` attribute but will be called when gallery modal closes.
 
 ***
 
-# Features
+# Traits
 1. Provide support for thumbnail generation.
 2. Dynamic population of images at any time.
 3. Lazy-loading of images, meaning... loading animation will be showed in the gallery until image is downloaded.
@@ -130,6 +130,6 @@ Similar to `on-open` attribute but will be called when gallery modal closes.
 
 ***
 
-# Contributions and bug report
+# Contributions and Bug reports
 1. Please create an issue if you need some help or report a bug.
 2. Take a pull request to add more features or fix the bugs. Please mention your changes in the PR.
