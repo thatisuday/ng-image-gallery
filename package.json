@@ -24,6 +24,7 @@
     "gulp-autoprefixer": "^3.1.0",
     "gulp-concat": "^2.6.0",
     "gulp-cssmin": "^0.1.7",
+    "gulp-gzip": "^1.4.0",
     "gulp-rename": "^1.2.2",
     "gulp-sass": "^2.3.2",
     "gulp-sourcemaps": "^1.6.0",

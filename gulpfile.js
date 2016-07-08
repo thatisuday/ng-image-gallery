@@ -7,6 +7,7 @@ var
 	autoprefixer = require('gulp-autoprefixer'),
 	uglify = require('gulp-uglify'),
 	sourcemaps = require('gulp-sourcemaps')
+	gzip = require('gulp-gzip')
 ;
 
 
@@ -24,6 +25,8 @@ gulp.task('buildJS', function(){
 	.pipe(uglify())
 	.pipe(sourcemaps.write('./'))
 	.pipe(gulp.dest('./dist'))
+	.pipe(gzip({append:true}))
+	.pipe(gulp.dest('./dist'))
 	;
 });
 
@@ -40,6 +43,8 @@ gulp.task('buildCSS', function(){
 	.pipe(rename({suffix : '.min'}))
 	.pipe(cssmin())
 	.pipe(sourcemaps.write('./'))
+	.pipe(gulp.dest('./dist'))
+	.pipe(gzip({append:true}))
 	.pipe(gulp.dest('./dist'))
 	;
 });
