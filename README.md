@@ -127,6 +127,8 @@ Similar to `on-open` attribute but will be called when gallery modal closes.
 6. Keypress support.
 7. Responsive (using css flexbox).
 8. 4kb gzipped (css+js)
+9. Total control on gallery from outsite world.
+10. Made by awesome guy ;) - just kidding (about `awesome`)
 
 ***
 
