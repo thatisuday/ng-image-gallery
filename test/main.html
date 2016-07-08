@@ -17,45 +17,53 @@
 		<h1>ng-image-gallery</h1>
 
 		<button ng-click="openGallery()">Open Gallery</button>
+		<button ng-click="toggleThumbnails()">Enable/Disable Thumbnails</button>
 		
 		<br/>
 		<br/>
 		<br/>
 
-		<ng-image-gallery images="images" methods="methods" thumbnails="false" on-open="opened();" on-close="closed();"></ng-image-gallery>
+		<ng-image-gallery images="images" methods="methods" thumbnails="thumbnails" on-open="opened();" on-close="closed();"></ng-image-gallery>
 
 		<script>
 			angular
 			.module('test', ['thatisuday.ng-image-gallery'])
 			.controller('main', function($scope, $timeout){
-				$scope.testMsg = 'Hello World!';
 				$scope.images = [
 					{
-						title:'title 1',
+						thumbUrl : 'https://pixabay.com/static/uploads/photo/2016/06/13/07/32/cactus-1453793__340.jpg',
 						url : 'https://pixabay.com/static/uploads/photo/2016/06/13/07/32/cactus-1453793_960_720.jpg'
 					},
 					{
-						title:'title 2',
 						url : 'https://pixabay.com/static/uploads/photo/2016/06/10/22/25/ortler-1449018_960_720.jpg'
 					},
 					{
-						title:'title 3',
+						thumbUrl : 'https://pixabay.com/static/uploads/photo/2016/04/11/18/53/aviator-1322701__340.jpg',
 						url : 'https://pixabay.com/static/uploads/photo/2016/04/11/18/53/aviator-1322701_960_720.jpg'
 					}
 				];
 
-				$scope.methods = {};
 
+				// Thumbnails
+				$scope.thumbnails = false;
+				$scope.toggleThumbnails = function(){
+					$scope.thumbnails = !$scope.thumbnails;
+				}
+
+
+				// Gallery methods gateway
+				$scope.methods = {};
 				$scope.openGallery = function(){
 					$scope.methods.open();
 				};
 
+				// Gallery callbacks
 				$scope.opened = function(){
-					//alert('Gallery opened!');
+					alert('Gallery opened! Started from image index = 0');
 				}
 
 				$scope.closed = function(){
-					//alert('Gallery closed!');
+					alert('Gallery closed!');
 				}
 			})
 			;

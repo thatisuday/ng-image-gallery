@@ -19,13 +19,13 @@
 			scope : {
 				images : '=',
 				methods : '=?',
-				thumbnails : '@?',
+				thumbnails : '=?',
 				onOpen : '&?',
 				onClose : '&?'
 			},
 			template : 	'<div class="ng-image-gallery">'+
-							'<div ng-if="thumbnails" class="ng-image-gallery-thumbnails">'+
-								'<div class="thumb" ng-repeat="image in images" ng-click="openFromThumb(image);" style="background-image:url({{image.thumbUrl || image.url}});"></div>'+
+							'<div ng-if="thumbnails == true" class="ng-image-gallery-thumbnails">'+
+								'<div class="thumb" ng-repeat="image in images" ng-click="methods.open($index);" style="background-image:url({{image.thumbUrl || image.url}});"></div>'+
 							'</div>'+
 							'<div class="ng-image-gallery-modal" ng-show="opened" ng-cloak>' +
 								'<div class="ng-image-gallery-backdrop"></div>'+
@@ -74,17 +74,17 @@
 					var deferred =  $q.defer();
 
 					// Show loder
-					if(!imgObj.cached) scope.showLoader();
+					if(!imgObj.hasOwnProperty('cached')) scope.showLoader();
 
 					// Process image
 					var img = new Image();
 					img.src = imgObj.url;
 					img.onload = function(){
 						// Hide loder
-						if(!imgObj.cached) scope.hideLoader();
+						if(!imgObj.hasOwnProperty('cached')) scope.hideLoader();
 
 						// Cache image
-						if(!imgObj.cached) imgObj.cached = true;
+						if(!imgObj.hasOwnProperty('cached')) imgObj.cached = true;
 
 						return deferred.resolve(imgObj);
 					}
@@ -97,12 +97,6 @@
 					scope.loadImg(imgObj).then(function(imgObj){
 						scope.activeImg = imgObj;
 					});
-				}
-
-				// Open gallery from thumbnail
-				scope.openFromThumb = function(imgObj){
-					scope.opened = true;
-					scope.setActiveImg(imgObj);
 				}
 
 				/***************************************************/
@@ -145,10 +139,12 @@
 				 *	Methods
 				**/
 
-				// Open modal
-				scope.methods.open = function(){
-					scope.activeImageIndex = 0; // Start from first image
-					scope.opened = true; // Model opened
+				// Open gallery modal
+				scope.methods.open = function(imgIndex){
+					// Open modal from an index if one passed
+					scope.activeImageIndex = (imgIndex) ? imgIndex : 0;
+
+					scope.opened = true; 
 
 					 // call open event after transition
 					$timeout(function(){
@@ -157,7 +153,7 @@
 				}
 
 
-				// Close modal
+				// Close gallery modal
 				scope.methods.close = function(){
 					scope.opened = false; // Model closed
 
@@ -210,7 +206,6 @@
 						});
 					}
 				});
-
 
 			}
 		}
