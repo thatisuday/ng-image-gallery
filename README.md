@@ -14,7 +14,7 @@ Angular directive for image gallery in **modal** with **thumbnails**
 
 # Install
 ## Download
-### using bower
+### → using bower
 ```
 bower install --save ng-image-gallery
 ```
@@ -25,7 +25,7 @@ bower install --save ng-image-gallery
 >
 > Include `icons` from `res` folder of this repository.
 
-### Manual 
+### → Manual 
 1. Install AngularJS or include `<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular.min.js"></script>`
 2. Install ngAnimate or include `<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular-animate.js"></script>`
 3. Include `main.min.js` and `main.min.css` from `dist` folder of this repository.
