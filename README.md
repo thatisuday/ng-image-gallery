@@ -30,7 +30,7 @@ bower install --save ng-image-gallery
 
 # Create image gallery
 ```
-<ng-image-gallery images="images" methods="methods" thumbnails="true" on-open="opened();" on-close="closed();"></ng-image-gallery>
+<ng-image-gallery images="images" methods="methods" thumbnails="true | false | model" on-open="opened();" on-close="closed();"></ng-image-gallery>
 ```
 
 > You can also use `<div ng-image-gallery ...></div>` approach.
@@ -43,7 +43,7 @@ bower install --save ng-image-gallery
 // inside your app controller
 $scope.images = [
 	{
-		thumbUrl : https://pixabay.com/static/uploads/photo/2016/06/13/07/32/cactus-1453793__340.jpg,
+		thumbUrl : 'https://pixabay.com/static/uploads/photo/2016/06/13/07/32/cactus-1453793__340.jpg',
 		url : 'https://pixabay.com/static/uploads/photo/2016/06/13/07/32/cactus-1453793_960_720.jpg'
 	},
 	{
@@ -55,7 +55,7 @@ $scope.images = [
 	}
 ];
 ```
-> `thumbUrl` is not absolutely necessary. If `thumbUrl` url is empty, thumbnail will use `url` instead.
+> `thumbUrl` is not absolutely necessary. If `thumbUrl` url is empty, thumbnail will use `url` instead to show preview.
 
 --
 
@@ -73,6 +73,10 @@ $scope.methods = {};
 // to open this gallery like ng-click="openGallery();"
 $scope.openGallery = function(){
 	$scope.methods.open();
+	
+	// You can also open gallery model with visible image index
+	// Image at that index will be shown when gallery modal opens
+	//scope.methods.open(index); 
 };
 
 // Similar to above function
@@ -94,7 +98,7 @@ $scope.prevImg = function(){
 ### 3. thumbnails (optional)
 thumbnails attribute is used when you need to generate thumbnails on the page of the gallery images. When user clicks on any thumbnail, gallery modal is opened with that image as visible image.
 
-> It's value doesn't matter. So even you make thumbnails="false", thumbnails will be shown. Just remove this attribute if you don't need thumbnails, which will be used in many cases.
+> It's value can be `true` or `false` hardcoded in attribute itself or you can assigned it to some scope variable which has boolean value.
 
 --
 ### 4. on-open (optional)
@@ -115,8 +119,8 @@ Similar to `on-open` attribute but will be called when gallery modal closes.
 ***
 
 # Features
-1. Provide support for thumbnail generation
-2. Dynamic images. Populate images at any time.
+1. Provide support for thumbnail generation.
+2. Dynamic population of images at any time.
 3. Lazy-loading of images, meaning... loading animation will be showed in the gallery until image is downloaded.
 4. jQuery independent with no dom manipulation at all.
 5. Smooth animations.
