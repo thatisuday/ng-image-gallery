@@ -17,31 +17,59 @@
 			transclude : false,
 			restrict : 'AE',
 			scope : {
-				images : '=',
-				methods : '=?',
-				thumbnails : '=?',
-				onOpen : '&?',
-				onClose : '&?'
+				images : '=',		// []
+				methods : '=?',		// {}
+				thumbnails : '=?',	// true|false
+				inline : '=?',		// true|flase
+				onOpen : '&?',		// function
+				onClose : '&?'		// function
 			},
-			template : 	'<div class="ng-image-gallery">'+
-							'<div ng-if="thumbnails == true" class="ng-image-gallery-thumbnails">'+
+			template : 	'<div class="ng-image-gallery" ng-class="{inline:inline}">'+
+							
+							// Thumbnails container
+							//  Hide for inline gallery
+							'<div ng-if="thumbnails && !inline" class="ng-image-gallery-thumbnails">'+
 								'<div class="thumb" ng-repeat="image in images" ng-click="methods.open($index);" style="background-image:url({{image.thumbUrl || image.url}});"></div>'+
 							'</div>'+
+
+							// Modal container
+							// (inline container for inline modal)
 							'<div class="ng-image-gallery-modal" ng-show="opened" ng-cloak>' +
-								'<div class="ng-image-gallery-backdrop"></div>'+
+								
+								// Gallery backdrop container
+								// (hide for inline gallery)
+								'<div class="ng-image-gallery-backdrop" ng-if="!inline"></div>'+
+								
+								// Gallery contents container
+								// (hide when image is loading)
 								'<div class="ng-image-gallery-content" ng-show="!imgLoading">'+
-									'<div class="close" ng-click="methods.close();"></div>'+
+									
+									// Icons
+									// (hide close icon on inline gallery)
+									'<div class="close" ng-click="methods.close();" ng-if="!inline"></div>'+
 									'<div class="prev" ng-click="methods.prev();"></div>'+
 									'<div class="next" ng-click="methods.next();"></div>'+
+
+
+									// Galleria container
 									'<div class="galleria">'+
+										
+										// Images container
 										'<div class="galleria-images">'+
 											'<img ng-repeat="image in images" ng-if="activeImg == image" ng-src="{{image.url}}" />'+
 										'</div>'+
+
+										// Bubble navigation container
 										'<div class="galleria-bubbles">'+
 											'<span ng-click="setActiveImg(image);" ng-repeat="image in images" ng-class="{active : (activeImg == image)}"></span>'+
 										'</div>'+
+
 									'</div>'+
+
 								'</div>'+
+								
+								// Loading animation overlay container
+								// (show when image is loading)
 								'<div class="ng-image-gallery-loader" ng-show="imgLoading">'+
 									'<div class="spinner">'+
 										'<div class="rect1"></div>'+
@@ -53,6 +81,7 @@
 								'</div>'+
 							'</div>'+
 						'</div>',
+						
 			link : function(scope, elem, attr){
 				
 				/*
@@ -111,10 +140,8 @@
 				scope.onOpen = (scope.onOpen) ? scope.onOpen : angular.noop;
 				scope.onClose = (scope.onClose) ? scope.onClose : angular.noop;
 
-				// Watches
+				// If images populate dynamically, reset gallery
 				var imagesFirstWatch = true;
-				var activeImageIndexFirstWatch = true;
-
 				scope.$watch('images', function(){
 					if(imagesFirstWatch){
 						imagesFirstWatch = false;
@@ -124,6 +151,9 @@
 					);
 				});
 
+				// Watch index of visible/active image
+				// If index changes, make sure to load/change image
+				var activeImageIndexFirstWatch = true;
 				scope.$watch('activeImageIndex', function(newImgIndex){
 					if(activeImageIndexFirstWatch){
 						activeImageIndexFirstWatch = false;
@@ -131,8 +161,18 @@
 					else if(scope.images.length) scope.setActiveImg(
 						scope.images[newImgIndex]
 					);
-				})
+				});
+
+				// Open model automatically if inline
+				scope.$watch('inline', function(){
+					$timeout(function(){
+						if(scope.inline) scope.methods.open();
+					});
+				});
 				
+				
+				
+
 				/***************************************************/
 
 				/*
@@ -189,7 +229,12 @@
 				/*
 				 *	User interactions
 				**/
+
+				// Key events
 				$document.bind('keyup', function(event){
+					// If inline model, do not interact
+					if(scope.inline) return;
+
 					if(event.which == keys.right || event.which == keys.enter){
 						$timeout(function(){
 							scope.methods.next();

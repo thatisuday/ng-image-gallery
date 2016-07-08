@@ -19,12 +19,13 @@
 
 		<button ng-click="openGallery()">Open Gallery</button>
 		<button ng-click="toggleThumbnails()">Enable/Disable Thumbnails</button>
+		<button ng-click="toggleInline()">Modal/Inline Gallery</button>
 		
 		<br/>
 		<br/>
 		<br/>
 
-		<ng-image-gallery images="images" methods="methods" thumbnails="thumbnails" on-open="opened();" on-close="closed();"></ng-image-gallery>
+		<ng-image-gallery images="images" methods="methods" thumbnails="thumbnails" inline="inline" on-open="opened();" on-close="closed();"></ng-image-gallery>
 
 		<script>
 			angular
@@ -78,6 +79,11 @@
 					$scope.thumbnails = !$scope.thumbnails;
 				}
 
+				// Inline
+				$scope.inline = false;
+				$scope.toggleInline = function(){
+					$scope.inline = !$scope.inline;
+				}
 
 				// Gallery methods gateway
 				$scope.methods = {};
