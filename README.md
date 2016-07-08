@@ -1,5 +1,6 @@
 # angular-image-gallery
 Angular directive for image gallery in **modal** with **thumbnails**
+###[Preview](http://bit.do/ng-image-gallery )
 
 ***
 
