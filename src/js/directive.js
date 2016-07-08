@@ -120,7 +120,7 @@
 						imagesFirstWatch = false;
 					}
 					else if(scope.images.length) scope.setActiveImg(
-						scope.images[scope.activeImageIndex]
+						scope.images[scope.activeImageIndex || 0]
 					);
 				});
 

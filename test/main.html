@@ -15,6 +15,7 @@
 	</head>
 	<body ng-controller="main">
 		<h1>ng-image-gallery</h1>
+		<p>Populating more images after {{counter}} seconds.</p>
 
 		<button ng-click="openGallery()">Open Gallery</button>
 		<button ng-click="toggleThumbnails()">Enable/Disable Thumbnails</button>
@@ -28,7 +29,15 @@
 		<script>
 			angular
 			.module('test', ['thatisuday.ng-image-gallery'])
-			.controller('main', function($scope, $timeout){
+			.controller('main', function($scope, $timeout, $interval){
+				$scope.counter = 5;
+				var counterIntvl = $interval(function(){
+					$scope.counter = $scope.counter - 1;
+					if($scope.counter == 0){
+						$interval.cancel(counterIntvl);
+					}
+				}, 1000);
+
 				$scope.images = [
 					{
 						thumbUrl : 'https://pixabay.com/static/uploads/photo/2016/06/13/07/32/cactus-1453793__340.jpg',
@@ -44,8 +53,27 @@
 				];
 
 
+				// More images to populate after 5 seconds
+				$scope.moreImages = [
+					{
+						url : 'https://pixabay.com/static/uploads/photo/2016/06/17/13/02/duck-1463317_960_720.jpg'
+					},
+					{
+						url : 'https://pixabay.com/static/uploads/photo/2016/02/04/03/33/baby-1178539_960_720.jpg'
+					},
+					{
+						url : 'https://pixabay.com/static/uploads/photo/2016/06/21/23/06/girl-1472195_960_720.jpg'
+					}
+				];
+
+				$timeout(function(){
+					$scope.images = $scope.images.concat($scope.moreImages);
+				}, 5000);
+				
+
+
 				// Thumbnails
-				$scope.thumbnails = false;
+				$scope.thumbnails = true;
 				$scope.toggleThumbnails = function(){
 					$scope.thumbnails = !$scope.thumbnails;
 				}
