@@ -1,5 +1,5 @@
 # angular-image-gallery
-Angular directive for image gallery in **modal** with **thumbnails**
+Angular directive for image gallery in **modal** with **thumbnails** or **inline** like carousel
 ###[Preview](http://bit.do/ng-image-gallery )
 
 ***
@@ -43,7 +43,7 @@ var myTestApp = angular.module('test', ['thatisuday.ng-image-gallery']);
 
 # Create image gallery
 ```
-<ng-image-gallery images="images" methods="methods" thumbnails="true | false | model" on-open="opened();" on-close="closed();"></ng-image-gallery>
+<ng-image-gallery images="images" methods="methods" thumbnails="true | false | boolean-model" inline="true | false | boolean-model" on-open="opened();" on-close="closed();"></ng-image-gallery>
 ```
 
 > You can also use `<div ng-image-gallery ...></div>` approach.
@@ -111,10 +111,18 @@ $scope.prevImg = function(){
 ### 3. thumbnails (optional)
 thumbnails attribute is used when you need to generate thumbnails on the page of the gallery images. When user clicks on any thumbnail, gallery modal is opened with that image as visible image.
 
-> It's value can be `true` or `false` hardcoded in attribute itself or you can assigned it to some scope variable which has boolean value.
+> It's value can be `true` or `false` hardcoded in attribute itself or you can assigned it to a scope variable which has boolean value.
 
 --
-### 4. on-open (optional)
+
+### 4. inline (optional)
+inline attribute is used when you need to inline image gallery instead in modal. When gallery is inline, no thumbnails will be generated and gallery will be launched automatically.
+
+> It's value can be `true` or `false` hardcoded in attribute itself or you can assigned it to a scope variable which has boolean value.
+
+--
+
+### 5. on-open (optional)
 This is the callback function that must be executed after gallery modal is opened. Function in the controller will look like below
 
 ```
@@ -125,9 +133,17 @@ $scope.opened = function(){
 
 --
 
-### 5. on-close (optional)
+### 6. on-close (optional)
 Similar to `on-open` attribute but will be called when gallery modal closes.
 
+***
+
+# Precautions
+### When gallery is inline
+1. Do not open gallery manually, it will be automatically launched inline in the page.
+2. Default dimensions of inline gallery is 100% by 300px. Make sure to customize it as per your needs on `.ng-image-gallery-modal` class inside `.ng-image-gallery.inline` class.
+3. Do not use callbacks on inline gallery as it is useless to do so at least on `open` and `close` events.
+4. By default, close button is hidden in inline gallery as it makes no sense.
 
 ***
 
@@ -140,11 +156,21 @@ Similar to `on-open` attribute but will be called when gallery modal closes.
 6. Keypress support.
 7. Responsive (using css flexbox).
 8. 4kb gzipped (css+js)
-9. Total control on gallery from outsite world.
+9. Total control on gallery from outside world.
 10. Made by awesome guy ;) - just kidding (about `awesome`)
+
+***
+
+# Build on your own
+You can build this directive with your own customization using gulp.
+1. Go to repository's parent directory and install all node dev dependencies using `npm install`.
+2. Make sure you have gulp install globally. Else use `npm install -g gulp` to install gulp globally.
+3. All css for this repository has been generated using sass (.scss), so you need to spend 5 mins to learn basis of sass.
+4. To build or watch the changes, use command `gulp build` or `gulp watch`
 
 ***
 
 # Contributions and Bug reports
 1. Please create an issue if you need some help or report a bug.
 2. Take a pull request to add more features or fix the bugs. Please mention your changes in the PR.
+3. Please make sure you recommend good practices if you come accross any or if something could have been better in this module.
