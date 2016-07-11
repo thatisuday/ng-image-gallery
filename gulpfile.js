@@ -18,7 +18,7 @@ var
 gulp.task('buildJS', function(){
 	gulp
 	.src('./src/js/**/*.js')
-	.pipe(concat('main.js'))
+	.pipe(concat('ng-image-gallery.js'))
 	.pipe(sourcemaps.init())
 	.pipe(gulp.dest('./dist'))
 	.pipe(rename({suffix : '.min'}))
@@ -35,7 +35,7 @@ gulp.task('buildJS', function(){
 gulp.task('buildCSS', function(){
 	gulp
 	.src('./src/sass/**/*.scss')
-	.pipe(concat('main.scss'))
+	.pipe(concat('ng-image-gallery.scss'))
 	.pipe(sass().on('error', sass.logError))
 	.pipe(autoprefixer())
 	.pipe(sourcemaps.init())
