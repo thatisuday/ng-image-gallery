@@ -1,3 +1,5 @@
+<img src="./garbage/logo.png" width="500">
+
 # angular-image-gallery
 Angular directive for image gallery in **modal** with **thumbnails** or **inline** like carousel
 ###[Preview](http://bit.do/ng-image-gallery )
