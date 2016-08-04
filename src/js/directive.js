@@ -213,7 +213,10 @@
 					// Open modal from an index if one passed
 					scope.activeImageIndex = (imgIndex) ? imgIndex : 0;
 
-					scope.opened = true; 
+					scope.opened = true;
+
+					// set overflow hidden to body
+					angular.element(document.body).addClass('body-overflow-hidden');
 
 					// call open event after transition
 					$timeout(function(){
@@ -224,6 +227,9 @@
 				// Close gallery modal
 				scope.methods.close = function(){
 					scope.opened = false; // Model closed
+
+					// set overflow hidden to body
+					angular.element(document.body).removeClass('body-overflow-hidden');
 
 					// call close event after transition
 					$timeout(function(){
