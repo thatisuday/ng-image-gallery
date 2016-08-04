@@ -77,48 +77,75 @@
 			left:0;
 			z-index: 2;
 
-			.close{
+			.destroy-icons-container{
 				position:absolute;
-				right: 20px;
+				right: 10px;
 				top:20px;
+				transition: background-color 0.3s ease-in-out;
 
-				width:20px;
-				height:20px;
+				&:hover{
+					background-color: rgba(255,255,255,0.1);
+				}
+
+				.ext-url,
+				.close{
+					display: inline-block;
+					width:20px;
+					height:20px;
+					margin:5px;
+					background-size:100% 100%;
+					background-repeat:no-repeat;
+					overflow: hidden;
+					cursor: pointer;
+					outline: none;
+					text-decoration: none;
+					color:#fff;
+					vertical-align: bottom;
+				}
+
+				.ext-url{
+					background-image:url(../res/icons/external-link.svg);
+				}
+
+				.close{
+					background-image:url(../res/icons/close.svg);
+				}
+			}
+			
+
+			.prev,
+			.next{
+				position:absolute;
+				top: 50%;
+				margin-top:-25px;
+				
+				width:50px;
+				height:50px;
 				background-size:100% 100%;
 				background-repeat:no-repeat;
 				overflow: hidden;
-				background-image:url(../res/icons/close.svg);
 				cursor: pointer;
+				outline: none;
+
+				&.bubbles-on{
+					top:calc((100% - 50px) / 2);
+				}
+
+				@media screen and (max-width:600px){
+					margin-top:-15px;
+					width:30px;
+					height:30px;
+				}
 			}
 
 			.prev{
-				position:absolute;
 				left: 0px;
-				top:50%;
-				margin-top:-25px;
-
-				width:50px;
-				height:50px;
-				background-size:100% 100%;
-				background-repeat:no-repeat;
-				overflow: hidden;
 				background-image:url(../res/icons/prev.svg);
-				cursor: pointer;
 			}
 
 			.next{
-				position:absolute;
 				right: 0px;
-				top:50%;
-				margin-top:-25px;
-
-				width:50px;
-				height:50px;
-				background-size:100% 100%;
-				background-repeat:no-repeat;
-				overflow: hidden;
 				background-image:url(../res/icons/next.svg);
-				cursor: pointer;
 			}
 
 			.galleria{
@@ -130,27 +157,22 @@
 				overflow: hidden;
 				display:flex;
 				flex-direction: column;
+				align-items: center;
 
 				.galleria-images{
 					position: relative;
-					display: flex;
-					flex-direction: row;
-					justify-content: center;
-					align-items: center;
 					flex: 1;
+					width: 100%;
 
-					img {
-						flex: 0 0 auto;
-						vertical-align: bottom;
-						max-width: 100%;
-						max-height: 100%;
-
+					.galleria-image{
 						position: absolute;
 						left: 0;
 						right: 0;
 						top: 0;
 						bottom: 0;
 						margin: auto;
+						max-width: 100%;
+						max-height: 100%;
 
 						// Animate when visible
 						backface-visibility: hidden;
@@ -185,38 +207,61 @@
 
 					display: flex;
 					flex-direction: row;
-					justify-content: center;
 					align-items: center;
 
 					span{
-						width:16px;
-						height:16px;
+						flex: none;
+						position:relative;
+						display: inline-block;
 						margin:0 2px;
 						cursor: pointer;
-						position:relative;
+						outline: none;
+						overflow: hidden;
+						border-radius: 100%;
+						background-size: cover;
+						background-position: center center;
+						vertical-align: middle;
 
-						&:before{
-							content : " ";
-							display: block;
-							width:10px;
-							height:10px;
-							background-color : rgba(255,255,255,0.5);
-							overflow:hidden;
-							border-radius:100%;
-							margin:3px;
-							transition: all 0.3s ease-in-out;
-						}
+						&:not(.img-bubble){
+							width:16px;
+							height:16px;
 
-						&.active{
 							&:before{
 								content : " ";
-								width:16px;
-								height:16px;
-								background-color : rgba(255,255,255,0.9);
-								margin:0px;
+								display: block;
+								width:10px;
+								height:10px;
+								background-color : rgba(255,255,255,0.5);
+								overflow:hidden;
+								border-radius:100%;
+								margin:3px;
+								transition: all 0.3s ease-in-out;
+							}
+
+							&.active{
+								&:before{
+									content : " ";
+									width:16px;
+									height:16px;
+									background-color : rgba(255,255,255,0.9);
+									margin:0px;
+								}
 							}
 						}
-					}	
+
+						&.img-bubble{
+							box-sizing:border-box;
+							width:18px;
+							height:18px;
+							margin:0 4px;
+							border:2px solid transparent;
+							transition: border 0.3s ease-in-out;
+
+							&.active{
+								border:2px solid #fff;
+							}
+						}
+					}
 				}
 			}
 		}
@@ -279,8 +324,9 @@
 		}
 	}
 
-	// If inline gallery
-	// Replace some css styles to make gallery inline
+	/*****************************************************************
+								INLINE GALLERY
+	/*****************************************************************/
 	&.inline{
 
 		// Convert modal to inline dic
@@ -292,6 +338,15 @@
 			height:300px;
 
 			.ng-image-gallery-content{
+				.destroy-icons-container{
+					top:0;
+
+					.ext-url{
+						margin:0;
+						background-image:url(../res/icons/external-link-inline.svg);
+					}
+				}
+
 				.prev{
 					background-image:url(../res/icons/prev-inline.svg);
 				}
@@ -309,16 +364,24 @@
 				.galleria{
 					.galleria-bubbles{
 						span{
-							&:before{
-								background-color : rgba(0,0,0,0.5);
-							}
-
-							&.active{
+							&:not(.img-bubble){
 								&:before{
-									background-color : rgba(0,0,0,0.9);
+									background-color : rgba(0,0,0,0.5);
+								}
+
+								&.active{
+									&:before{
+										background-color : rgba(0,0,0,0.9);
+									}
 								}
 							}
-						}	
+							
+							&.img-bubble{
+								&.active{
+									border:2px solid #000;
+								}
+							}
+						}
 					}
 				}
 			}

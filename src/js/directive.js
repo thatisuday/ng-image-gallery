@@ -17,12 +17,17 @@
 			transclude : false,
 			restrict : 'AE',
 			scope : {
-				images : '=',		// []
-				methods : '=?',		// {}
-				thumbnails : '=?',	// true|false
-				inline : '=?',		// true|flase
-				onOpen : '&?',		// function
-				onClose : '&?'		// function
+				images 			: 	'=',		// []
+				methods 		: 	'=?',		// {}
+
+				thumbnails 		: 	'=?',		// true|false
+				inline 			: 	'=?',		// true|flase
+				bubbles 		: 	'=?',		// true|flase
+				imgBubbles 		: 	'=?',		// true|flase
+				bgClose 		: 	'=?',		// true|flase
+
+				onOpen 			: 	'&?',		// function
+				onClose 		: 	'&?'		// function
 			},
 			template : 	'<div class="ng-image-gallery" ng-class="{inline:inline}">'+
 							
@@ -42,26 +47,38 @@
 								
 								// Gallery contents container
 								// (hide when image is loading)
-								'<div class="ng-image-gallery-content" ng-show="!imgLoading">'+
+								'<div class="ng-image-gallery-content" ng-show="!imgLoading" ng-click="backgroundClose($event);">'+
 									
-									// Icons
-									// (hide close icon on inline gallery)
-									'<div class="close" ng-click="methods.close();" ng-if="!inline"></div>'+
-									'<div class="prev" ng-click="methods.prev();"></div>'+
-									'<div class="next" ng-click="methods.next();"></div>'+
+									// destroy icons container
+									'<div class="destroy-icons-container">'+
+										// External link icon
+										'<a class="ext-url" ng-repeat="image in images" ng-if="activeImg == image && image.extUrl" href="{{image.extUrl}}"></a>'+
 
+										// Close Icon (hidden in inline gallery)
+										'<div class="close" ng-click="methods.close();" ng-if="!inline"></div>'+
+									'</div>'+
+
+									// Prev-Next Icons
+									// Add `bubbles-on` class when bubbles are enabled (for offset)
+									'<div class="prev" ng-click="methods.prev();" ng-class="{\'bubbles-on\':bubbles}" ng-hide="images.length == 1"></div>'+
+									'<div class="next" ng-click="methods.next();" ng-class="{\'bubbles-on\':bubbles}" ng-hide="images.length == 1"></div>'+
 
 									// Galleria container
 									'<div class="galleria">'+
 										
 										// Images container
 										'<div class="galleria-images">'+
-											'<img ng-repeat="image in images" ng-if="activeImg == image" ng-src="{{image.url}}" />'+
+											'<img class="galleria-image" ng-repeat="image in images" ng-if="activeImg == image" ng-src="{{image.url}}" ondragstart="return false;" oncontextmenu="return false;"/>'+
 										'</div>'+
 
 										// Bubble navigation container
-										'<div class="galleria-bubbles">'+
-											'<span ng-click="setActiveImg(image);" ng-repeat="image in images" ng-class="{active : (activeImg == image)}"></span>'+
+										'<div class="galleria-bubbles" ng-if="bubbles && !imgBubbles"  ng-hide="images.length == 1">'+
+											'<span class="galleria-bubble" ng-click="setActiveImg(image);" ng-repeat="image in images" ng-class="{active : (activeImg == image)}"></span>'+
+										'</div>'+
+
+										// Image bubble navigation container
+										'<div class="galleria-bubbles" ng-if="bubbles && imgBubbles" ng-hide="images.length == 1">'+
+											'<span class="galleria-bubble img-bubble" ng-click="setActiveImg(image);" ng-repeat="image in images" ng-class="{active : (activeImg == image)}" style="background-image:url({{image.bubbleUrl || image.thumbUrl || image.url}});"></span>'+
 										'</div>'+
 
 									'</div>'+
@@ -128,17 +145,27 @@
 					});
 				}
 
+
 				/***************************************************/
 				
+
 				/*
 				 *	Gallery settings
 				**/
 
 				// Modify scope models
-				scope.images = (scope.images) ? scope.images : [];
-				scope.methods = (scope.methods) ? scope.methods : {};
-				scope.onOpen = (scope.onOpen) ? scope.onOpen : angular.noop;
-				scope.onClose = (scope.onClose) ? scope.onClose : angular.noop;
+				scope.images 	 	 = 	(scope.images) 		 ? scope.images 		: 	[];
+				scope.methods 	 	 = 	(scope.methods) 	 ? scope.methods 		: 	{};
+
+				scope.thumbnails 	 = 	(scope.thumbnails) 	 ? scope.thumbnails 	: 	true;
+				scope.inline 	 	 = 	(scope.inline) 		 ? scope.inline 		: 	false;
+				scope.bubbles 	 	 = 	(scope.bubbles) 	 ? scope.bubbles 		: 	true;
+				scope.imgBubbles 	 = 	(scope.imgBubbles) 	 ? scope.imgBubbles 	: 	false;
+				scope.bgClose 	 	 = 	(scope.bgClose) 	 ? scope.bgClose 		: 	false;
+
+				scope.onOpen 	 	 = 	(scope.onOpen) 		 ? scope.onOpen 		: 	angular.noop;
+				scope.onClose 	 	 = 	(scope.onClose) 	 ? scope.onClose 		: 	angular.noop;
+
 
 				// If images populate dynamically, reset gallery
 				var imagesFirstWatch = true;
@@ -158,19 +185,19 @@
 					if(activeImageIndexFirstWatch){
 						activeImageIndexFirstWatch = false;
 					}
-					else if(scope.images.length) scope.setActiveImg(
-						scope.images[newImgIndex]
-					);
+					else if(scope.images.length){
+						scope.setActiveImg(
+							scope.images[newImgIndex]
+						);
+					}
 				});
 
-				// Open model automatically if inline
+				// Open modal automatically if inline
 				scope.$watch('inline', function(){
 					$timeout(function(){
 						if(scope.inline) scope.methods.open();
 					});
 				});
-				
-				
 				
 
 				/***************************************************/
@@ -186,7 +213,7 @@
 
 					scope.opened = true; 
 
-					 // call open event after transition
+					// call open event after transition
 					$timeout(function(){
 						scope.onOpen();
 					}, 300);
@@ -224,7 +251,36 @@
 					}
 				}
 
+
+				// Close gallery on background click
+				scope.backgroundClose = function(e){
+					if(!scope.bgClose || scope.inline) return;
+
+					var noCloseClasses = [
+						'galleria-image',
+						'destroy-icons-container',
+						'ext-url',
+						'close',
+						'next',
+						'prev',
+						'galleria-bubble'
+					];
+
+					// check if clicked element has a class that
+					// belongs to `noCloseClasses`
+					for(var i = 0; i < e.target.classList.length; i++){
+						if(noCloseClasses.indexOf(e.target.classList[i]) != -1){
+							break;
+						}
+						else{
+							scope.methods.close();
+						}
+					}
+				}
+
+
 				/***************************************************/
+
 
 				/*
 				 *	User interactions
@@ -232,7 +288,7 @@
 
 				// Key events
 				$document.bind('keyup', function(event){
-					// If inline model, do not interact
+					// If inline modal, do not interact
 					if(scope.inline) return;
 
 					if(event.which == keys.right || event.which == keys.enter){
@@ -252,6 +308,27 @@
 					}
 				});
 
+				// Swipe events
+				if(window.Hammer){
+					var hammerElem = new Hammer(elem[0]);
+					hammerElem.on('swipeleft', function(ev){
+						$timeout(function(){
+							scope.methods.prev();
+						});
+					});
+					hammerElem.on('swiperight', function(ev){
+						$timeout(function(){
+							scope.methods.next();
+						});
+					});
+					hammerElem.on('doubletap', function(ev){
+						if(scope.inline) return;
+
+						$timeout(function(){
+							scope.methods.close();
+						});
+					});
+				}
 			}
 		}
 	}]);

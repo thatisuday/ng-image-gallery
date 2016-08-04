@@ -26,12 +26,15 @@ bower install --save ng-image-gallery
 > Include `main.min.js` and `main.min.css` from `dist` folder of this repository.
 >
 > Include `icons` from `res` folder of this repository.
+>
+> Include `hammer.js` for touch support (optional).
 
 ### → Manual 
 1. Install AngularJS or include `<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular.min.js"></script>`
 2. Install ngAnimate or include `<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular-animate.js"></script>`
 3. Include `main.min.js` and `main.min.css` from `dist` folder of this repository.
 4. Include `icons` from `res` folder of this repository.
+5. Include `hammer.js` from http://hammerjs.github.io (optional).
 
 ## Configure
 Add `thatisuday.ng-image-gallery` module to your app's dependencies.
@@ -45,7 +48,7 @@ var myTestApp = angular.module('test', ['thatisuday.ng-image-gallery']);
 
 # Create image gallery
 ```
-<ng-image-gallery images="images" methods="methods" thumbnails="true | false | boolean-model" inline="true | false | boolean-model" on-open="opened();" on-close="closed();"></ng-image-gallery>
+<ng-image-gallery images="images" methods="methods" thumbnails="true | false | boolean-model" inline="true | false | boolean-model" on-open="opened();" on-close="closed();" img-bubbles="true | false | boolean-model" bg-close="true | false | boolean-model" bubbles="true | false | boolean-model"></ng-image-gallery>
 ```
 
 > You can also use `<div ng-image-gallery ...></div>` approach.
@@ -59,7 +62,8 @@ var myTestApp = angular.module('test', ['thatisuday.ng-image-gallery']);
 $scope.images = [
 	{
 		thumbUrl : 'https://pixabay.com/static/uploads/photo/2016/06/13/07/32/cactus-1453793__340.jpg',
-		url : 'https://pixabay.com/static/uploads/photo/2016/06/13/07/32/cactus-1453793_960_720.jpg'
+		url : 'https://pixabay.com/static/uploads/photo/2016/06/13/07/32/cactus-1453793_960_720.jpg',
+		extUrl : 'http://mywebsitecpm/photo/1453793'
 	},
 	{
 		url : 'https://pixabay.com/static/uploads/photo/2016/06/10/22/25/ortler-1449018_960_720.jpg'
@@ -71,6 +75,8 @@ $scope.images = [
 ];
 ```
 > `thumbUrl` is not absolutely necessary. If `thumbUrl` url is empty, thumbnail will use `url` instead to show preview.
+
+> `extUrl` is also **optional**, it is external link of current image. An `external link' icon with anchor link will be added beside close button.
 
 --
 
@@ -110,21 +116,17 @@ $scope.prevImg = function(){
 
 --
 
-### 3. thumbnails (optional)
+### 3. thumbnails (optional) _[default : true]_
 thumbnails attribute is used when you need to generate thumbnails on the page of the gallery images. When user clicks on any thumbnail, gallery modal is opened with that image as visible image.
 
-> It's value can be `true` or `false` hardcoded in attribute itself or you can assigned it to a scope variable which has boolean value.
-
 --
 
-### 4. inline (optional)
+### 4. inline (optional) _[default : false]_
 inline attribute is used when you need to inline image gallery instead in modal. When gallery is inline, no thumbnails will be generated and gallery will be launched automatically.
 
-> It's value can be `true` or `false` hardcoded in attribute itself or you can assigned it to a scope variable which has boolean value.
-
 --
 
-### 5. on-open (optional)
+### 5. on-open (optional) _[default : noop]_
 This is the callback function that must be executed after gallery modal is opened. Function in the controller will look like below
 
 ```
@@ -135,8 +137,34 @@ $scope.opened = function(){
 
 --
 
-### 6. on-close (optional)
+### 6. on-close (optional) _[default : noop]_
 Similar to `on-open` attribute but will be called when gallery modal closes.
+
+--
+
+### 7. img-bubbles (optional) _[default : false]_
+To create image bubbles instead of simple circles. by default, bubble image url will be `thumbUrl` or `url`. But you can also add `bubbleUrl` (of small sizes images) to minimize request playload.
+
+> Not recommend if bubbles url defaults to `url` as it will download heavy images all at once.
+
+--
+
+### 8. bg-close (optional) _[default : false]_
+close gallery on backgroud click. This can be very sensitivity in mobile devices. This will not work in inline gallery.
+
+--
+
+### 9. bubbles (optional) _[default : true]_
+Turn on/off bubbles.
+
+
+***
+
+# Touch support
+- swipe right and left to change images
+- doubletap to close gallery
+
+> Touch will be enabled only if `hammer.js` file is added.
 
 ***
 
@@ -153,11 +181,11 @@ Similar to `on-open` attribute but will be called when gallery modal closes.
 1. Provide support for thumbnail generation.
 2. Dynamic population of images at any time.
 3. Lazy-loading of images, meaning... loading animation will be showed in the gallery until image is downloaded.
-4. jQuery independent with no dom manipulation at all.
+4. jQuery independent.
 5. Smooth animations.
 6. Keypress support.
-7. Responsive (using css flexbox).
-8. 4kb gzipped (css+js)
+7. Responsive (using css flexbox) with touch support.
+8. Image theft protection (simple way)
 9. Total control on gallery from outside world.
 10. Inline + Modal gallery, awesome combo.
 

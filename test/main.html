@@ -4,28 +4,41 @@
 		<title>ng-image-gallery</title>
 		<meta name="viewport" content="width=device-width, initial-scale=1"/>
 
+		<!-- Local Dependencies -->
+		<!-- <script src="../bower_components/angular/angular.js"></script>
+		<script src="../bower_components/angular-animate/angular-animate.js"></script>
+		<script src="../bower_components/hammerjs/hammer.min.js"></script> -->
+
 		<!-- Dependencies -->
 		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular.min.js"></script>
 		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-animate.js"></script>
-		<!-- <script src="../bower_components/angular/angular.min.js"></script> -->
+		<script src="https://rawgit.com/hammerjs/hammer.js/v2.0.8/hammer.min.js"></script>
 
 		<!-- Module files-->
-		<script src="../dist/main.min.js"></script>
-		<link href="../dist/main.min.css" rel="stylesheet"/>
+		<script src="../dist/ng-image-gallery.min.js"></script>
+		<link href="../dist/ng-image-gallery.min.css" rel="stylesheet"/>
 	</head>
 	<body ng-controller="main">
 		<h1>ng-image-gallery</h1>
-		<p>Populating more images after {{counter}} seconds.</p>
+		<p ng-hide="counter == 0">Populating more images after {{counter}} seconds.</p>
 
 		<button ng-click="openGallery()">Open Gallery</button>
+		<button ng-click="removePhoto()">Remove Photo</button>
+		
+		<br/>
+		<br/>
+
 		<button ng-click="toggleThumbnails()">Enable/Disable Thumbnails</button>
 		<button ng-click="toggleInline()">Modal/Inline Gallery</button>
+		<button ng-click="toggleBubbles()">Show/Hide bubbles</button>
+		<button ng-click="toggleImgBubbles()">{{(imgBubbles) ? 'Switch off' : 'Switch on'}} Image bubbles</button>
+		<button ng-click="closeOnBackground()">{{(bgClose) ? 'Do not close' : 'Close'}} on background click</button>
 		
 		<br/>
 		<br/>
 		<br/>
 
-		<ng-image-gallery images="images" methods="methods" thumbnails="thumbnails" inline="inline" on-open="opened();" on-close="closed();"></ng-image-gallery>
+		<ng-image-gallery images="images" methods="methods" thumbnails="thumbnails" inline="inline" bubbles="bubbles" img-bubbles="imgBubbles" bg-close="bgClose" on-open="opened();" on-close="closed();" bg-close="false"></ng-image-gallery>
 
 		<script>
 			angular
@@ -38,40 +51,66 @@
 						$interval.cancel(counterIntvl);
 					}
 				}, 1000);
-
+				
+				// Local images
 				$scope.images = [
 					{
-						thumbUrl : 'https://pixabay.com/static/uploads/photo/2016/06/13/07/32/cactus-1453793__340.jpg',
-						url : 'https://pixabay.com/static/uploads/photo/2016/06/13/07/32/cactus-1453793_960_720.jpg'
+						url : '../test/test-images/1.jpg',
+						extUrl : 'http://google.com/image/1'
 					},
 					{
-						url : 'https://pixabay.com/static/uploads/photo/2016/06/10/22/25/ortler-1449018_960_720.jpg'
+						url : '../test/test-images/2.jpg'
 					},
 					{
-						thumbUrl : 'https://pixabay.com/static/uploads/photo/2016/04/11/18/53/aviator-1322701__340.jpg',
-						url : 'https://pixabay.com/static/uploads/photo/2016/04/11/18/53/aviator-1322701_960_720.jpg'
+						url : '../test/test-images/3.jpg'
+					},
+					{
+						url : '../test/test-images/4.jpg',
+						extUrl : 'http://google.com/image/4'
+					},
+					{
+						url : '../test/test-images/5.jpg'
+					},
+					{
+						url : '../test/test-images/6.jpg'
+					},
+					{
+						url : '../test/test-images/7.jpg'
+					},
+					{
+						url : '../test/test-images/8.jpg',
+						extUrl : 'http://google.com/image/8'
+					},
+					{
+						url : '../test/test-images/9.jpg'
 					}
 				];
 
-
-				// More images to populate after 5 seconds
 				$scope.moreImages = [
 					{
-						url : 'https://pixabay.com/static/uploads/photo/2016/06/17/13/02/duck-1463317_960_720.jpg'
+						url : '../test/test-images/10.jpg'
 					},
 					{
-						url : 'https://pixabay.com/static/uploads/photo/2016/02/04/03/33/baby-1178539_960_720.jpg'
+						url : '../test/test-images/11.jpg',
+						extUrl : 'http://google.com/image/11'
 					},
 					{
-						url : 'https://pixabay.com/static/uploads/photo/2016/06/21/23/06/girl-1472195_960_720.jpg'
+						url : '../test/test-images/12.jpg'
+					},
+					{
+						url : '../test/test-images/13.jpg'
 					}
 				];
+
+				/*****************************************************/
 
 				$timeout(function(){
 					$scope.images = $scope.images.concat($scope.moreImages);
 				}, 5000);
 				
-
+				$scope.removePhoto = function(){
+					if($scope.images.length > 1) $scope.images.pop();
+				}
 
 				// Thumbnails
 				$scope.thumbnails = true;
@@ -85,6 +124,24 @@
 					$scope.inline = !$scope.inline;
 				}
 
+				// Bubbles
+				$scope.bubbles = true;
+				$scope.toggleBubbles = function(){
+					$scope.bubbles = !$scope.bubbles;
+				}
+
+				// Image bubbles
+				$scope.imgBubbles = false;
+				$scope.toggleImgBubbles = function(){
+					$scope.imgBubbles = !$scope.imgBubbles;
+				}
+
+				// Background close
+				$scope.bgClose = false;
+				$scope.closeOnBackground = function(){
+					$scope.bgClose = !$scope.bgClose;
+				}
+
 				// Gallery methods gateway
 				$scope.methods = {};
 				$scope.openGallery = function(){
@@ -93,11 +150,11 @@
 
 				// Gallery callbacks
 				$scope.opened = function(){
-					alert('Gallery opened!');
+					console.info('Gallery opened!');
 				}
 
 				$scope.closed = function(){
-					alert('Gallery closed!');
+					console.warn('Gallery closed!');
 				}
 			})
 			;
