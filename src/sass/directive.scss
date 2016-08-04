@@ -211,13 +211,16 @@
 
 					display: flex;
 					flex-direction: row;
+					justify-content: center;
 					align-items: center;
+					align-content: center;
+					flex-wrap: wrap;
 
 					span{
 						flex: none;
 						position:relative;
 						display: inline-block;
-						margin:0 2px;
+						margin:2px 4px;
 						cursor: pointer;
 						overflow: hidden;
 						border-radius: 100%;
@@ -226,42 +229,28 @@
 						vertical-align: middle;
 
 						&:not(.img-bubble){
-							width:16px;
-							height:16px;
-
-							&:before{
-								content : " ";
-								display: block;
-								width:10px;
-								height:10px;
-								background-color : rgba(255,255,255,0.5);
-								overflow:hidden;
-								border-radius:100%;
-								margin:3px;
-								transition: all 0.3s ease-in-out;
-							}
+							width:12px;
+							height:12px;
+							background-color : rgba(255,255,255,0.5);
+							border-radius:100%;
+							overflow: hidden;
+							transition: all 0.3s ease-in-out;
 
 							&.active{
-								&:before{
-									content : " ";
-									width:16px;
-									height:16px;
-									background-color : rgba(255,255,255,0.9);
-									margin:0px;
-								}
+								background-color : #fff;
 							}
 						}
 
 						&.img-bubble{
 							box-sizing:border-box;
-							width:18px;
-							height:18px;
-							margin:0 4px;
-							border:2px solid transparent;
+							width:12px;
+							height:12px;
+							margin:2px 4px;
+							border:1px solid transparent;
 							transition: border 0.3s ease-in-out;
 
 							&.active{
-								border:2px solid #fff;
+								border:1px solid #fff;
 							}
 						}
 					}
@@ -369,20 +358,16 @@
 					.galleria-bubbles{
 						span{
 							&:not(.img-bubble){
-								&:before{
-									background-color : rgba(0,0,0,0.5);
-								}
+								background-color : rgba(0,0,0,0.5);
 
 								&.active{
-									&:before{
-										background-color : rgba(0,0,0,0.9);
-									}
+									background-color : #333;
 								}
 							}
 							
 							&.img-bubble{
 								&.active{
-									border:2px solid #000;
+									border:1px solid #000;
 								}
 							}
 						}

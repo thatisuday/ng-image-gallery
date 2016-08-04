@@ -19,6 +19,7 @@
 			scope : {
 				images 			: 	'=',		// []
 				methods 		: 	'=?',		// {}
+				conf 			: 	'=?',		// {}
 
 				thumbnails 		: 	'=?',		// true|false
 				inline 			: 	'=?',		// true|flase
@@ -154,19 +155,19 @@
 				**/
 
 				// Modify scope models
-				scope.images 	 	 = 	(scope.images 		!= undefined) ? scope.images 	: 	[];
-				scope.methods 	 	 = 	(scope.methods 		!= undefined) ? scope.methods 	: 	{};
+				scope.images 	 	 = 	(scope.images 		!= undefined) ? scope.images 	 : 	[];
+				scope.methods 	 	 = 	(scope.methods 		!= undefined) ? scope.methods 	 : 	{};
+				scope.conf 	 		 = 	(scope.conf 		!= undefined) ? scope.conf 		 : 	{};
 
-				scope.thumbnails 	 = 	(scope.thumbnails 	!= undefined) ? scope.thumbnails : 	true;
-				scope.inline 	 	 = 	(scope.inline 		!= undefined) ? scope.inline 	: 	false;
-				scope.bubbles 	 	 = 	(scope.bubbles 		!= undefined) ? scope.bubbles 	: 	true;
-				scope.imgBubbles 	 = 	(scope.imgBubbles 	!= undefined) ? scope.imgBubbles : 	false;
-				scope.bgClose 	 	 = 	(scope.bgClose 		!= undefined) ? scope.bgClose 	: 	false;
+				scope.thumbnails 	 = 	(scope.thumbnails 	!= undefined) ? scope.thumbnails : 	(scope.conf.thumbnails 	!= undefined) ?  scope.conf.thumbnails	: 	true;
+				scope.inline 	 	 = 	(scope.inline 		!= undefined) ? scope.inline 	 : 	(scope.conf.inline 		!= undefined) ?  scope.conf.inline		: 	false;
+				scope.bubbles 	 	 = 	(scope.bubbles 		!= undefined) ? scope.bubbles 	 : 	(scope.conf.bubbles 	!= undefined) ?  scope.conf.bubbles		: 	true;
+				scope.imgBubbles 	 = 	(scope.imgBubbles 	!= undefined) ? scope.imgBubbles : 	(scope.conf.imgBubbles 	!= undefined) ?  scope.conf.imgBubbles	: 	false;
+				scope.bgClose 	 	 = 	(scope.bgClose 		!= undefined) ? scope.bgClose 	 : 	(scope.conf.bgClose 	!= undefined) ?  scope.conf.bgClose		: 	false;
 
-				scope.onOpen 	 	 = 	(scope.onOpen 		!= undefined) ? scope.onOpen 	: 	angular.noop;
-				scope.onClose 	 	 = 	(scope.onClose 		!= undefined) ? scope.onClose 	: 	angular.noop;
-
-
+				scope.onOpen 	 	 = 	(scope.onOpen 		!= undefined) ? scope.onOpen 	 : 	angular.noop;
+				scope.onClose 	 	 = 	(scope.onClose 		!= undefined) ? scope.onClose 	 : 	angular.noop;
+				
 				// If images populate dynamically, reset gallery
 				var imagesFirstWatch = true;
 				scope.$watch('images', function(){
@@ -220,7 +221,6 @@
 					}, 300);
 				}
 
-
 				// Close gallery modal
 				scope.methods.close = function(){
 					scope.opened = false; // Model closed
@@ -251,7 +251,6 @@
 						scope.activeImageIndex--;
 					}
 				}
-
 
 				// Close gallery on background click
 				scope.backgroundClose = function(e){

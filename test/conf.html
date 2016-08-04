@@ -20,43 +20,20 @@
 	</head>
 	<body ng-controller="main">
 		<h1>ng-image-gallery</h1>
-		<p ng-hide="counter == 0">Populating more images after {{counter}} seconds.</p>
 
 		<button ng-click="openGallery()">Open Gallery</button>
-		<button ng-click="addPhoto()">Add Photo</button>
 		<button ng-click="removePhoto()">Remove Photo</button>
 		
 		<br/>
 		<br/>
-
-		<button ng-click="toggleThumbnails()">Enable/Disable Thumbnails</button>
-		<button ng-click="toggleInline()">Modal/Inline Gallery</button>
-		<button ng-click="toggleBubbles()">Show/Hide bubbles</button>
-		<button ng-click="toggleImgBubbles()">{{(imgBubbles) ? 'Switch off' : 'Switch on'}} Image bubbles</button>
-		
-		<br/>
 		<br/>
 
-		<button ng-click="closeOnBackground()">{{(bgClose) ? 'Do not close' : 'Close'}} on background click (modal gallery)</button>
-		
-		<br/>
-		<br/>
-		<br/>
-
-		<ng-image-gallery images="images" methods="methods" conf="conf" thumbnails="thumbnails" inline="inline" bubbles="bubbles" img-bubbles="imgBubbles" bg-close="bgClose" on-open="opened();" on-close="closed();" bg-close="false"></ng-image-gallery>
+		<ng-image-gallery images="images" methods="methods" conf="conf" on-open="opened();" on-close="closed();"></ng-image-gallery>
 
 		<script>
 			angular
 			.module('test', ['thatisuday.ng-image-gallery'])
 			.controller('main', function($scope, $timeout, $interval){
-				$scope.counter = 5;
-				var counterIntvl = $interval(function(){
-					$scope.counter = $scope.counter - 1;
-					if($scope.counter == 0){
-						$interval.cancel(counterIntvl);
-					}
-				}, 1000);
-				
 				// Local images
 				$scope.images = [
 					{
@@ -109,80 +86,13 @@
 					}
 				];
 
-				$scope.moreImages = [
-					{
-						url : '../test/test-images/10.jpg',
-						thumbUrl : '../test/test-images/thumbs/10.jpg',
-						bubbleUrl : '../test/test-images/bubbles/10.jpg',
-					},
-					{
-						url : '../test/test-images/11.jpg',
-						thumbUrl : '../test/test-images/thumbs/11.jpg',
-						bubbleUrl : '../test/test-images/bubbles/11.jpg',
-						extUrl : 'http://google.com/image/11'
-					},
-					{
-						url : '../test/test-images/12.jpg',
-						thumbUrl : '../test/test-images/thumbs/12.jpg',
-						bubbleUrl : '../test/test-images/bubbles/12.jpg',
-					},
-					{
-						url : '../test/test-images/13.jpg',
-						thumbUrl : '../test/test-images/thumbs/13.jpg',
-						bubbleUrl : '../test/test-images/bubbles/13.jpg'
-					}
-				];
-
 				/*****************************************************/
 
-				$timeout(function(){
-					$scope.images = $scope.images.concat($scope.moreImages);
-				}, 5000);
-				
-				$scope.addPhoto = function(){
-					var n = Math.floor(Math.random() * 13) + 1;
-					$scope.images.push(
-						{
-							url : '../test/test-images/' + n + '.jpg',
-							thumbUrl : '../test/test-images/thumbs/' + n + '.jpg',
-							bubbleUrl : '../test/test-images/bubbles/' + n + '.jpg'
-						}
-					);
-				}
-				
-				$scope.removePhoto = function(){
-					if($scope.images.length > 1) $scope.images.pop();
-				}
+				// configurations
+				$scope.conf = {
+					bgClose : false
+				};
 
-				// Thumbnails
-				$scope.thumbnails = true;
-				$scope.toggleThumbnails = function(){
-					$scope.thumbnails = !$scope.thumbnails;
-				}
-
-				// Inline
-				$scope.inline = false;
-				$scope.toggleInline = function(){
-					$scope.inline = !$scope.inline;
-				}
-
-				// Bubbles
-				$scope.bubbles = true;
-				$scope.toggleBubbles = function(){
-					$scope.bubbles = !$scope.bubbles;
-				}
-
-				// Image bubbles
-				$scope.imgBubbles = false;
-				$scope.toggleImgBubbles = function(){
-					$scope.imgBubbles = !$scope.imgBubbles;
-				}
-
-				// Background close
-				$scope.bgClose = false;
-				$scope.closeOnBackground = function(){
-					$scope.bgClose = !$scope.bgClose;
-				}
 
 				// Gallery methods gateway
 				$scope.methods = {};
