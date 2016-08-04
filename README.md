@@ -2,7 +2,7 @@
 
 # ng-image-gallery
 Angular directive for image gallery in **modal** with **thumbnails** or **inline** like carousel
-###[Preview](http://bit.do/ng-image-gallery )
+###[Preview](https://rawgit.com/thatisuday/ng-image-gallery/master/demo/main.html)
 
 ***
 
