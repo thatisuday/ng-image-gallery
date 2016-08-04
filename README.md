@@ -49,7 +49,7 @@ var myTestApp = angular.module('test', ['thatisuday.ng-image-gallery']);
 
 # Create image gallery
 ```
-<ng-image-gallery images="images" methods="methods" thumbnails="true | false | boolean-model" inline="true | false | boolean-model" on-open="opened();" on-close="closed();" img-bubbles="true | false | boolean-model" bg-close="true | false | boolean-model" bubbles="true | false | boolean-model"></ng-image-gallery>
+<ng-image-gallery images="images" methods="methods" conf="conf" thumbnails="true | false | boolean-model" inline="true | false | boolean-model" on-open="opened();" on-close="closed();" img-bubbles="true | false | boolean-model" bg-close="true | false | boolean-model" bubbles="true | false | boolean-model"></ng-image-gallery>
 ```
 
 > You can also use `<div ng-image-gallery ...></div>` approach.
@@ -62,6 +62,8 @@ var myTestApp = angular.module('test', ['thatisuday.ng-image-gallery']);
 // inside your app controller
 $scope.images = [
 	{
+		title : 'This is amazing photo of nature',
+		alt : 'amazing nature photo',
 		thumbUrl : 'https://pixabay.com/static/uploads/photo/2016/06/13/07/32/cactus-1453793__340.jpg',
 		url : 'https://pixabay.com/static/uploads/photo/2016/06/13/07/32/cactus-1453793_960_720.jpg',
 		extUrl : 'http://mywebsitecpm/photo/1453793'
@@ -78,6 +80,8 @@ $scope.images = [
 > `thumbUrl` is not absolutely necessary. If `thumbUrl` url is empty, thumbnail will use `url` instead to show preview.
 
 > `extUrl` is also **optional**, it is external link of current image. An `external link' icon with anchor link will be added beside close button.
+
+> `title` and `alt` tags are also **optional**.
 
 --
 
@@ -158,6 +162,28 @@ close gallery on backgroud click. This can be very sensitivity in mobile devices
 ### 9. bubbles (optional) _[default : true]_
 Turn on/off bubbles.
 
+
+### 10. conf
+`conf` attribute contains JavaScript object (bound to scope) which override following options.
+
+| property name | alias for |
+| ---------------- | --------- |
+|thumbnails|thumbnails|
+|inline|inline|
+|bubbles|bubbles|
+|imgBubbles|img-bubbles|
+|bgClose|bg-close|
+
+Not a big fan of inline options, use `conf`
+```
+$scope.conf = {
+	thumbnails 	: 	true,	
+	inline		: 	false,
+	bubbles		: 	true,
+	imgBubbles 	: 	true,	
+	bgClose		: 	false
+};
+```
 
 ***
 
