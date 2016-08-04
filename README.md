@@ -16,9 +16,10 @@ Angular directive for image gallery in **modal** with **thumbnails** or **inline
 
 # Install
 ## Download
-### → using bower
+### → using __**bower**__ or __**npm**__
 ```
 bower install --save ng-image-gallery
+npm install --save ng-image-gallery
 ```
 
 > Include `angular.min.js` and `angular-animate.min.js` from bower components.
