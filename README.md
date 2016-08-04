@@ -162,7 +162,8 @@ Turn on/off bubbles.
 ***
 
 # Touch support
-- swipe right and left to change images
+- swipe right for prev
+- swipe left for next
 - doubletap to close gallery
 
 > Touch will be enabled only if `hammer.js` file is added.

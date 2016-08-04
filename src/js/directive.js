@@ -312,12 +312,12 @@
 				// Swipe events
 				if(window.Hammer){
 					var hammerElem = new Hammer(elem[0]);
-					hammerElem.on('swipeleft', function(ev){
+					hammerElem.on('swiperight', function(ev){
 						$timeout(function(){
 							scope.methods.prev();
 						});
 					});
-					hammerElem.on('swiperight', function(ev){
+					hammerElem.on('swipeleft', function(ev){
 						$timeout(function(){
 							scope.methods.next();
 						});
