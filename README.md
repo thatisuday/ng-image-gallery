@@ -23,7 +23,7 @@ bower install --save ng-image-gallery
 
 > Include `angular.min.js` and `angular-animate.min.js` from bower components.
 >
-> Include `main.min.js` and `main.min.css` from `dist` folder of this repository.
+> Include `ng-image-gallery.min.js` and `ng-image-gallery.min.css` from `dist` folder of this repository.
 >
 > Include `icons` from `res` folder of this repository.
 >
@@ -32,7 +32,7 @@ bower install --save ng-image-gallery
 ### → Manual 
 1. Install AngularJS or include `<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular.min.js"></script>`
 2. Install ngAnimate or include `<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular-animate.js"></script>`
-3. Include `main.min.js` and `main.min.css` from `dist` folder of this repository.
+3. Include `ng-image-gallery.min.js` and `ng-image-gallery.min.css` from `dist` folder of this repository.
 4. Include `icons` from `res` folder of this repository.
 5. Include `hammer.js` from http://hammerjs.github.io (optional).
 
