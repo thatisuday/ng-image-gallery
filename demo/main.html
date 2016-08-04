@@ -1,25 +1,29 @@
 <!DOCTYPE html>
-<html ng-app="test">
+<html ng-app="demo">
 	<head>
 		<title>ng-image-gallery</title>
 		<meta name="viewport" content="width=device-width, initial-scale=1"/>
 
 		<!-- Local Dependencies -->
-		<!-- <script src="../bower_components/angular/angular.js"></script>
+		<script src="../bower_components/angular/angular.js"></script>
 		<script src="../bower_components/angular-animate/angular-animate.js"></script>
-		<script src="../bower_components/hammerjs/hammer.min.js"></script> -->
+		<script src="../bower_components/hammerjs/hammer.min.js"></script>
 
 		<!-- Dependencies -->
-		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular.min.js"></script>
+		<!-- <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular.min.js"></script>
 		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-animate.js"></script>
-		<script src="https://rawgit.com/hammerjs/hammer.js/v2.0.8/hammer.min.js"></script>
+		<script src="https://rawgit.com/hammerjs/hammer.js/v2.0.8/hammer.min.js"></script> -->
 
 		<!-- Module files-->
 		<script src="../dist/ng-image-gallery.min.js"></script>
 		<link href="../dist/ng-image-gallery.min.css" rel="stylesheet"/>
 	</head>
 	<body ng-controller="main">
-		<h1>ng-image-gallery</h1>
+		
+		<a href="./conf.html">With conf</a><br/>
+
+		<h1><a href="https://github.com/thatisuday/ng-image-gallery" style="text-decoration:none; color:#333;">ng-image-gallery</a></h1>
+
 		<p ng-hide="counter == 0">Populating more images after {{counter}} seconds.</p>
 
 		<button ng-click="openGallery()">Open Gallery</button>
@@ -31,7 +35,7 @@
 
 		<button ng-click="toggleThumbnails()">Enable/Disable Thumbnails</button>
 		<button ng-click="toggleInline()">Modal/Inline Gallery</button>
-		<button ng-click="toggleBubbles()">Show/Hide bubbles</button>
+		<button ng-click="toggleBubbles()">{{(bubbles) ? 'Switch off' : 'Switch on'}} bubbles</button>
 		<button ng-click="toggleImgBubbles()">{{(imgBubbles) ? 'Switch off' : 'Switch on'}} Image bubbles</button>
 		
 		<br/>
@@ -47,7 +51,7 @@
 
 		<script>
 			angular
-			.module('test', ['thatisuday.ng-image-gallery'])
+			.module('demo', ['thatisuday.ng-image-gallery'])
 			.controller('main', function($scope, $timeout, $interval){
 				$scope.counter = 5;
 				var counterIntvl = $interval(function(){
@@ -60,76 +64,86 @@
 				// Local images
 				$scope.images = [
 					{
-						url : '../test/test-images/1.jpg',
-						thumbUrl : '../test/test-images/thumbs/1.jpg',
-						bubbleUrl : '../test/test-images/bubbles/1.jpg',
+						title : 'My first image',
+						alt : 'photo1',
+						url : '../demo/demo-images/1.jpg',
+						thumbUrl : '../demo/demo-images/thumbs/1.jpg',
+						bubbleUrl : '../demo/demo-images/bubbles/1.jpg',
 						extUrl : 'http://google.com/image/1'
 					},
 					{
-						url : '../test/test-images/2.jpg',
-						thumbUrl : '../test/test-images/thumbs/2.jpg',
-						bubbleUrl : '../test/test-images/bubbles/2.jpg',
+						url : '../demo/demo-images/2.jpg',
+						thumbUrl : '../demo/demo-images/thumbs/2.jpg',
+						bubbleUrl : '../demo/demo-images/bubbles/2.jpg',
 					},
 					{
-						url : '../test/test-images/3.jpg',
-						thumbUrl : '../test/test-images/thumbs/3.jpg',
-						bubbleUrl : '../test/test-images/bubbles/3.jpg',
+						url : '../demo/demo-images/3.jpg',
+						thumbUrl : '../demo/demo-images/thumbs/3.jpg',
+						bubbleUrl : '../demo/demo-images/bubbles/3.jpg',
 					},
 					{
-						url : '../test/test-images/4.jpg',
-						thumbUrl : '../test/test-images/thumbs/4.jpg',
-						bubbleUrl : '../test/test-images/bubbles/4.jpg',
+						title : 'My fourth image',
+						alt : 'photo4',
+						url : '../demo/demo-images/4.jpg',
+						thumbUrl : '../demo/demo-images/thumbs/4.jpg',
+						bubbleUrl : '../demo/demo-images/bubbles/4.jpg',
 						extUrl : 'http://google.com/image/4'
 					},
 					{
-						url : '../test/test-images/5.jpg',
-						thumbUrl : '../test/test-images/thumbs/5.jpg',
-						bubbleUrl : '../test/test-images/bubbles/5.jpg',
+						url : '../demo/demo-images/5.jpg',
+						thumbUrl : '../demo/demo-images/thumbs/5.jpg',
+						bubbleUrl : '../demo/demo-images/bubbles/5.jpg',
 					},
 					{
-						url : '../test/test-images/6.jpg',
-						thumbUrl : '../test/test-images/thumbs/6.jpg',
-						bubbleUrl : '../test/test-images/bubbles/6.jpg',
+						url : '../demo/demo-images/6.jpg',
+						thumbUrl : '../demo/demo-images/thumbs/6.jpg',
+						bubbleUrl : '../demo/demo-images/bubbles/6.jpg',
 					},
 					{
-						url : '../test/test-images/7.jpg',
-						thumbUrl : '../test/test-images/thumbs/7.jpg',
-						bubbleUrl : '../test/test-images/bubbles/7.jpg',
+						title : 'My seventh image',
+						alt : 'photo7',
+						url : '../demo/demo-images/7.jpg',
+						thumbUrl : '../demo/demo-images/thumbs/7.jpg',
+						bubbleUrl : '../demo/demo-images/bubbles/7.jpg',
 					},
 					{
-						url : '../test/test-images/8.jpg',
-						thumbUrl : '../test/test-images/thumbs/8.jpg',
-						bubbleUrl : '../test/test-images/bubbles/8.jpg',
+						url : '../demo/demo-images/8.jpg',
+						thumbUrl : '../demo/demo-images/thumbs/8.jpg',
+						bubbleUrl : '../demo/demo-images/bubbles/8.jpg',
 						extUrl : 'http://google.com/image/8'
 					},
 					{
-						url : '../test/test-images/9.jpg',
-						thumbUrl : '../test/test-images/thumbs/9.jpg',
-						bubbleUrl : '../test/test-images/bubbles/9.jpg',
+						title : 'My 9th image',
+						alt : 'photo9',
+						url : '../demo/demo-images/9.jpg',
+						thumbUrl : '../demo/demo-images/thumbs/9.jpg',
+						bubbleUrl : '../demo/demo-images/bubbles/9.jpg',
 					}
 				];
 
 				$scope.moreImages = [
 					{
-						url : '../test/test-images/10.jpg',
-						thumbUrl : '../test/test-images/thumbs/10.jpg',
-						bubbleUrl : '../test/test-images/bubbles/10.jpg',
+						url : '../demo/demo-images/10.jpg',
+						thumbUrl : '../demo/demo-images/thumbs/10.jpg',
+						bubbleUrl : '../demo/demo-images/bubbles/10.jpg',
 					},
 					{
-						url : '../test/test-images/11.jpg',
-						thumbUrl : '../test/test-images/thumbs/11.jpg',
-						bubbleUrl : '../test/test-images/bubbles/11.jpg',
+						url : '../demo/demo-images/11.jpg',
+						thumbUrl : '../demo/demo-images/thumbs/11.jpg',
+						bubbleUrl : '../demo/demo-images/bubbles/11.jpg',
 						extUrl : 'http://google.com/image/11'
 					},
 					{
-						url : '../test/test-images/12.jpg',
-						thumbUrl : '../test/test-images/thumbs/12.jpg',
-						bubbleUrl : '../test/test-images/bubbles/12.jpg',
+						title : 'My twelth image',
+						alt : 'photo12',
+						url : '../demo/demo-images/12.jpg',
+						thumbUrl : '../demo/demo-images/thumbs/12.jpg',
+						bubbleUrl : '../demo/demo-images/bubbles/12.jpg',
 					},
 					{
-						url : '../test/test-images/13.jpg',
-						thumbUrl : '../test/test-images/thumbs/13.jpg',
-						bubbleUrl : '../test/test-images/bubbles/13.jpg'
+						url : '../demo/demo-images/13.jpg',
+						thumbUrl : '../demo/demo-images/thumbs/13.jpg',
+						bubbleUrl : '../demo/demo-images/bubbles/13.jpg'
 					}
 				];
 
@@ -143,9 +157,9 @@
 					var n = Math.floor(Math.random() * 13) + 1;
 					$scope.images.push(
 						{
-							url : '../test/test-images/' + n + '.jpg',
-							thumbUrl : '../test/test-images/thumbs/' + n + '.jpg',
-							bubbleUrl : '../test/test-images/bubbles/' + n + '.jpg'
+							url : '../demo/demo-images/' + n + '.jpg',
+							thumbUrl : '../demo/demo-images/thumbs/' + n + '.jpg',
+							bubbleUrl : '../demo/demo-images/bubbles/' + n + '.jpg'
 						}
 					);
 				}

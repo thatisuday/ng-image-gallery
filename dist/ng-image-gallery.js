@@ -35,7 +35,7 @@
 							// Thumbnails container
 							//  Hide for inline gallery
 							'<div ng-if="thumbnails && !inline" class="ng-image-gallery-thumbnails">'+
-								'<div class="thumb" ng-repeat="image in images" ng-click="methods.open($index);" style="background-image:url({{image.thumbUrl || image.url}});"></div>'+
+								'<div class="thumb" ng-repeat="image in images" ng-click="methods.open($index);" style="background-image:url({{image.thumbUrl || image.url}});"  ng-attr-title="{{image.title || undefined}}"></div>'+
 							'</div>'+
 
 							// Modal container
@@ -69,7 +69,7 @@
 										
 										// Images container
 										'<div class="galleria-images">'+
-											'<img class="galleria-image" ng-repeat="image in images" ng-if="activeImg == image" ng-src="{{image.url}}" ondragstart="return false;" oncontextmenu="return false;"/>'+
+											'<img class="galleria-image" ng-repeat="image in images" ng-if="activeImg == image" ng-src="{{image.url}}" ondragstart="return false;" oncontextmenu="return false;" ng-attr-title="{{image.title || undefined}}" ng-attr-alt="{{image.alt || undefined}}"/>'+
 										'</div>'+
 
 										// Bubble navigation container
@@ -159,11 +159,14 @@
 				scope.methods 	 	 = 	(scope.methods 		!= undefined) ? scope.methods 	 : 	{};
 				scope.conf 	 		 = 	(scope.conf 		!= undefined) ? scope.conf 		 : 	{};
 
-				scope.thumbnails 	 = 	(scope.thumbnails 	!= undefined) ? scope.thumbnails : 	(scope.conf.thumbnails 	!= undefined) ?  scope.conf.thumbnails	: 	true;
-				scope.inline 	 	 = 	(scope.inline 		!= undefined) ? scope.inline 	 : 	(scope.conf.inline 		!= undefined) ?  scope.conf.inline		: 	false;
-				scope.bubbles 	 	 = 	(scope.bubbles 		!= undefined) ? scope.bubbles 	 : 	(scope.conf.bubbles 	!= undefined) ?  scope.conf.bubbles		: 	true;
-				scope.imgBubbles 	 = 	(scope.imgBubbles 	!= undefined) ? scope.imgBubbles : 	(scope.conf.imgBubbles 	!= undefined) ?  scope.conf.imgBubbles	: 	false;
-				scope.bgClose 	 	 = 	(scope.bgClose 		!= undefined) ? scope.bgClose 	 : 	(scope.conf.bgClose 	!= undefined) ?  scope.conf.bgClose		: 	false;
+				// setting options ()
+				scope.$watchCollection('conf', function(conf){
+					scope.thumbnails 	 = 	(conf.thumbnails 	!= undefined) ? conf.thumbnails 	: 	(scope.thumbnails 	!= undefined) 	?  scope.thumbnails		: 	true;
+					scope.inline 	 	 = 	(conf.inline 		!= undefined) ? conf.inline 	 	: 	(scope.inline 		!= undefined) 	?  scope.inline			: 	false;
+					scope.bubbles 	 	 = 	(conf.bubbles 		!= undefined) ? conf.bubbles 	 	: 	(scope.bubbles 		!= undefined) 	?  scope.bubbles		: 	true;
+					scope.imgBubbles 	 = 	(conf.imgBubbles 	!= undefined) ? conf.imgBubbles 	: 	(scope.imgBubbles 	!= undefined) 	?  scope.imgBubbles		: 	false;
+					scope.bgClose 	 	 = 	(conf.bgClose 		!= undefined) ? conf.bgClose 	 	: 	(scope.bgClose 		!= undefined) 	?  scope.bgClose		: 	false;
+				});
 
 				scope.onOpen 	 	 = 	(scope.onOpen 		!= undefined) ? scope.onOpen 	 : 	angular.noop;
 				scope.onClose 	 	 = 	(scope.onClose 		!= undefined) ? scope.onClose 	 : 	angular.noop;
@@ -216,7 +219,7 @@
 					scope.opened = true;
 
 					// set overflow hidden to body
-					angular.element(document.body).addClass('body-overflow-hidden');
+					if(!scope.inline) angular.element(document.body).addClass('body-overflow-hidden');
 
 					// call open event after transition
 					$timeout(function(){
