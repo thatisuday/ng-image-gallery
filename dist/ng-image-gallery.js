@@ -154,17 +154,17 @@
 				**/
 
 				// Modify scope models
-				scope.images 	 	 = 	(scope.images) 		 ? scope.images 		: 	[];
-				scope.methods 	 	 = 	(scope.methods) 	 ? scope.methods 		: 	{};
+				scope.images 	 	 = 	(scope.images 		!= undefined) ? scope.images 	: 	[];
+				scope.methods 	 	 = 	(scope.methods 		!= undefined) ? scope.methods 	: 	{};
 
-				scope.thumbnails 	 = 	(scope.thumbnails) 	 ? scope.thumbnails 	: 	true;
-				scope.inline 	 	 = 	(scope.inline) 		 ? scope.inline 		: 	false;
-				scope.bubbles 	 	 = 	(scope.bubbles) 	 ? scope.bubbles 		: 	true;
-				scope.imgBubbles 	 = 	(scope.imgBubbles) 	 ? scope.imgBubbles 	: 	false;
-				scope.bgClose 	 	 = 	(scope.bgClose) 	 ? scope.bgClose 		: 	false;
+				scope.thumbnails 	 = 	(scope.thumbnails 	!= undefined) ? scope.thumbnails : 	true;
+				scope.inline 	 	 = 	(scope.inline 		!= undefined) ? scope.inline 	: 	false;
+				scope.bubbles 	 	 = 	(scope.bubbles 		!= undefined) ? scope.bubbles 	: 	true;
+				scope.imgBubbles 	 = 	(scope.imgBubbles 	!= undefined) ? scope.imgBubbles : 	false;
+				scope.bgClose 	 	 = 	(scope.bgClose 		!= undefined) ? scope.bgClose 	: 	false;
 
-				scope.onOpen 	 	 = 	(scope.onOpen) 		 ? scope.onOpen 		: 	angular.noop;
-				scope.onClose 	 	 = 	(scope.onClose) 	 ? scope.onClose 		: 	angular.noop;
+				scope.onOpen 	 	 = 	(scope.onOpen 		!= undefined) ? scope.onOpen 	: 	angular.noop;
+				scope.onClose 	 	 = 	(scope.onClose 		!= undefined) ? scope.onClose 	: 	angular.noop;
 
 
 				// If images populate dynamically, reset gallery

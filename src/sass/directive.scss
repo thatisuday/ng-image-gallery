@@ -1,4 +1,10 @@
 .ng-image-gallery{
+	outline:none;
+
+	*{
+		outline:none;
+	}
+
 	.ng-image-gallery-thumbnails{
 		&:after{
 			content: "";
@@ -97,7 +103,6 @@
 					background-repeat:no-repeat;
 					overflow: hidden;
 					cursor: pointer;
-					outline: none;
 					text-decoration: none;
 					color:#fff;
 					vertical-align: bottom;
@@ -125,7 +130,6 @@
 				background-repeat:no-repeat;
 				overflow: hidden;
 				cursor: pointer;
-				outline: none;
 
 				&.bubbles-on{
 					top:calc((100% - 50px) / 2);
@@ -215,7 +219,6 @@
 						display: inline-block;
 						margin:0 2px;
 						cursor: pointer;
-						outline: none;
 						overflow: hidden;
 						border-radius: 100%;
 						background-size: cover;
