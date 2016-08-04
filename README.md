@@ -174,6 +174,7 @@ Turn on/off bubbles.
 2. Default dimensions of inline gallery is 100% by 300px. Make sure to customize it as per your needs on `.ng-image-gallery-modal` class inside `.ng-image-gallery.inline` class.
 3. Do not use callbacks on inline gallery as it is useless to do so at least on `open` and `close` events.
 4. By default, close button is hidden in inline gallery as it makes no sense.
+5. Use `bg-close` carefully.
 
 ***
 
