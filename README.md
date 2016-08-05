@@ -52,12 +52,12 @@ var myTestApp = angular.module('test', ['thatisuday.ng-image-gallery']);
 <ng-image-gallery
 	images="images"
 	methods="methods"
-	conf="conf"
 	thumbnails="true | false | boolean-model"
 	inline="true | false | boolean-model"
 	img-bubbles="true | false | boolean-model"
 	bg-close="true | false | boolean-model"
 	bubbles="true | false | boolean-model"
+	conf="conf"
 	on-open="opened();"
 	on-close="closed();"
 ></ng-image-gallery>
