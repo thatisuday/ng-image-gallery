@@ -18,7 +18,7 @@ Angular directive for image gallery in **modal** with **thumbnails** or **inline
 ## Download
 ### → using __**bower**__ or __**npm**__
 ```
-bower install --save ng-image-gallery#2.0.2-rc.2
+bower install --save ng-image-gallery
 npm install --save ng-image-gallery
 ```
 
