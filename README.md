@@ -84,6 +84,7 @@ myApp.config(function(ngImageGalleryOptsProvider){
 > See runtime options for explanation
 
 --
+--
 
 ## Set options in runtime (attributes)
 ### 1. images
@@ -177,6 +178,7 @@ close gallery on background click. This can be very sensitivity in mobile device
 ### 7. bubbles (optional) _[default : true]_
 Turn on/off bubbles.
 
+--
 
 ### 8. conf
 `conf` attribute contains JavaScript object (bound to scope) which override following options.
@@ -215,8 +217,6 @@ $scope.opened = function(){
 
 ### 10. on-close (optional) _[default : noop]_
 Similar to `on-open` attribute but will be called when gallery modal closes.
-
---
 
 
 ***
