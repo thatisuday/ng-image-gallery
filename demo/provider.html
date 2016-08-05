@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html ng-app="demo">
+	<head>
+		<title>ng-image-gallery</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+		<!-- Local Dependencies -->
+		<!-- <script src="../bower_components/angular/angular.js"></script>
+		<script src="../bower_components/angular-animate/angular-animate.js"></script>
+		<script src="../bower_components/hammerjs/hammer.min.js"></script> -->
+
+		<!-- Dependencies -->
+		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular.min.js"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-animate.js"></script>
+		<script src="https://rawgit.com/hammerjs/hammer.js/v2.0.8/hammer.min.js"></script>
+
+		<!-- Module files-->
+		<script src="../dist/ng-image-gallery.min.js"></script>
+		<link href="../dist/ng-image-gallery.min.css" rel="stylesheet"/>
+	</head>
+	<body ng-controller="main">
+		<a href="./main.html">Home</a><br/>
+
+		<h1>
+			<a href="https://github.com/thatisuday/ng-image-gallery" style="text-decoration:none; color:#333;">
+				ng-image-gallery
+			</a>
+		</h1>
+
+		<br/>
+
+		<button ng-click="openGallery()">Open Gallery</button>
+		<button ng-click="addPhoto()">Add Photo</button>
+		<button ng-click="removePhoto()">Remove Photo</button>
+		
+		<br/>
+		<br/>
+
+		<br/>
+		<br/>
+
+		<ng-image-gallery images="images" methods="methods" on-open="opened();" on-close="closed();"></ng-image-gallery>
+
+		<script>
+			angular
+			.module('demo', ['thatisuday.ng-image-gallery'])
+			.config(function(ngImageGalleryOptsProvider){
+				ngImageGalleryOptsProvider.setOpts({
+					thumbnails  :   true,   
+					//inline      :   true,
+					bubbles     :   true,
+					imgBubbles  :   true,   
+					//bgClose     :   true
+				});
+			})
+			.controller('main', function($scope, $timeout, $interval){
+				// Local images
+				$scope.images = [
+					{
+						url : '../demo/demo-images/1.jpg',
+						thumbUrl : '../demo/demo-images/thumbs/1.jpg',
+						bubbleUrl : '../demo/demo-images/bubbles/1.jpg',
+						extUrl : 'http://google.com/image/1'
+					},
+					{
+						url : '../demo/demo-images/2.jpg',
+						thumbUrl : '../demo/demo-images/thumbs/2.jpg',
+						bubbleUrl : '../demo/demo-images/bubbles/2.jpg',
+					},
+					{
+						url : '../demo/demo-images/3.jpg',
+						thumbUrl : '../demo/demo-images/thumbs/3.jpg',
+						bubbleUrl : '../demo/demo-images/bubbles/3.jpg',
+					},
+					{
+						url : '../demo/demo-images/4.jpg',
+						thumbUrl : '../demo/demo-images/thumbs/4.jpg',
+						bubbleUrl : '../demo/demo-images/bubbles/4.jpg',
+						extUrl : 'http://google.com/image/4'
+					},
+					{
+						url : '../demo/demo-images/5.jpg',
+						thumbUrl : '../demo/demo-images/thumbs/5.jpg',
+						bubbleUrl : '../demo/demo-images/bubbles/5.jpg',
+					},
+					{
+						url : '../demo/demo-images/6.jpg',
+						thumbUrl : '../demo/demo-images/thumbs/6.jpg',
+						bubbleUrl : '../demo/demo-images/bubbles/6.jpg',
+					},
+					{
+						url : '../demo/demo-images/7.jpg',
+						thumbUrl : '../demo/demo-images/thumbs/7.jpg',
+						bubbleUrl : '../demo/demo-images/bubbles/7.jpg',
+					},
+					{
+						url : '../demo/demo-images/8.jpg',
+						thumbUrl : '../demo/demo-images/thumbs/8.jpg',
+						bubbleUrl : '../demo/demo-images/bubbles/8.jpg',
+						extUrl : 'http://google.com/image/8'
+					},
+					{
+						url : '../demo/demo-images/9.jpg',
+						thumbUrl : '../demo/demo-images/thumbs/9.jpg',
+						bubbleUrl : '../demo/demo-images/bubbles/9.jpg',
+					}
+				];
+
+				/*****************************************************/
+
+				// Gallery methods gateway
+				$scope.methods = {};
+				$scope.openGallery = function(){
+					$scope.methods.open();
+				};
+				
+				$scope.addPhoto = function(){
+					var n = Math.floor(Math.random() * 13) + 1;
+					$scope.images.push(
+						{
+							url : '../demo/demo-images/' + n + '.jpg',
+							thumbUrl : '../demo/demo-images/thumbs/' + n + '.jpg',
+							bubbleUrl : '../demo/demo-images/bubbles/' + n + '.jpg'
+						}
+					);
+				}
+				
+				$scope.removePhoto = function(){
+					if($scope.images.length > 1) $scope.images.pop();
+				}
+			})
+			;
+		</script>
+	</body>
+</html>

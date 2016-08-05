@@ -11,7 +11,26 @@
 
 	angular
 	.module('thatisuday.ng-image-gallery', ['ngAnimate'])
-	.directive('ngImageGallery', ['$timeout', '$document', '$q', function($timeout, $document, $q){
+	.provider('ngImageGalleryOpts', function(){
+		var defOpts = {
+			thumbnails  :   true,   
+			inline      :   false,
+			bubbles     :   true,
+			imgBubbles  :   false,   
+			bgClose     :   false
+		};
+
+		return{
+			setOpts : function(newOpts){
+				angular.extend(defOpts, newOpts); 
+			},
+			$get : function(){
+				return defOpts;
+			}
+		}
+	})
+	.directive('ngImageGallery', ['$timeout', '$q', 'ngImageGalleryOpts',
+	function($timeout, $q, ngImageGalleryOpts){
 		return {
 			replace : true,
 			transclude : false,
@@ -159,13 +178,13 @@
 				scope.methods 	 	 = 	(scope.methods 		!= undefined) ? scope.methods 	 : 	{};
 				scope.conf 	 		 = 	(scope.conf 		!= undefined) ? scope.conf 		 : 	{};
 
-				// setting options ()
+				// setting options
 				scope.$watchCollection('conf', function(conf){
-					scope.thumbnails 	 = 	(conf.thumbnails 	!= undefined) ? conf.thumbnails 	: 	(scope.thumbnails 	!= undefined) 	?  scope.thumbnails		: 	true;
-					scope.inline 	 	 = 	(conf.inline 		!= undefined) ? conf.inline 	 	: 	(scope.inline 		!= undefined) 	?  scope.inline			: 	false;
-					scope.bubbles 	 	 = 	(conf.bubbles 		!= undefined) ? conf.bubbles 	 	: 	(scope.bubbles 		!= undefined) 	?  scope.bubbles		: 	true;
-					scope.imgBubbles 	 = 	(conf.imgBubbles 	!= undefined) ? conf.imgBubbles 	: 	(scope.imgBubbles 	!= undefined) 	?  scope.imgBubbles		: 	false;
-					scope.bgClose 	 	 = 	(conf.bgClose 		!= undefined) ? conf.bgClose 	 	: 	(scope.bgClose 		!= undefined) 	?  scope.bgClose		: 	false;
+					scope.thumbnails 	 = 	(conf.thumbnails 	!= undefined) ? conf.thumbnails 	: 	(scope.thumbnails 	!= undefined) 	?  scope.thumbnails		: 	ngImageGalleryOpts.thumbnails;
+					scope.inline 	 	 = 	(conf.inline 		!= undefined) ? conf.inline 	 	: 	(scope.inline 		!= undefined) 	?  scope.inline			: 	ngImageGalleryOpts.inline;
+					scope.bubbles 	 	 = 	(conf.bubbles 		!= undefined) ? conf.bubbles 	 	: 	(scope.bubbles 		!= undefined) 	?  scope.bubbles		: 	ngImageGalleryOpts.bubbles;
+					scope.imgBubbles 	 = 	(conf.imgBubbles 	!= undefined) ? conf.imgBubbles 	: 	(scope.imgBubbles 	!= undefined) 	?  scope.imgBubbles		: 	ngImageGalleryOpts.imgBubbles;
+					scope.bgClose 	 	 = 	(conf.bgClose 		!= undefined) ? conf.bgClose 	 	: 	(scope.bgClose 		!= undefined) 	?  scope.bgClose		: 	ngImageGalleryOpts.bgClose;
 				});
 
 				scope.onOpen 	 	 = 	(scope.onOpen 		!= undefined) ? scope.onOpen 	 : 	angular.noop;
@@ -296,7 +315,7 @@
 				**/
 
 				// Key events
-				$document.bind('keyup', function(event){
+				angular.element(document).bind('keyup', function(event){
 					// If inline modal, do not interact
 					if(scope.inline) return;
 

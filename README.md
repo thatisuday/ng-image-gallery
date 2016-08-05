@@ -49,12 +49,32 @@ var myTestApp = angular.module('test', ['thatisuday.ng-image-gallery']);
 
 # Create image gallery
 ```
-<ng-image-gallery images="images" methods="methods" conf="conf" thumbnails="true | false | boolean-model" inline="true | false | boolean-model" on-open="opened();" on-close="closed();" img-bubbles="true | false | boolean-model" bg-close="true | false | boolean-model" bubbles="true | false | boolean-model"></ng-image-gallery>
+<ng-image-gallery images="images" methods="methods" conf="conf" thumbnails="true | false | boolean-model" inline="true | false | boolean-model" img-bubbles="true | false | boolean-model" bg-close="true | false | boolean-model" bubbles="true | false | boolean-model" on-open="opened();" on-close="closed();"></ng-image-gallery>
 ```
 
 > You can also use `<div ng-image-gallery ...></div>` approach.
 
-## Options (attributes)
+
+## Set options in `config` phase
+You can set up `ng-image-gallery` options once and for all using `ngImageGalleryOptsProvider`.
+
+```
+myApp.config(function(ngImageGalleryOptsProvider){
+	ngImageGalleryOptsProvider.setOpts({
+		thumbnails  :   true,   
+		inline      :   false,
+		bubbles     :   true,
+		imgBubbles  :   false,   
+		bgClose     :   true
+	});
+})
+```
+
+> See runtime options for explanation
+
+--
+
+## Set options in runtime (attributes)
 ### 1. images
 **images** is a JavaScript array that contains objects with image url(s) of the images to be loaded into the gallery. This object can be dynamic, means images can be pushed into this array at any time. This array looks like below...
 
@@ -131,39 +151,23 @@ inline attribute is used when you need to inline image gallery instead in modal.
 
 --
 
-### 5. on-open (optional) _[default : noop]_
-This is the callback function that must be executed after gallery modal is opened. Function in the controller will look like below
-
-```
-$scope.opened = function(){
-	alert('Gallery opened'); // or do something else
-}
-```
-
---
-
-### 6. on-close (optional) _[default : noop]_
-Similar to `on-open` attribute but will be called when gallery modal closes.
-
---
-
-### 7. img-bubbles (optional) _[default : false]_
+### 5. img-bubbles (optional) _[default : false]_
 To create image bubbles instead of simple circles. by default, bubble image url will be `thumbUrl` or `url`. But you can also add `bubbleUrl` (of small sizes images) to minimize request playload.
 
 > Not recommend if bubbles url defaults to `url` as it will download heavy images all at once.
 
 --
 
-### 8. bg-close (optional) _[default : false]_
-close gallery on backgroud click. This can be very sensitivity in mobile devices. This will not work in inline gallery.
+### 6. bg-close (optional) _[default : false]_
+close gallery on background click. This can be very sensitivity in mobile devices. This will not work in inline gallery.
 
 --
 
-### 9. bubbles (optional) _[default : true]_
+### 7. bubbles (optional) _[default : true]_
 Turn on/off bubbles.
 
 
-### 10. conf
+### 8. conf
 `conf` attribute contains JavaScript object (bound to scope) which override following options.
 
 | property name | alias for |
@@ -180,10 +184,29 @@ $scope.conf = {
 	thumbnails 	: 	true,	
 	inline		: 	false,
 	bubbles		: 	true,
-	imgBubbles 	: 	true,	
+	imgBubbles 	: 	false,	
 	bgClose		: 	false
 };
 ```
+
+--
+
+### 9. on-open (optional) _[default : noop]_
+This is the callback function that must be executed after gallery modal is opened. Function in the controller will look like below
+
+```
+$scope.opened = function(){
+	alert('Gallery opened'); // or do something else
+}
+```
+
+--
+
+### 10. on-close (optional) _[default : noop]_
+Similar to `on-open` attribute but will be called when gallery modal closes.
+
+--
+
 
 ***
 
@@ -202,7 +225,6 @@ $scope.conf = {
 2. Default dimensions of inline gallery is 100% by 300px. Make sure to customize it as per your needs on `.ng-image-gallery-modal` class inside `.ng-image-gallery.inline` class.
 3. Do not use callbacks on inline gallery as it is useless to do so at least on `open` and `close` events.
 4. By default, close button is hidden in inline gallery as it makes no sense.
-5. Use `bg-close` carefully.
 
 ***
 
@@ -233,4 +255,4 @@ You can build this directive with your own customization using gulp.
 # Contributions and Bug reports
 1. Please create an issue if you need some help or report a bug.
 2. Take a pull request to add more features or fix the bugs. Please mention your changes in the PR.
-3. Please make sure you recommend good practices if you came/come accross any or if something could have been better in this module.
+3. Please make sure you recommend good practices if you came/come across any or if something could have been better in this module.
