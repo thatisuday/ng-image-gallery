@@ -57,6 +57,7 @@ var myTestApp = angular.module('test', ['thatisuday.ng-image-gallery']);
 	img-bubbles="true | false | boolean-model"
 	bg-close="true | false | boolean-model"
 	bubbles="true | false | boolean-model"
+	img-anim="fadeup"
 	conf="conf"
 	on-open="opened();"
 	on-close="closed();"
@@ -74,9 +75,10 @@ myApp.config(function(ngImageGalleryOptsProvider){
 	ngImageGalleryOptsProvider.setOpts({
 		thumbnails  :   true,   
 		inline      :   false,
-		bubbles     :   true,
-		imgBubbles  :   false,   
+		imgBubbles  :   false, 
 		bgClose     :   true
+		bubbles     :   true, 
+		imgAnim 	: 	'fadeup',
 	});
 })
 ```
@@ -180,7 +182,12 @@ Turn on/off bubbles.
 
 --
 
-### 8. conf
+### 8. img-anim (optional) _[default : 'fadeup']_
+Set animation for image transition. Possible animation classes : `fade`, `fadeup`, `zoom`, `slide`, `pop`, `revolve`.
+
+--
+
+### 9. conf
 `conf` attribute contains JavaScript object (bound to scope) which override following options.
 
 | property name | alias for |
@@ -190,6 +197,7 @@ Turn on/off bubbles.
 |bubbles|bubbles|
 |imgBubbles|img-bubbles|
 |bgClose|bg-close|
+|imgAnim|img-anim|
 
 Not a big fan of inline options, use `conf`
 ```
@@ -198,13 +206,14 @@ $scope.conf = {
 	inline		: 	false,
 	bubbles		: 	true,
 	imgBubbles 	: 	false,	
-	bgClose		: 	false
+	bgClose		: 	false,
+	imgAnim		: 	'fadeup'
 };
 ```
 
 --
 
-### 9. on-open (optional) _[default : noop]_
+### 10. on-open (optional) _[default : noop]_
 This is the callback function that must be executed after gallery modal is opened. Function in the controller will look like below
 
 ```
@@ -215,7 +224,7 @@ $scope.opened = function(){
 
 --
 
-### 10. on-close (optional) _[default : noop]_
+### 11. on-close (optional) _[default : noop]_
 Similar to `on-open` attribute but will be called when gallery modal closes.
 
 

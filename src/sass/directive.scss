@@ -195,18 +195,6 @@
 						// Animate when visible
 						backface-visibility: hidden;
 						-webkit-backface-visibility: hidden;
-						
-						// ngAnimate classes
-						&.ng-enter{
-							transition: opacity 0.3s ease-in-out;
-							opacity : 0;
-						}
-						&.ng-enter-active{
-							opacity : 1;
-						}
-						&.ng-leave-active{
-							opacity : 0;
-						}
 
 						// Prevent user selection and highlighting
 						-webkit-touch-callout: none;
@@ -216,6 +204,185 @@
 						-ms-user-select: none;
 						user-select: none;
 					}
+
+					/*****************************************************/
+
+					// image fade animation
+					&.img-anim-fade{
+						.galleria-image{
+							&.ng-enter{
+								transition: opacity 0.3s ease-in-out;
+								opacity : 0;
+							}
+							&.ng-enter-active{
+								opacity : 1;
+							}
+							&.ng-leave-active{
+								opacity : 0;
+							}
+						}
+					}
+
+					// image fadeup animation
+					&.img-anim-fadeup{
+						.galleria-image{
+							&.ng-enter{
+								transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+								opacity : 0;
+								transform: scale(0.98);
+							}
+							&.ng-enter-active{
+								opacity : 1;
+								transform: scale(1);
+							}
+							&.ng-leave{
+								transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+							}
+							&.ng-leave-active{
+								opacity : 0;
+							}
+						}
+					}
+
+					// image zoom animation
+					&.img-anim-zoom{
+						.galleria-image{
+							&.ng-enter{
+								transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+								opacity : 0;
+								transform: scale(0);
+							}
+							&.ng-enter-active{
+								opacity : 1;
+								transform: scale(1);
+							}
+							&.ng-leave{
+								transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+							}
+							&.ng-leave-active{
+								opacity : 0;
+								transform: scale(0);
+							}
+						}
+					}
+
+					// image slide animation
+					&.img-anim-slide{
+						&.img-move-dir-forward{
+							.galleria-image{
+								&.ng-enter{
+									transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+									transform: translateX(-100%);
+									opacity : 0;
+								}
+								&.ng-enter-active{
+									transform: translateX(0px);
+									opacity : 1;
+								}
+								&.ng-leave{
+									transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+								}
+								&.ng-leave-active{
+									opacity : 0;
+									transform: translateX(100%);
+								}
+							}
+						}
+						&.img-move-dir-backward{
+							.galleria-image{
+								&.ng-enter{
+									transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+									transform: translateX(100%);
+									opacity : 0;
+								}
+								&.ng-enter-active{
+									transform: translateX(0px);
+									opacity : 1;
+								}
+								&.ng-leave{
+									transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+								}
+								&.ng-leave-active{
+									opacity : 0;
+									transform: translateX(-100%);
+								}
+							}
+						}
+					}
+
+					// image pop animation
+					&.img-anim-pop{
+						&.img-move-dir-forward{
+							.galleria-image{
+								&.ng-enter{
+									transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+									transform: translateX(-100%) scale(0,0);
+									opacity : 0;
+								}
+								&.ng-enter-active{
+									transform: translateX(0px) scale(1,1);
+									opacity : 1;
+								}
+								&.ng-leave{
+									transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+								}
+								&.ng-leave-active{
+									opacity : 0;
+									transform: translateX(100%) scale(0,0);
+								}
+							}
+						}
+						&.img-move-dir-backward{
+							.galleria-image{
+								&.ng-enter{
+									transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+									transform: translateX(100%) scale(0,0);
+									opacity : 0;
+								}
+								&.ng-enter-active{
+									transform: translateX(0px) scale(1,1);
+									opacity : 1;
+								}
+								&.ng-leave{
+									transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+								}
+								&.ng-leave-active{
+									opacity : 0;
+									transform: translateX(-100%) scale(0,0);
+								}
+							}
+						}
+					}
+
+					// image revolve animation
+					&.img-anim-revolve{
+						&.img-move-dir-forward{
+							.galleria-image{
+								&.ng-enter{
+									animation: revolve-in-forward;
+									animation-duration: 0.3s;
+								}
+								&.ng-leave{
+									animation: revolve-out-forward;
+									animation-duration: 0.3s;
+								}
+							}
+						}
+						&.img-move-dir-backward{
+							.galleria-image{
+								&.ng-enter{
+									animation: revolve-in-backward;
+									animation-duration: 0.3s;
+								}
+								&.ng-leave{
+									animation: revolve-out-backward;
+									animation-duration: 0.3s;
+								}
+							}
+						}
+					}
+
+					/*****************************************************/
 				}
 
 				.galleria-bubbles{

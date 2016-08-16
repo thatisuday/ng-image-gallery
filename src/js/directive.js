@@ -17,7 +17,8 @@
 			inline      :   false,
 			bubbles     :   true,
 			imgBubbles  :   false,   
-			bgClose     :   false
+			bgClose     :   false,
+			imgAnim 	: 	'fadeup',
 		};
 
 		return{
@@ -45,11 +46,12 @@
 				bubbles 		: 	'=?',		// true|flase
 				imgBubbles 		: 	'=?',		// true|flase
 				bgClose 		: 	'=?',		// true|flase
+				imgAnim 		: 	'@?',		// {name}
 
 				onOpen 			: 	'&?',		// function
 				onClose 		: 	'&?'		// function
 			},
-			template : 	'<div class="ng-image-gallery" ng-class="{inline:inline}">'+
+			template : 	'<div class="ng-image-gallery img-move-dir-{{imgMoveDirection}}" ng-class="{inline:inline}">'+
 							
 							// Thumbnails container
 							//  Hide for inline gallery
@@ -87,7 +89,7 @@
 									'<div class="galleria">'+
 										
 										// Images container
-										'<div class="galleria-images">'+
+										'<div class="galleria-images img-anim-{{imgAnim}} img-move-dir-{{imgMoveDirection}}">'+
 											'<img class="galleria-image" ng-repeat="image in images" ng-if="activeImg == image" ng-src="{{image.url}}" ondragstart="return false;" oncontextmenu="return false;" ng-attr-title="{{image.title || undefined}}" ng-attr-alt="{{image.alt || undefined}}"/>'+
 										'</div>'+
 
@@ -164,6 +166,21 @@
 				}
 
 				scope.setActiveImg = function(imgObj){
+					// Get images move direction
+					if(
+						scope.images.indexOf(scope.activeImg) - scope.images.indexOf(imgObj) == (scope.images.length - 1) ||
+						(
+							scope.images.indexOf(scope.activeImg) - scope.images.indexOf(imgObj) <= 0 && 
+							scope.images.indexOf(scope.activeImg) - scope.images.indexOf(imgObj) != -(scope.images.length - 1)
+						)
+						
+					){
+						scope.imgMoveDirection = 'forward';
+					}
+					else{
+						scope.imgMoveDirection = 'backward';
+					}
+
 					// Load image
 					scope.loadImg(imgObj).then(function(imgObj){
 						scope.activeImg = imgObj;
@@ -190,6 +207,7 @@
 					scope.bubbles 	 	 = 	(conf.bubbles 		!= undefined) ? conf.bubbles 	 	: 	(scope.bubbles 		!= undefined) 	?  scope.bubbles		: 	ngImageGalleryOpts.bubbles;
 					scope.imgBubbles 	 = 	(conf.imgBubbles 	!= undefined) ? conf.imgBubbles 	: 	(scope.imgBubbles 	!= undefined) 	?  scope.imgBubbles		: 	ngImageGalleryOpts.imgBubbles;
 					scope.bgClose 	 	 = 	(conf.bgClose 		!= undefined) ? conf.bgClose 	 	: 	(scope.bgClose 		!= undefined) 	?  scope.bgClose		: 	ngImageGalleryOpts.bgClose;
+					scope.imgAnim 	 	 = 	(conf.imgAnim 		!= undefined) ? conf.imgAnim 	 	: 	(scope.imgAnim 		!= undefined) 	?  scope.imgAnim		: 	ngImageGalleryOpts.imgAnim;
 				});
 
 				scope.onOpen 	 	 = 	(scope.onOpen 		!= undefined) ? scope.onOpen 	 : 	angular.noop;
