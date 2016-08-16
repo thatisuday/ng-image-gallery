@@ -514,8 +514,13 @@
 
 					.ext-url{
 						margin:0;
-						background-image:url(../res/icons/external-link-inline.svg);
+
+						&:before{
+							background-image:url(../res/icons/external-link-inline.svg);
+						}
 					}
+
+
 				}
 
 				.prev{

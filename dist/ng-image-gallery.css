@@ -534,8 +534,9 @@
     .ng-image-gallery.inline .ng-image-gallery-modal .ng-image-gallery-content .destroy-icons-container {
       top: 0; }
       .ng-image-gallery.inline .ng-image-gallery-modal .ng-image-gallery-content .destroy-icons-container .ext-url {
-        margin: 0;
-        background-image: url(../res/icons/external-link-inline.svg); }
+        margin: 0; }
+        .ng-image-gallery.inline .ng-image-gallery-modal .ng-image-gallery-content .destroy-icons-container .ext-url:before {
+          background-image: url(../res/icons/external-link-inline.svg); }
     .ng-image-gallery.inline .ng-image-gallery-modal .ng-image-gallery-content .prev {
       background-image: url(../res/icons/prev-inline.svg); }
     .ng-image-gallery.inline .ng-image-gallery-modal .ng-image-gallery-content .next {
