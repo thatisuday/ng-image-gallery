@@ -42,6 +42,16 @@
 		<br/>
 
 		<button ng-click="closeOnBackground()">{{(bgClose) ? 'Do not close' : 'Close'}} on background click (modal gallery)</button>
+
+		<br/>
+		<br/>
+
+		Choose animation<br/>
+
+		<label ng-repeat="class in ['fade', 'fadeup', 'zoom', 'slide', 'pop', 'revolve']">
+			<input type="radio" name="imgAnim" ng-model="conf.imgAnim" ng-value="class"/> {{class}}
+		</label>
+
 		
 		<br/>
 		<br/>
@@ -146,6 +156,10 @@
 						bubbleUrl : '../demo/demo-images/bubbles/13.jpg'
 					}
 				];
+
+				$scope.conf = {
+					imgAnim : 'fadeup'
+				};
 
 				/*****************************************************/
 

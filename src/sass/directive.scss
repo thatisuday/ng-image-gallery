@@ -235,9 +235,6 @@
 								opacity : 1;
 								transform: scale(1);
 							}
-							&.ng-leave{
-								transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
-							}
 							&.ng-leave-active{
 								opacity : 0;
 							}

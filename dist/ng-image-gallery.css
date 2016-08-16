@@ -294,11 +294,6 @@
             opacity: 1;
             -webkit-transform: scale(1);
                     transform: scale(1); }
-          .ng-image-gallery .ng-image-gallery-modal .ng-image-gallery-content .galleria .galleria-images.img-anim-fadeup .galleria-image.ng-leave {
-            -webkit-transition: opacity 0.3s ease-in-out, -webkit-transform 0.3s ease-in-out;
-            transition: opacity 0.3s ease-in-out, -webkit-transform 0.3s ease-in-out;
-            transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
-            transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out, -webkit-transform 0.3s ease-in-out; }
           .ng-image-gallery .ng-image-gallery-modal .ng-image-gallery-content .galleria .galleria-images.img-anim-fadeup .galleria-image.ng-leave-active {
             opacity: 0; }
           .ng-image-gallery .ng-image-gallery-modal .ng-image-gallery-content .galleria .galleria-images.img-anim-zoom .galleria-image.ng-enter {
