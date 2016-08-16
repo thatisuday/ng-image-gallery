@@ -137,6 +137,11 @@
 
 				// Image load complete promise
 				scope.loadImg = function(imgObj){
+					
+					// Return rejected promise
+					// if not image object received
+					if(!imgObj) return $q.reject();
+
 					var deferred =  $q.defer();
 
 					// Show loder

@@ -91,20 +91,30 @@
 				position:absolute;
 				right: 10px;
 				top:20px;
-				transition: background-color 0.3s ease-in-out;
-
-				&:hover{
-					background-color: rgba(255,255,255,0.1);
-				}
 
 				.ext-url,
 				.close{
+					&:hover{
+						transition: background-color 0.3s ease-in-out;
+						background-color: rgba(255,255,255,0.1);
+					}
+
+					&:before{
+						content : "";
+						display: block;
+						position: absolute;
+						top : 5px;
+						right: 5px;
+						bottom:5px;
+						left:5px;
+						background-size:100% 100%;
+						background-repeat:no-repeat;
+					}
+
+					position: relative;
 					display: inline-block;
-					width:20px;
-					height:20px;
-					margin:5px;
-					background-size:100% 100%;
-					background-repeat:no-repeat;
+					width:30px;
+					height:30px;
 					overflow: hidden;
 					cursor: pointer;
 					text-decoration: none;
@@ -112,11 +122,11 @@
 					vertical-align: bottom;
 				}
 
-				.ext-url{
+				.ext-url:before{
 					background-image:url(../res/icons/external-link.svg);
 				}
 
-				.close{
+				.close:before{
 					background-image:url(../res/icons/close.svg);
 				}
 			}
