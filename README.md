@@ -1,4 +1,4 @@
-<img src="./garbage/logo.png" width="500">
+![gif](https://media.giphy.com/media/l0HlHWjTy61tdPxYs/giphy.gif)
 
 # ng-image-gallery
 Angular directive for image gallery in **modal** with **thumbnails** or **inline** like carousel
