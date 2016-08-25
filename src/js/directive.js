@@ -30,8 +30,8 @@
 			}
 		}
 	})
-	.directive('ngImageGallery', ['$timeout', '$q', 'ngImageGalleryOpts',
-	function($timeout, $q, ngImageGalleryOpts){
+	.directive('ngImageGallery', ['$rootScope', '$timeout', '$q', 'ngImageGalleryOpts',
+	function($rootScope, $timeout, $q, ngImageGalleryOpts){
 		return {
 			replace : true,
 			transclude : false,
@@ -379,7 +379,23 @@
 							scope.methods.close();
 						});
 					});
-				}
+				};
+
+
+				/***********************************************************/
+
+
+				/*
+				 *	Actions on angular events
+				**/
+				
+				var removeClassFromDocumentBody = function(){
+					angular.element(document.body).removeClass('body-overflow-hidden');
+				};
+				
+				$rootScope.$on('$stateChangeSuccess', removeClassFromDocumentBody);
+				$rootScope.$on('$routeChangeSuccess ', removeClassFromDocumentBody);
+
 			}
 		}
 	}]);
