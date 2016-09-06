@@ -1,8 +1,8 @@
 ![gif](https://media.giphy.com/media/l0HlHWjTy61tdPxYs/giphy.gif)
 
-# ng-image-gallery
-Angular directive for image gallery in **modal** with **thumbnails** or **inline** like carousel
-###[Preview](https://rawgit.com/thatisuday/ng-image-gallery/master/demo/main.html)
+# ng-image-gallery ![bower](https://img.shields.io/bower/v/ng-image-gallery.svg?style=flat-square) [![npm downloads](https://img.shields.io/npm/dt/ng-image-gallery.svg?style=flat-square)](https://www.npmjs.com/package/ng-image-gallery) [![preview](https://img.shields.io/badge/preview-click here-green.svg?style=flat-square)](https://rawgit.com/thatisuday/ng-image-gallery/master/demo/main.html)
+
+Angular directive for image gallery in **modal** with **thumbnails** or **inline** like carousel 
 
 ***
 
