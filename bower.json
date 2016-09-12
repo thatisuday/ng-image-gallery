@@ -6,7 +6,7 @@
   ],
   "description": "Probably the best angular inline and modal image gallery combined...",
   "main": [
-    "dist/ng-image-gallery.js, dist/ng-image-gallery.css"
+    "dist/ng-image-gallery.js", "dist/ng-image-gallery.css"
   ],
   "keywords": [
     "directive",
