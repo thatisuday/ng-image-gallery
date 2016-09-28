@@ -1,8 +1,8 @@
 {
   "name": "ng-image-gallery",
-  "version": "v2.0.4-rc.4",
+  "version": "v2.0.5-rc.2",
   "description": "Probably the best angular inline and modal image gallery combined...",
-  "main": "index.js",
+  "main": "dist/ng-image-gallery.js",
   "directories": {
     "test": "test"
   },
