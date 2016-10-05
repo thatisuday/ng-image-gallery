@@ -100,7 +100,7 @@
 
 										// Image bubble navigation container
 										'<div class="galleria-bubbles" ng-if="bubbles && imgBubbles" ng-hide="images.length == 1">'+
-											'<span class="galleria-bubble img-bubble" ng-click="setActiveImg(image);" ng-repeat="image in images" ng-class="{active : (activeImg == image)}" style="background-image:url({{image.bubbleUrl || image.thumbUrl || image.url}});"></span>'+
+											'<span class="galleria-bubble img-bubble" ng-click="setActiveImg(image);" ng-repeat="image in images" ng-class="{active : (activeImg == image)}" ng-style="{ \'background-image\': \'url(\' + (image.bubbleUrl || image.thumbUrl || image.url) +\')\' }"></span>'+
 										'</div>'+
 
 									'</div>'+
