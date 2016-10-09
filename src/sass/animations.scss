@@ -16,6 +16,7 @@
 
 /*********************************************/
 
+
 @keyframes revolve-in-forward{
 	0%{
 		opacity: 0;
@@ -24,7 +25,7 @@
 
 	50%{
 		opacity: 0.5;
-		transform: scale(0.5,0.5) translateX(-100%);
+		transform: scale(0.5,0.5) translateX(100%);
 	}
 
 	100%{
@@ -35,7 +36,7 @@
 @keyframes revolve-out-forward{
 	50%{
 		opacity: 0.5;
-		transform: scale(0.5,0.5) translateX(100%);
+		transform: scale(0.5,0.5) translateX(-100%);
 	}
 
 	100%{
@@ -52,7 +53,7 @@
 
 	50%{
 		opacity: 0.5;
-		transform: scale(0.5,0.5) translateX(100%);
+		transform: scale(0.5,0.5) translateX(-100%);
 	}
 
 	100%{
@@ -63,7 +64,7 @@
 @keyframes revolve-out-backward{
 	50%{
 		opacity: 0.5;
-		transform: scale(0.5,0.5) translateX(-100%);
+		transform: scale(0.5,0.5) translateX(100%);
 	}
 
 	100%{

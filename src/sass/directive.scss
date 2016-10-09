@@ -265,7 +265,7 @@
 
 					// image slide animation
 					&.img-anim-slide{
-						&.img-move-dir-forward{
+						&.img-move-dir-backward{
 							.galleria-image{
 								&.ng-enter{
 									transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
@@ -285,7 +285,7 @@
 								}
 							}
 						}
-						&.img-move-dir-backward{
+						&.img-move-dir-forward{
 							.galleria-image{
 								&.ng-enter{
 									transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
@@ -309,7 +309,7 @@
 
 					// image pop animation
 					&.img-anim-pop{
-						&.img-move-dir-forward{
+						&.img-move-dir-backward{
 							.galleria-image{
 								&.ng-enter{
 									transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
@@ -329,7 +329,7 @@
 								}
 							}
 						}
-						&.img-move-dir-backward{
+						&.img-move-dir-forward{
 							.galleria-image{
 								&.ng-enter{
 									transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
