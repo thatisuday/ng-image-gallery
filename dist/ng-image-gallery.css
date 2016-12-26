@@ -204,9 +204,9 @@
             background-size: 100% 100%;
             background-repeat: no-repeat; }
         .ng-image-gallery .ng-image-gallery-modal .ng-image-gallery-content .destroy-icons-container .ext-url:before {
-          background-image: url(../res/icons/external-link.svg); }
+          background-image: url(../images/icons/external-link.svg); }
         .ng-image-gallery .ng-image-gallery-modal .ng-image-gallery-content .destroy-icons-container .close:before {
-          background-image: url(../res/icons/close.svg); }
+          background-image: url(../images/icons/close.svg); }
       .ng-image-gallery .ng-image-gallery-modal .ng-image-gallery-content .prev,
       .ng-image-gallery .ng-image-gallery-modal .ng-image-gallery-content .next {
         position: absolute;
@@ -229,10 +229,10 @@
             height: 30px; } }
       .ng-image-gallery .ng-image-gallery-modal .ng-image-gallery-content .prev {
         left: 0px;
-        background-image: url(../res/icons/prev.svg); }
+        background-image: url(../images/icons/prev.svg); }
       .ng-image-gallery .ng-image-gallery-modal .ng-image-gallery-content .next {
         right: 0px;
-        background-image: url(../res/icons/next.svg); }
+        background-image: url(../images/icons/next.svg); }
       .ng-image-gallery .ng-image-gallery-modal .ng-image-gallery-content .galleria {
         position: absolute;
         top: 0;
@@ -536,11 +536,11 @@
       .ng-image-gallery.inline .ng-image-gallery-modal .ng-image-gallery-content .destroy-icons-container .ext-url {
         margin: 0; }
         .ng-image-gallery.inline .ng-image-gallery-modal .ng-image-gallery-content .destroy-icons-container .ext-url:before {
-          background-image: url(../res/icons/external-link-inline.svg); }
+          background-image: url(../images/icons/external-link-inline.svg); }
     .ng-image-gallery.inline .ng-image-gallery-modal .ng-image-gallery-content .prev {
-      background-image: url(../res/icons/prev-inline.svg); }
+      background-image: url(../images/icons/prev-inline.svg); }
     .ng-image-gallery.inline .ng-image-gallery-modal .ng-image-gallery-content .next {
-      background-image: url(../res/icons/next-inline.svg); }
+      background-image: url(../images/icons/next-inline.svg); }
     .ng-image-gallery.inline .ng-image-gallery-modal .ng-image-gallery-content .prev, .ng-image-gallery.inline .ng-image-gallery-modal .ng-image-gallery-content .next {
       margin-top: -15px;
       width: 30px;
