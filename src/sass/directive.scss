@@ -123,11 +123,11 @@
 				}
 
 				.ext-url:before{
-					background-image:url(../images/icons/external-link.svg);
+					background-image:url(../res/icons/external-link.svg);
 				}
 
 				.close:before{
-					background-image:url(../images/icons/close.svg);
+					background-image:url(../res/icons/close.svg);
 				}
 			}
 			
@@ -158,12 +158,12 @@
 
 			.prev{
 				left: 0px;
-				background-image:url(../images/icons/prev.svg);
+				background-image:url(../res/icons/prev.svg);
 			}
 
 			.next{
 				right: 0px;
-				background-image:url(../images/icons/next.svg);
+				background-image:url(../res/icons/next.svg);
 			}
 
 			.galleria{
@@ -516,7 +516,7 @@
 						margin:0;
 
 						&:before{
-							background-image:url(../images/icons/external-link-inline.svg);
+							background-image:url(../res/icons/external-link-inline.svg);
 						}
 					}
 
@@ -524,11 +524,11 @@
 				}
 
 				.prev{
-					background-image:url(../images/icons/prev-inline.svg);
+					background-image:url(../res/icons/prev-inline.svg);
 				}
 
 				.next{
-					background-image:url(../images/icons/next-inline.svg);
+					background-image:url(../res/icons/next-inline.svg);
 				}
 
 				.prev, .next{
