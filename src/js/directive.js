@@ -13,12 +13,13 @@
 	.module('thatisuday.ng-image-gallery', ['ngAnimate'])
 	.provider('ngImageGalleryOpts', function(){
 		var defOpts = {
-			thumbnails  :   true,   
-			inline      :   false,
-			bubbles     :   true,
-			imgBubbles  :   false,   
-			bgClose     :   false,
-			imgAnim 	: 	'fadeup',
+			thumbnails  	:   true,   
+			inline      	:   false,
+			bubbles     	:   true,
+			imgBubbles  	:   false,   
+			bgClose     	:   false,
+			piracy 			: 	false,
+			imgAnim 		: 	'fadeup',
 		};
 
 		return{
@@ -30,6 +31,19 @@
 			}
 		}
 	})
+	.directive('ngRightClick', ['$parse', function($parse){
+	    return {
+	    	scope : false,
+			link : function(scope, element, attrs){
+				element.bind('contextmenu', function(event){
+					if(scope.piracy == false){
+						event.preventDefault();
+						return scope.piracy;
+					}
+				});
+			}
+	    };
+	}])
 	.directive('ngImageGallery', ['$rootScope', '$timeout', '$q', 'ngImageGalleryOpts',
 	function($rootScope, $timeout, $q, ngImageGalleryOpts){
 		return {
@@ -42,10 +56,11 @@
 				conf 			: 	'=?',		// {}
 
 				thumbnails 		: 	'=?',		// true|false
-				inline 			: 	'=?',		// true|flase
-				bubbles 		: 	'=?',		// true|flase
-				imgBubbles 		: 	'=?',		// true|flase
-				bgClose 		: 	'=?',		// true|flase
+				inline 			: 	'=?',		// true|false
+				bubbles 		: 	'=?',		// true|false
+				imgBubbles 		: 	'=?',		// true|false
+				bgClose 		: 	'=?',		// true|false
+				piracy			: 	'=?',		// true|false
 				imgAnim 		: 	'@?',		// {name}
 
 				onOpen 			: 	'&?',		// function
@@ -90,7 +105,7 @@
 										
 										// Images container
 										'<div class="galleria-images img-anim-{{imgAnim}} img-move-dir-{{imgMoveDirection}}">'+
-											'<img class="galleria-image" ng-repeat="image in images track by $index" ng-if="activeImg == image" ng-src="{{image.url}}" ondragstart="return false;" oncontextmenu="return false;" ng-attr-title="{{image.title || undefined}}" ng-attr-alt="{{image.alt || undefined}}"/>'+
+											'<img class="galleria-image" ng-right-click ng-repeat="image in images track by $index" ng-if="activeImg == image" ng-src="{{image.url}}" ondragstart="return false;" ng-attr-title="{{image.title || undefined}}" ng-attr-alt="{{image.alt || undefined}}"/>'+
 										'</div>'+
 
 										// Bubble navigation container
@@ -207,6 +222,7 @@
 					scope.bubbles 	 	 = 	(conf.bubbles 		!= undefined) ? conf.bubbles 	 	: 	(scope.bubbles 		!= undefined) 	?  scope.bubbles		: 	ngImageGalleryOpts.bubbles;
 					scope.imgBubbles 	 = 	(conf.imgBubbles 	!= undefined) ? conf.imgBubbles 	: 	(scope.imgBubbles 	!= undefined) 	?  scope.imgBubbles		: 	ngImageGalleryOpts.imgBubbles;
 					scope.bgClose 	 	 = 	(conf.bgClose 		!= undefined) ? conf.bgClose 	 	: 	(scope.bgClose 		!= undefined) 	?  scope.bgClose		: 	ngImageGalleryOpts.bgClose;
+					scope.piracy 	 	 = 	(conf.piracy 		!= undefined) ? conf.piracy 	 	: 	(scope.piracy 		!= undefined) 	?  scope.piracy			: 	ngImageGalleryOpts.piracy;
 					scope.imgAnim 	 	 = 	(conf.imgAnim 		!= undefined) ? conf.imgAnim 	 	: 	(scope.imgAnim 		!= undefined) 	?  scope.imgAnim		: 	ngImageGalleryOpts.imgAnim;
 				});
 
@@ -394,7 +410,7 @@
 				};
 				
 				$rootScope.$on('$stateChangeSuccess', removeClassFromDocumentBody);
-				$rootScope.$on('$routeChangeSuccess ', removeClassFromDocumentBody);
+				$rootScope.$on('$routeChangeSuccess', removeClassFromDocumentBody);
 
 			}
 		}
