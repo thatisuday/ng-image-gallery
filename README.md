@@ -57,6 +57,7 @@ var myTestApp = angular.module('test', ['thatisuday.ng-image-gallery']);
 	img-bubbles="true | false | boolean-model"
 	bg-close="true | false | boolean-model"
 	bubbles="true | false | boolean-model"
+	piracy="true | false | boolean-model"
 	img-anim="fadeup"
 	conf="conf"
 	on-open="opened();"
@@ -78,6 +79,7 @@ myApp.config(function(ngImageGalleryOptsProvider){
 		imgBubbles  :   false, 
 		bgClose     :   true
 		bubbles     :   true, 
+		piracy      :   false, 
 		imgAnim 	: 	'fadeup',
 	});
 })
@@ -198,6 +200,7 @@ Set animation for image transition. Possible animation classes : `fade`, `fadeup
 |imgBubbles|img-bubbles|
 |bgClose|bg-close|
 |imgAnim|img-anim|
+|piracy|piracy|
 
 Not a big fan of inline options, use `conf`
 ```
@@ -207,6 +210,7 @@ $scope.conf = {
 	bubbles		: 	true,
 	imgBubbles 	: 	false,	
 	bgClose		: 	false,
+	piracy		: 	true,
 	imgAnim		: 	'fadeup'
 };
 ```
@@ -226,6 +230,12 @@ $scope.opened = function(){
 
 ### 11. on-close (optional) _[default : noop]_
 Similar to `on-open` attribute but will be called when gallery modal closes.
+
+
+--
+
+### 12. piracy  (optional) _[default : false]_
+Allow user to save image by right click on it.
 
 
 ***
