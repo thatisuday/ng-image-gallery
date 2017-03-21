@@ -87,8 +87,7 @@ myApp.config(function(ngImageGalleryOptsProvider){
 
 > See runtime options for explanation
 
---
---
+***
 
 ## Set options in runtime (attributes)
 ### 1. images
