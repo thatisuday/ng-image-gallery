@@ -13,10 +13,18 @@
 		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular.min.js"></script>
 		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-animate.js"></script>
 		<script src="https://rawgit.com/hammerjs/hammer.js/v2.0.8/hammer.min.js"></script>
+		<link href="https://fonts.googleapis.com/css?family=Work+Sans:300,400,500,600,700" rel="stylesheet">
 
 		<!-- Module files-->
 		<script src="/dist/ng-image-gallery.min.js"></script>
 		<link href="/dist/ng-image-gallery.min.css" rel="stylesheet"/>
+
+		<style type="text/css">
+			.ng-image-gallery{
+				font-family: 'Work Sans', sans-serif !important;
+				font-weight: 300;
+			}
+		</style>
 	</head>
 	<body ng-controller="main">
 		
@@ -35,6 +43,12 @@
 		<button ng-click="toggleInline()">Modal/Inline Gallery</button>
 		<button ng-click="toggleBubbles()">{{(bubbles) ? 'Switch off' : 'Switch on'}} bubbles</button>
 		<button ng-click="toggleImgBubbles()">{{(imgBubbles) ? 'Switch off' : 'Switch on'}} Image bubbles</button>
+
+		<br/>
+		<br/>
+
+		<label>Thumbnail size</label> <input type="number" ng-model="thumbSize"><br/>
+		<label>Bubble size</label> <input type="number" ng-model="bubbleSize">
 		
 		<br/>
 		<br/>
@@ -55,7 +69,7 @@
 		<br/>
 		<br/>
 
-		<ng-image-gallery images="images" methods="methods" conf="conf" thumbnails="thumbnails" thumb-size="100" inline="inline" bubbles="bubbles" bubble-size="25" img-bubbles="imgBubbles" bg-close="bgClose" piracy="true" on-open="opened();" on-close="closed();" bg-close="false"></ng-image-gallery>
+		<ng-image-gallery images="images" methods="methods" conf="conf" thumbnails="thumbnails" thumb-size="thumbSize" inline="inline" bubbles="bubbles" bubble-size="bubbleSize" img-bubbles="imgBubbles" bg-close="bgClose" piracy="true" on-open="opened();" on-close="closed();" bg-close="false"></ng-image-gallery>
 
 		<script>
 			angular
@@ -77,12 +91,14 @@
 						url : '/demo/demo-images/1.jpg',
 						thumbUrl : '/demo/demo-images/thumbs/1.jpg',
 						bubbleUrl : '/demo/demo-images/bubbles/1.jpg',
-						extUrl : 'http://google.com/image/1'
+						extUrl : 'http://google.com/image/1',
+						desc : 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc consequat enim dui, vitae pretium turpis faucibus ac. Donec nisi ex, tempus non leo vel, laoreet convallis libero.'
 					},
 					{
 						url : '/demo/demo-images/2.jpg',
 						thumbUrl : '/demo/demo-images/thumbs/2.jpg',
 						bubbleUrl : '/demo/demo-images/bubbles/2.jpg',
+						desc : 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.'
 					},
 					{
 						url : '/demo/demo-images/3.jpg',
@@ -95,7 +111,8 @@
 						url : '/demo/demo-images/4.jpg',
 						thumbUrl : '/demo/demo-images/thumbs/4.jpg',
 						bubbleUrl : '/demo/demo-images/bubbles/4.jpg',
-						extUrl : 'http://google.com/image/4'
+						extUrl : 'http://google.com/image/4',
+						desc : 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc consequat enim dui, vitae pretium turpis faucibus ac. Donec nisi ex, tempus non leo vel, laoreet convallis libero. Vestibulum luctus libero nisl, elementum placerat libero ornare quis. Etiam aliquet, tellus et sagittis ullamcorper, nulla arcu volutpat orci, id vehicula quam orci sed nisi. Cras pellentesque faucibus elit a sagittis. Ut bibendum, arcu ac maximus efficitur, odio magna luctus nisi, a sollicitudin orci odio in quam. Nunc non tempus quam, vel ullamcorper massa. Quisque aliquet velit eget leo venenatis, eu sagittis justo aliquet. Ut ac sollicitudin tortor. Duis id egestas lacus. In nibh eros, pretium sed cursus sed, lobortis ac elit.'
 					},
 					{
 						url : '/demo/demo-images/5.jpg',

@@ -17,7 +17,7 @@
 			thumbSize		: 	100,
 			inline      	:   false,
 			bubbles     	:   true,
-			bubbleSize		: 	10,  
+			bubbleSize		: 	20,  
 			imgBubbles  	:   false,
 			bgClose     	:   false,
 			piracy 			: 	false,
@@ -96,11 +96,14 @@
 					};
 
 					$timeout(autoFitBubbles);
-					
+
 					angular.element($window).bind('resize', function(){
 						$timeout(autoFitBubbles);
 					});
 					scope.$watch('inline', function(){
+						$timeout(autoFitBubbles);
+					});
+					scope.$watch('bubbleSize', function(){
 						$timeout(autoFitBubbles);
 					});
 					scope.$watchCollection('images', function(){
@@ -136,9 +139,18 @@
 					});
 				}
 
-				scope.$watch('_bubblesInView', indexCalc);
-				scope.$watch('_activeImageIndex', indexCalc);
-				scope.$watchCollection('images', indexCalc);
+				angular.element($window).bind('resize', function(){
+					$timeout(indexCalc);
+				});
+				scope.$watch('_bubblesInView', function(){
+					$timeout(indexCalc);
+				});
+				scope.$watch('_activeImageIndex', function(){
+					$timeout(indexCalc);
+				});
+				scope.$watchCollection('images', function(){
+					$timeout(indexCalc);
+				});
 			}
 		};
 	}])
@@ -173,7 +185,7 @@
 							
 
 							'<div ng-if="thumbnails && !inline" class="ng-image-gallery-thumbnails">' +
- 								'<div class="thumb" ng-repeat="image in images track by $index" ng-click="methods.open($index);" show-image-async="{{image.thumbUrl || image.url}}" async-kind="thumb" ng-attr-title="{{image.title || undefined}}" ng-style="{\'width\' : thumbSize+\'px\', \'height\' : thumbSize+\'px\'}">'+
+ 								'<div class="thumb" ng-repeat="image in images track by $index" ng-click="methods.open($index);" show-image-async="{{image.thumbUrl || image.url}}" async-kind="thumb" ng-style="{\'width\' : thumbSize+\'px\', \'height\' : thumbSize+\'px\'}">'+
  									'<div class="loader"></div>'+
  								'</div>' +
  							'</div>' +
@@ -209,7 +221,15 @@
 										
 										// Images container
 										'<div class="galleria-images img-anim-{{imgAnim}} img-move-dir-{{_imgMoveDirection}}">'+
-											'<img class="galleria-image" ng-right-click ng-repeat="image in images track by $index" ng-if="_activeImg == image" ng-src="{{image.url}}" ondragstart="return false;" ng-attr-title="{{image.title || undefined}}" ng-attr-alt="{{image.alt || undefined}}"/>'+
+											'<img class="galleria-image" ng-right-click ng-repeat="image in images track by $index" ng-if="_activeImg == image" ng-src="{{image.url}}" ondragstart="return false;" ng-attr-alt="{{image.alt || undefined}}"/>'+
+										'</div>'+
+
+										// Image description container
+										'<div class="galleria-title-description-wrapper">'+
+											'<div ng-repeat="image in images track by $index" ng-if="(image.title || image.desc) && (_activeImg == image)">'+
+												'<div class="title" ng-if="image.title">{{image.title}}</div>'+
+												'<div class="desc" ng-if="image.desc">{{image.desc}}</div>'+
+											'</div>'+
 										'</div>'+
 
 										// Bubble navigation container
