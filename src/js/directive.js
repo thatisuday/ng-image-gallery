@@ -13,10 +13,12 @@
 	.module('thatisuday.ng-image-gallery', ['ngAnimate'])
 	.provider('ngImageGalleryOpts', function(){
 		var defOpts = {
-			thumbnails  	:   true,   
+			thumbnails  	:   true,
+			thumbSize		: 	100,
 			inline      	:   false,
 			bubbles     	:   true,
-			imgBubbles  	:   false,   
+			bubbleSize		: 	10,  
+			imgBubbles  	:   false,
 			bgClose     	:   false,
 			piracy 			: 	false,
 			imgAnim 		: 	'fadeup',
@@ -33,7 +35,8 @@
 	})
 	.directive('ngRightClick', ['$parse', function($parse){
 	    return {
-	    	scope : false,
+	    	restrict: "A",
+			scope : false,
 			link : function(scope, element, attrs){
 				element.bind('contextmenu', function(event){
 					if(scope.piracy == false){
@@ -43,6 +46,101 @@
 				});
 			}
 	    };
+	}])
+	.directive("showImageAsync", [function(){
+		return {
+			restrict: "A",
+			scope: false,
+			link: function (scope, element, attributes){
+				var image = new Image();
+				image.src = attributes.showImageAsync;
+				image.onload = function(){
+					scope.$apply(function(){
+						if(attributes.asyncKind == 'thumb'){
+							element.css({ backgroundImage: 'url("' + attributes.showImageAsync + '")' });
+							element.empty(); // remove loading animation element
+						}
+						else if(attributes.asyncKind == 'bubble'){
+							element.css({ backgroundImage: 'url("' + attributes.showImageAsync + '")' });
+						}
+					});
+				};
+			}
+		};
+	}])
+	.directive("bubbleAutoFit", ['$window', '$timeout', function($window, $timeout){
+		return {
+			restrict: "A",
+			scope: false,
+			link: {
+				pre : function (scope, element, attributes){
+					var autoFitBubbles = function(){
+						var scrollerWidth = element[0].getBoundingClientRect().width;
+						if(scrollerWidth == 0) return;
+
+						var bubbleSize = scope.bubbleSize;
+						var minMargin = 4 + 4; // left+right
+						var bubbleSpace = (bubbleSize + minMargin);
+						var rawQuotient = scrollerWidth / bubbleSpace;
+						var bubblesInView = Math.floor(rawQuotient);
+						var extraSpace = scrollerWidth - (bubblesInView * bubbleSpace);
+						var extraMargin = extraSpace / bubblesInView;
+						var bubbleMargin = minMargin + extraMargin;
+						var finalBubbleSpace = bubbleMargin + bubbleSize;
+
+						scope._bubblesInView = bubblesInView;
+						scope._finalBubbleSpace = finalBubbleSpace;
+						scope._bubbleMargin = '0 ' + (bubbleMargin/2) + 'px';
+
+						scope.safeApply(angular.noop);
+					};
+
+					$timeout(autoFitBubbles);
+					
+					angular.element($window).bind('resize', function(){
+						$timeout(autoFitBubbles);
+					});
+					scope.$watch('inline', function(){
+						$timeout(autoFitBubbles);
+					});
+					scope.$watchCollection('images', function(){
+						$timeout(autoFitBubbles);
+					});
+				}
+			}
+		};
+	}])
+	.directive("bubbleAutoScroll", ['$window', '$timeout', function($window, $timeout){
+		return {
+			restrict: "A",
+			scope: false,
+			link: function (scope, element, attributes){
+				
+				var indexCalc = function(){
+					var relativeIndexToBubbleWrapper = scope._bubblesInView - (scope._bubblesInView - scope._activeImageIndex);
+					
+					$timeout(function(){
+						if(relativeIndexToBubbleWrapper > scope._bubblesInView - 2){
+							var outBubbles = ((scope._activeImageIndex+1) - scope._bubblesInView) + 1;
+
+							if(scope._activeImageIndex != (scope.images.length - 1)){
+								scope._bubblesContainerMarginLeft = '-' + (scope._finalBubbleSpace * outBubbles) + 'px';
+							}
+							else{
+								scope._bubblesContainerMarginLeft = '-' + (scope._finalBubbleSpace * (outBubbles - 1)) + 'px';
+							}
+						}
+						else{
+							scope._bubblesContainerMarginLeft = '0px';
+						}
+					});
+				}
+
+				scope.$watch('_bubblesInView', indexCalc);
+				scope.$watch('_activeImageIndex', indexCalc);
+				scope.$watchCollection('images', indexCalc);
+			}
+		};
 	}])
 	.directive('ngImageGallery', ['$rootScope', '$timeout', '$q', 'ngImageGalleryOpts',
 	function($rootScope, $timeout, $q, ngImageGalleryOpts){
@@ -56,8 +154,10 @@
 				conf 			: 	'=?',		// {}
 
 				thumbnails 		: 	'=?',		// true|false
+				thumbSize		: 	'=?', 		// px
 				inline 			: 	'=?',		// true|false
 				bubbles 		: 	'=?',		// true|false
+				bubbleSize 		: 	'=?',		// px
 				imgBubbles 		: 	'=?',		// true|false
 				bgClose 		: 	'=?',		// true|false
 				piracy			: 	'=?',		// true|false
@@ -66,17 +166,21 @@
 				onOpen 			: 	'&?',		// function
 				onClose 		: 	'&?'		// function
 			},
-			template : 	'<div class="ng-image-gallery img-move-dir-{{imgMoveDirection}}" ng-class="{inline:inline}">'+
+			template : 	'<div class="ng-image-gallery img-move-dir-{{_imgMoveDirection}}" ng-class="{inline:inline}">'+
 							
 							// Thumbnails container
 							//  Hide for inline gallery
-							'<div ng-if="thumbnails && !inline" class="ng-image-gallery-thumbnails">'+
-								'<div class="thumb" ng-repeat="image in images track by $index" ng-click="methods.open($index);" ng-style="{ \'background-image\': \'url(\' + (image.thumbUrl || image.url) + \')\' }"  ng-attr-title="{{image.title || undefined}}"></div>'+
-							'</div>'+
+							
+
+							'<div ng-if="thumbnails && !inline" class="ng-image-gallery-thumbnails">' +
+ 								'<div class="thumb" ng-repeat="image in images track by $index" ng-click="methods.open($index);" show-image-async="{{image.thumbUrl || image.url}}" async-kind="thumb" ng-attr-title="{{image.title || undefined}}" ng-style="{\'width\' : thumbSize+\'px\', \'height\' : thumbSize+\'px\'}">'+
+ 									'<div class="loader"></div>'+
+ 								'</div>' +
+ 							'</div>' +
 
 							// Modal container
 							// (inline container for inline modal)
-							'<div class="ng-image-gallery-modal" ng-show="opened" ng-cloak>' +
+							'<div class="ng-image-gallery-modal" ng-if="opened" ng-cloak>' +
 								
 								// Gallery backdrop container
 								// (hide for inline gallery)
@@ -89,7 +193,7 @@
 									// destroy icons container
 									'<div class="destroy-icons-container">'+
 										// External link icon
-										'<a class="ext-url" ng-repeat="image in images track by $index" ng-if="activeImg == image && image.extUrl" href="{{image.extUrl}}"></a>'+
+										'<a class="ext-url" ng-repeat="image in images track by $index" ng-if="_activeImg == image && image.extUrl" href="{{image.extUrl}}"></a>'+
 
 										// Close Icon (hidden in inline gallery)
 										'<div class="close" ng-click="methods.close();" ng-if="!inline"></div>'+
@@ -104,18 +208,22 @@
 									'<div class="galleria">'+
 										
 										// Images container
-										'<div class="galleria-images img-anim-{{imgAnim}} img-move-dir-{{imgMoveDirection}}">'+
-											'<img class="galleria-image" ng-right-click ng-repeat="image in images track by $index" ng-if="activeImg == image" ng-src="{{image.url}}" ondragstart="return false;" ng-attr-title="{{image.title || undefined}}" ng-attr-alt="{{image.alt || undefined}}"/>'+
+										'<div class="galleria-images img-anim-{{imgAnim}} img-move-dir-{{_imgMoveDirection}}">'+
+											'<img class="galleria-image" ng-right-click ng-repeat="image in images track by $index" ng-if="_activeImg == image" ng-src="{{image.url}}" ondragstart="return false;" ng-attr-title="{{image.title || undefined}}" ng-attr-alt="{{image.alt || undefined}}"/>'+
 										'</div>'+
 
 										// Bubble navigation container
-										'<div class="galleria-bubbles" ng-if="bubbles && !imgBubbles"  ng-hide="images.length == 1">'+
-											'<span class="galleria-bubble" ng-click="setActiveImg(image);" ng-repeat="image in images track by $index" ng-class="{active : (activeImg == image)}"></span>'+
+										'<div class="galleria-bubbles-wrapper" ng-if="bubbles && !imgBubbles"  ng-hide="images.length == 1" ng-style="{\'height\' : bubbleSize+\'px\'}" bubble-auto-fit>'+
+											'<div class="galleria-bubbles" bubble-auto-scroll ng-style="{\'margin-left\': _bubblesContainerMarginLeft}">'+
+												'<span class="galleria-bubble" ng-click="setActiveImg(image);" ng-repeat="image in images track by $index" ng-class="{active : (_activeImg == image)}" ng-style="{\'width\' : bubbleSize+\'px\', \'height\' : bubbleSize+\'px\', margin: _bubbleMargin}"></span>'+
+											'</div>'+
 										'</div>'+
 
 										// Image bubble navigation container
-										'<div class="galleria-bubbles" ng-if="bubbles && imgBubbles" ng-hide="images.length == 1">'+
-											'<span class="galleria-bubble img-bubble" ng-click="setActiveImg(image);" ng-repeat="image in images track by $index" ng-class="{active : (activeImg == image)}" ng-style="{ \'background-image\': \'url(\' + (image.bubbleUrl || image.thumbUrl || image.url) +\')\' }"></span>'+
+										'<div class="galleria-bubbles-wrapper" ng-if="bubbles && imgBubbles" ng-hide="images.length == 1" ng-style="{\'height\' : bubbleSize+\'px\'}" bubble-auto-fit>'+
+											'<div class="galleria-bubbles" bubble-auto-scroll ng-style="{\'margin-left\': _bubblesContainerMarginLeft}">'+
+												'<span class="galleria-bubble img-bubble" ng-click="setActiveImg(image);" ng-repeat="image in images track by $index" ng-class="{active : (_activeImg == image)}" show-image-async="{{image.bubbleUrl || image.thumbUrl || image.url}}" async-kind="bubble" ng-style="{\'width\' : bubbleSize+\'px\', \'height\' : bubbleSize+\'px\', \'border-width\' : bubbleSize/10+\'px\', margin: _bubbleMargin}"></span>'+
+											'</div>'+
 										'</div>'+
 
 									'</div>'+
@@ -136,282 +244,298 @@
 							'</div>'+
 						'</div>',
 						
-			link : function(scope, elem, attr){
-				
-				/*
-				 *	Operational functions
-				**/
-
-				// Show gallery loader
-				scope.showLoader = function(){
-					scope.imgLoading = true;
-				}
-
-				// Hide gallery loader
-				scope.hideLoader = function(){
-					scope.imgLoading = false;
-				}
-
-				// Image load complete promise
-				scope.loadImg = function(imgObj){
+			link : {
+				pre : function(scope, elem, attr){
 					
-					// Return rejected promise
-					// if not image object received
-					if(!imgObj) return $q.reject();
+					/*
+					 *	Operational functions
+					**/
 
-					var deferred =  $q.defer();
-
-					// Show loder
-					if(!imgObj.hasOwnProperty('cached')) scope.showLoader();
-
-					// Process image
-					var img = new Image();
-					img.src = imgObj.url;
-					img.onload = function(){
-						// Hide loder
-						if(!imgObj.hasOwnProperty('cached')) scope.hideLoader();
-
-						// Cache image
-						if(!imgObj.hasOwnProperty('cached')) imgObj.cached = true;
-
-						return deferred.resolve(imgObj);
+					// Show gallery loader
+					scope.showLoader = function(){
+						scope.imgLoading = true;
 					}
 
-					return deferred.promise;
-				}
+					// Hide gallery loader
+					scope.hideLoader = function(){
+						scope.imgLoading = false;
+					}
 
-				scope.setActiveImg = function(imgObj){
-					// Get images move direction
-					if(
-						scope.images.indexOf(scope.activeImg) - scope.images.indexOf(imgObj) == (scope.images.length - 1) ||
-						(
-							scope.images.indexOf(scope.activeImg) - scope.images.indexOf(imgObj) <= 0 && 
-							scope.images.indexOf(scope.activeImg) - scope.images.indexOf(imgObj) != -(scope.images.length - 1)
-						)
+					// Image load complete promise
+					scope.loadImg = function(imgObj){
 						
-					){
-						scope.imgMoveDirection = 'forward';
+						// Return rejected promise
+						// if not image object received
+						if(!imgObj) return $q.reject();
+
+						var deferred =  $q.defer();
+
+						// Show loder
+						if(!imgObj.hasOwnProperty('cached')) scope.showLoader();
+
+						// Process image
+						var img = new Image();
+						img.src = imgObj.url;
+						img.onload = function(){
+							// Hide loder
+							if(!imgObj.hasOwnProperty('cached')) scope.hideLoader();
+
+							// Cache image
+							if(!imgObj.hasOwnProperty('cached')) imgObj.cached = true;
+
+							return deferred.resolve(imgObj);
+						}
+
+						return deferred.promise;
 					}
-					else{
-						scope.imgMoveDirection = 'backward';
-					}
 
-					// Load image
-					scope.loadImg(imgObj).then(function(imgObj){
-						scope.activeImg = imgObj;
-					});
-				}
-
-
-				/***************************************************/
-				
-
-				/*
-				 *	Gallery settings
-				**/
-
-				// Modify scope models
-				scope.images 	 	 = 	(scope.images 		!= undefined) ? scope.images 	 : 	[];
-				scope.methods 	 	 = 	(scope.methods 		!= undefined) ? scope.methods 	 : 	{};
-				scope.conf 	 		 = 	(scope.conf 		!= undefined) ? scope.conf 		 : 	{};
-
-				// setting options
-				scope.$watchCollection('conf', function(conf){
-					scope.thumbnails 	 = 	(conf.thumbnails 	!= undefined) ? conf.thumbnails 	: 	(scope.thumbnails 	!= undefined) 	?  scope.thumbnails		: 	ngImageGalleryOpts.thumbnails;
-					scope.inline 	 	 = 	(conf.inline 		!= undefined) ? conf.inline 	 	: 	(scope.inline 		!= undefined) 	?  scope.inline			: 	ngImageGalleryOpts.inline;
-					scope.bubbles 	 	 = 	(conf.bubbles 		!= undefined) ? conf.bubbles 	 	: 	(scope.bubbles 		!= undefined) 	?  scope.bubbles		: 	ngImageGalleryOpts.bubbles;
-					scope.imgBubbles 	 = 	(conf.imgBubbles 	!= undefined) ? conf.imgBubbles 	: 	(scope.imgBubbles 	!= undefined) 	?  scope.imgBubbles		: 	ngImageGalleryOpts.imgBubbles;
-					scope.bgClose 	 	 = 	(conf.bgClose 		!= undefined) ? conf.bgClose 	 	: 	(scope.bgClose 		!= undefined) 	?  scope.bgClose		: 	ngImageGalleryOpts.bgClose;
-					scope.piracy 	 	 = 	(conf.piracy 		!= undefined) ? conf.piracy 	 	: 	(scope.piracy 		!= undefined) 	?  scope.piracy			: 	ngImageGalleryOpts.piracy;
-					scope.imgAnim 	 	 = 	(conf.imgAnim 		!= undefined) ? conf.imgAnim 	 	: 	(scope.imgAnim 		!= undefined) 	?  scope.imgAnim		: 	ngImageGalleryOpts.imgAnim;
-				});
-
-				scope.onOpen 	 	 = 	(scope.onOpen 		!= undefined) ? scope.onOpen 	 : 	angular.noop;
-				scope.onClose 	 	 = 	(scope.onClose 		!= undefined) ? scope.onClose 	 : 	angular.noop;
-				
-				// If images populate dynamically, reset gallery
-				var imagesFirstWatch = true;
-				scope.$watch('images', function(){
-					if(imagesFirstWatch){
-						imagesFirstWatch = false;
-					}
-					else if(scope.images.length) scope.setActiveImg(
-						scope.images[scope.activeImageIndex || 0]
-					);
-				});
-
-				// Watch index of visible/active image
-				// If index changes, make sure to load/change image
-				var activeImageIndexFirstWatch = true;
-				scope.$watch('activeImageIndex', function(newImgIndex){
-					if(activeImageIndexFirstWatch){
-						activeImageIndexFirstWatch = false;
-					}
-					else if(scope.images.length){
-						scope.setActiveImg(
-							scope.images[newImgIndex]
-						);
-					}
-				});
-
-				// Open modal automatically if inline
-				scope.$watch('inline', function(){
-					$timeout(function(){
-						if(scope.inline) scope.methods.open();
-					});
-				});
-				
-
-				/***************************************************/
-
-
-				/*
-				 *	Methods
-				**/
-
-				// Open gallery modal
-				scope.methods.open = function(imgIndex){
-					// Open modal from an index if one passed
-					scope.activeImageIndex = (imgIndex) ? imgIndex : 0;
-
-					scope.opened = true;
-
-					// set overflow hidden to body
-					if(!scope.inline) angular.element(document.body).addClass('body-overflow-hidden');
-
-					// call open event after transition
-					$timeout(function(){
-						scope.onOpen();
-					}, 300);
-				}
-
-				// Close gallery modal
-				scope.methods.close = function(){
-					scope.opened = false; // Model closed
-
-					// set overflow hidden to body
-					angular.element(document.body).removeClass('body-overflow-hidden');
-
-					// call close event after transition
-					$timeout(function(){
-						scope.onClose();
-						scope.activeImageIndex = 0; // Reset index
-					}, 300);
-				}
-
-				// Change image to next
-				scope.methods.next = function(){
-					if(scope.activeImageIndex == (scope.images.length - 1)){
-						scope.activeImageIndex = 0;
-					}
-					else{
-						scope.activeImageIndex = scope.activeImageIndex + 1;
-					}
-				}
-
-				// Change image to prev
-				scope.methods.prev = function(){
-					if(scope.activeImageIndex == 0){
-						scope.activeImageIndex = scope.images.length - 1;
-					}
-					else{
-						scope.activeImageIndex--;
-					}
-				}
-
-				// Close gallery on background click
-				scope.backgroundClose = function(e){
-					if(!scope.bgClose || scope.inline) return;
-
-					var noCloseClasses = [
-						'galleria-image',
-						'destroy-icons-container',
-						'ext-url',
-						'close',
-						'next',
-						'prev',
-						'galleria-bubble'
-					];
-
-					// check if clicked element has a class that
-					// belongs to `noCloseClasses`
-					for(var i = 0; i < e.target.classList.length; i++){
-						if(noCloseClasses.indexOf(e.target.classList[i]) != -1){
-							break;
+					scope.setActiveImg = function(imgObj){
+						// Get images move direction
+						if(
+							scope.images.indexOf(scope._activeImg) - scope.images.indexOf(imgObj) == (scope.images.length - 1) ||
+							(
+								scope.images.indexOf(scope._activeImg) - scope.images.indexOf(imgObj) <= 0 && 
+								scope.images.indexOf(scope._activeImg) - scope.images.indexOf(imgObj) != -(scope.images.length - 1)
+							)
+							
+						){
+							scope._imgMoveDirection = 'forward';
 						}
 						else{
-							scope.methods.close();
+							scope._imgMoveDirection = 'backward';
+						}
+
+						// Load image
+						scope.loadImg(imgObj).then(function(imgObj){
+							scope._activeImg = imgObj;
+							scope._activeImageIndex = scope.images.indexOf(imgObj);
+						});
+					}
+
+					scope.safeApply = function(fn){
+						var phase = this.$root.$$phase;
+						if(phase == '$apply' || phase == '$digest'){
+							if(fn && (typeof(fn) === 'function')){
+								fn();
+							}
+						}else{
+							this.$apply(fn);
+						}
+					};
+
+
+					/***************************************************/
+					
+
+					/*
+					 *	Gallery settings
+					**/
+
+					// Modify scope models
+					scope.images 	 	 = 	(scope.images 		!= undefined) ? scope.images 	 : 	[];
+					scope.methods 	 	 = 	(scope.methods 		!= undefined) ? scope.methods 	 : 	{};
+					scope.conf 	 		 = 	(scope.conf 		!= undefined) ? scope.conf 		 : 	{};
+
+					// setting options
+					scope.$watchCollection('conf', function(conf){
+						scope.thumbnails 	 = 	(conf.thumbnails 	!= undefined) ? conf.thumbnails 	: 	(scope.thumbnails 	!= undefined) 	?  scope.thumbnails		: 	ngImageGalleryOpts.thumbnails;
+						scope.thumbSize 	 = 	(conf.thumbSize 	!= undefined) ? conf.thumbSize 		: 	(scope.thumbSize 	!= undefined) 	?  scope.thumbSize		: 	ngImageGalleryOpts.thumbSize;
+						scope.inline 	 	 = 	(conf.inline 		!= undefined) ? conf.inline 	 	: 	(scope.inline 		!= undefined) 	?  scope.inline			: 	ngImageGalleryOpts.inline;
+						scope.bubbles 	 	 = 	(conf.bubbles 		!= undefined) ? conf.bubbles 	 	: 	(scope.bubbles 		!= undefined) 	?  scope.bubbles		: 	ngImageGalleryOpts.bubbles;
+						scope.bubbleSize 	 = 	(conf.bubbleSize 	!= undefined) ? conf.bubbleSize 	 : 	(scope.bubbleSize 	!= undefined) 	?  scope.bubbleSize		: 	ngImageGalleryOpts.bubbleSize;
+						scope.imgBubbles 	 = 	(conf.imgBubbles 	!= undefined) ? conf.imgBubbles 	: 	(scope.imgBubbles 	!= undefined) 	?  scope.imgBubbles		: 	ngImageGalleryOpts.imgBubbles;
+						scope.bgClose 	 	 = 	(conf.bgClose 		!= undefined) ? conf.bgClose 	 	: 	(scope.bgClose 		!= undefined) 	?  scope.bgClose		: 	ngImageGalleryOpts.bgClose;
+						scope.piracy 	 	 = 	(conf.piracy 		!= undefined) ? conf.piracy 	 	: 	(scope.piracy 		!= undefined) 	?  scope.piracy			: 	ngImageGalleryOpts.piracy;
+						scope.imgAnim 	 	 = 	(conf.imgAnim 		!= undefined) ? conf.imgAnim 	 	: 	(scope.imgAnim 		!= undefined) 	?  scope.imgAnim		: 	ngImageGalleryOpts.imgAnim;
+					});
+
+					scope.onOpen 	 	 = 	(scope.onOpen 		!= undefined) ? scope.onOpen 	 : 	angular.noop;
+					scope.onClose 	 	 = 	(scope.onClose 		!= undefined) ? scope.onClose 	 : 	angular.noop;
+					
+					// If images populate dynamically, reset gallery
+					var imagesFirstWatch = true;
+					scope.$watch('images', function(){
+						if(imagesFirstWatch){
+							imagesFirstWatch = false;
+						}
+						else if(scope.images.length) scope.setActiveImg(
+							scope.images[scope._activeImageIndex || 0]
+						);
+					});
+
+					// Watch index of visible/active image
+					// If index changes, make sure to load/change image
+					var activeImageIndexFirstWatch = true;
+					scope.$watch('_activeImageIndex', function(newImgIndex){
+						if(activeImageIndexFirstWatch){
+							activeImageIndexFirstWatch = false;
+						}
+						else if(scope.images.length){
+							scope.setActiveImg(
+								scope.images[newImgIndex]
+							);
+						}
+					});
+
+					// Open modal automatically if inline
+					scope.$watch('inline', function(){
+						$timeout(function(){
+							if(scope.inline) scope.methods.open();
+						});
+					});
+					
+
+					/***************************************************/
+
+
+					/*
+					 *	Methods
+					**/
+
+					// Open gallery modal
+					scope.methods.open = function(imgIndex){
+						// Open modal from an index if one passed
+						scope._activeImageIndex = (imgIndex) ? imgIndex : 0;
+
+						scope.opened = true;
+
+						// set overflow hidden to body
+						if(!scope.inline) angular.element(document.body).addClass('body-overflow-hidden');
+
+						// call open event after transition
+						$timeout(function(){
+							scope.onOpen();
+						}, 300);
+					}
+
+					// Close gallery modal
+					scope.methods.close = function(){
+						scope.opened = false; // Model closed
+
+						// set overflow hidden to body
+						angular.element(document.body).removeClass('body-overflow-hidden');
+
+						// call close event after transition
+						$timeout(function(){
+							scope.onClose();
+							scope._activeImageIndex = 0; // Reset index
+						}, 300);
+					}
+
+					// Change image to next
+					scope.methods.next = function(){
+						if(scope._activeImageIndex == (scope.images.length - 1)){
+							scope._activeImageIndex = 0;
+						}
+						else{
+							scope._activeImageIndex = scope._activeImageIndex + 1;
 						}
 					}
-				}
 
-
-				/***************************************************/
-
-
-				/*
-				 *	User interactions
-				**/
-
-				// Key events
-				angular.element(document).bind('keyup', function(event){
-					// If inline modal, do not interact
-					if(scope.inline) return;
-
-					if(event.which == keys.right || event.which == keys.enter){
-						$timeout(function(){
-							scope.methods.next();
-						});
+					// Change image to prev
+					scope.methods.prev = function(){
+						if(scope._activeImageIndex == 0){
+							scope._activeImageIndex = scope.images.length - 1;
+						}
+						else{
+							scope._activeImageIndex--;
+						}
 					}
-					else if(event.which == keys.left){
-						$timeout(function(){
-							scope.methods.prev();
-						});
-					}
-					else if(event.which == keys.esc){
-						$timeout(function(){
-							scope.methods.close();
-						});
-					}
-				});
 
-				// Swipe events
-				if(window.Hammer){
-					var hammerElem = new Hammer(elem[0]);
-					hammerElem.on('swiperight', function(ev){
-						$timeout(function(){
-							scope.methods.prev();
-						});
-					});
-					hammerElem.on('swipeleft', function(ev){
-						$timeout(function(){
-							scope.methods.next();
-						});
-					});
-					hammerElem.on('doubletap', function(ev){
+					// Close gallery on background click
+					scope.backgroundClose = function(e){
+						if(!scope.bgClose || scope.inline) return;
+
+						var noCloseClasses = [
+							'galleria-image',
+							'destroy-icons-container',
+							'ext-url',
+							'close',
+							'next',
+							'prev',
+							'galleria-bubble'
+						];
+
+						// check if clicked element has a class that
+						// belongs to `noCloseClasses`
+						for(var i = 0; i < e.target.classList.length; i++){
+							if(noCloseClasses.indexOf(e.target.classList[i]) != -1){
+								break;
+							}
+							else{
+								scope.methods.close();
+							}
+						}
+					}
+
+
+					/***************************************************/
+
+
+					/*
+					 *	User interactions
+					**/
+
+					// Key events
+					angular.element(document).bind('keyup', function(event){
+						// If inline modal, do not interact
 						if(scope.inline) return;
 
-						$timeout(function(){
-							scope.methods.close();
-						});
+						if(event.which == keys.right || event.which == keys.enter){
+							$timeout(function(){
+								scope.methods.next();
+							});
+						}
+						else if(event.which == keys.left){
+							$timeout(function(){
+								scope.methods.prev();
+							});
+						}
+						else if(event.which == keys.esc){
+							$timeout(function(){
+								scope.methods.close();
+							});
+						}
 					});
-				};
+
+					// Swipe events
+					if(window.Hammer){
+						var hammerElem = new Hammer(elem[0]);
+						hammerElem.on('swiperight', function(ev){
+							$timeout(function(){
+								scope.methods.prev();
+							});
+						});
+						hammerElem.on('swipeleft', function(ev){
+							$timeout(function(){
+								scope.methods.next();
+							});
+						});
+						hammerElem.on('doubletap', function(ev){
+							if(scope.inline) return;
+
+							$timeout(function(){
+								scope.methods.close();
+							});
+						});
+					};
 
 
-				/***********************************************************/
+					/***********************************************************/
 
 
-				/*
-				 *	Actions on angular events
-				**/
-				
-				var removeClassFromDocumentBody = function(){
-					angular.element(document.body).removeClass('body-overflow-hidden');
-				};
-				
-				$rootScope.$on('$stateChangeSuccess', removeClassFromDocumentBody);
-				$rootScope.$on('$routeChangeSuccess', removeClassFromDocumentBody);
+					/*
+					 *	Actions on angular events
+					**/
+					
+					var removeClassFromDocumentBody = function(){
+						angular.element(document.body).removeClass('body-overflow-hidden');
+					};
+					
+					$rootScope.$on('$stateChangeSuccess', removeClassFromDocumentBody);
+					$rootScope.$on('$routeChangeSuccess', removeClassFromDocumentBody);
 
+				}
 			}
 		}
 	}]);

@@ -1,3 +1,5 @@
+@import 'variables';
+
 .body-overflow-hidden{
 	overflow: hidden !important;
 }
@@ -21,17 +23,55 @@
 
 		.thumb{
 			float:left;
-			width:50px;
-			height:50px;
 			overflow:hidden;
-			border-radius:3px;
 			background-size:cover;
 			background-position:center center;
 			cursor: pointer;
+			background-color: $thumb-background-color;
+			position: relative;
 
 			&:not(:last-child){
 				margin-right: 5px;
 				margin-bottom: 5px;
+			}
+
+			>.loader{
+				position: absolute;
+				left: 10%;
+				top: 10%;
+				right: 10%;
+				bottom: 10%;
+				animation: thumb-load 1.4s infinite linear;
+				transform: translateZ(0);
+
+				@keyframes thumb-load{
+					0% {transform: rotate(0deg);}
+					100% {transform: rotate(360deg);}
+				}
+
+				&:before{
+					width: 50%;
+					height: 50%;
+					background: #ccc;
+					border-radius: 100% 0 0 0;
+					position: absolute;
+					top: 0;
+					left: 0;
+					content: '';
+				}
+				&:after{
+					background: $thumb-background-color;
+					width: 75%;
+					height: 75%;
+					border-radius: 50%;
+					content: '';
+					margin: auto;
+					position: absolute;
+					top: 0;
+					left: 0;
+					bottom: 0;
+					right: 0;
+				}
 			}
 		}
 	}
@@ -382,53 +422,52 @@
 					/*****************************************************/
 				}
 
-				.galleria-bubbles{
-					flex: 0 0 50px;
-					text-align: center;
-					overflow:hidden;
+				.galleria-bubbles-wrapper{
+					flex: none;
+					margin: 20px 0;
+					overflow: hidden;
+					width: 100%;
 
-					display: flex;
-					flex-direction: row;
-					justify-content: center;
-					align-items: center;
-					align-content: center;
-					flex-wrap: wrap;
+					>.galleria-bubbles{
+						display: block;
+						text-align: center;
+						white-space: nowrap;
+						transition: margin-left 0.3s;
 
-					span{
-						flex: none;
-						position:relative;
-						display: inline-block;
-						margin:2px 4px;
-						cursor: pointer;
-						overflow: hidden;
-						border-radius: 100%;
-						background-size: cover;
-						background-position: center center;
-						vertical-align: middle;
-
-						&:not(.img-bubble){
-							width:12px;
-							height:12px;
-							background-color : rgba(255,255,255,0.5);
-							border-radius:100%;
+						span{
+							flex: none;
+							position:relative;
+							display: inline-block;
+							margin:0 5px;
+							cursor: pointer;
 							overflow: hidden;
-							transition: all 0.3s ease-in-out;
+							border-radius: 100%;
+							background-size: cover;
+							background-position: center center;
+							vertical-align: middle;
+							background-color: $bubble-background-color;
 
-							&.active{
-								background-color : #fff;
+							&:not(.img-bubble){
+								width:12px;
+								height:12px;
+								background-color : rgba(255,255,255,0.5);
+								border-radius:100%;
+								overflow: hidden;
+								transition: all 0.3s ease-in-out;
+
+								&.active{
+									background-color : #fff;
+								}
 							}
-						}
 
-						&.img-bubble{
-							box-sizing:border-box;
-							width:12px;
-							height:12px;
-							margin:2px 4px;
-							border:1px solid transparent;
-							transition: border 0.3s ease-in-out;
+							&.img-bubble{
+								box-sizing:border-box;
+								border:1px solid transparent;
+								transition: border 0.3s ease-in-out, margin 0.3s ease-in-out;
 
-							&.active{
-								border:1px solid #fff;
+								&.active{
+									border:1px solid #fff;
+								}
 							}
 						}
 					}

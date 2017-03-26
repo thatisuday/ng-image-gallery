@@ -15,13 +15,11 @@
 		<script src="https://rawgit.com/hammerjs/hammer.js/v2.0.8/hammer.min.js"></script>
 
 		<!-- Module files-->
-		<script src="../dist/ng-image-gallery.min.js"></script>
-		<link href="../dist/ng-image-gallery.min.css" rel="stylesheet"/>
+		<script src="/dist/ng-image-gallery.min.js"></script>
+		<link href="/dist/ng-image-gallery.min.css" rel="stylesheet"/>
 	</head>
 	<body ng-controller="main">
 		
-		<a href="./conf.html">With conf</a><br/>
-
 		<h1><a href="https://github.com/thatisuday/ng-image-gallery" style="text-decoration:none; color:#333;">ng-image-gallery</a></h1>
 
 		<p ng-hide="counter == 0">Populating more images after {{counter}} seconds.</p>
@@ -57,7 +55,7 @@
 		<br/>
 		<br/>
 
-		<ng-image-gallery images="images" methods="methods" conf="conf" thumbnails="thumbnails" inline="inline" bubbles="bubbles" img-bubbles="imgBubbles" bg-close="bgClose" piracy="true" on-open="opened();" on-close="closed();" bg-close="false"></ng-image-gallery>
+		<ng-image-gallery images="images" methods="methods" conf="conf" thumbnails="thumbnails" thumb-size="100" inline="inline" bubbles="bubbles" bubble-size="25" img-bubbles="imgBubbles" bg-close="bgClose" piracy="true" on-open="opened();" on-close="closed();" bg-close="false"></ng-image-gallery>
 
 		<script>
 			angular
@@ -76,84 +74,84 @@
 					{
 						title : 'My first image',
 						alt : 'photo1',
-						url : '../demo/demo-images/1.jpg',
-						thumbUrl : '../demo/demo-images/thumbs/1.jpg',
-						bubbleUrl : '../demo/demo-images/bubbles/1.jpg',
+						url : '/demo/demo-images/1.jpg',
+						thumbUrl : '/demo/demo-images/thumbs/1.jpg',
+						bubbleUrl : '/demo/demo-images/bubbles/1.jpg',
 						extUrl : 'http://google.com/image/1'
 					},
 					{
-						url : '../demo/demo-images/2.jpg',
-						thumbUrl : '../demo/demo-images/thumbs/2.jpg',
-						bubbleUrl : '../demo/demo-images/bubbles/2.jpg',
+						url : '/demo/demo-images/2.jpg',
+						thumbUrl : '/demo/demo-images/thumbs/2.jpg',
+						bubbleUrl : '/demo/demo-images/bubbles/2.jpg',
 					},
 					{
-						url : '../demo/demo-images/3.jpg',
-						thumbUrl : '../demo/demo-images/thumbs/3.jpg',
-						bubbleUrl : '../demo/demo-images/bubbles/3.jpg',
+						url : '/demo/demo-images/3.jpg',
+						thumbUrl : '/demo/demo-images/thumbs/3.jpg',
+						bubbleUrl : '/demo/demo-images/bubbles/3.jpg',
 					},
 					{
 						title : 'My fourth image',
 						alt : 'photo4',
-						url : '../demo/demo-images/4.jpg',
-						thumbUrl : '../demo/demo-images/thumbs/4.jpg',
-						bubbleUrl : '../demo/demo-images/bubbles/4.jpg',
+						url : '/demo/demo-images/4.jpg',
+						thumbUrl : '/demo/demo-images/thumbs/4.jpg',
+						bubbleUrl : '/demo/demo-images/bubbles/4.jpg',
 						extUrl : 'http://google.com/image/4'
 					},
 					{
-						url : '../demo/demo-images/5.jpg',
-						thumbUrl : '../demo/demo-images/thumbs/5.jpg',
-						bubbleUrl : '../demo/demo-images/bubbles/5.jpg',
+						url : '/demo/demo-images/5.jpg',
+						thumbUrl : '/demo/demo-images/thumbs/5.jpg',
+						bubbleUrl : '/demo/demo-images/bubbles/5.jpg',
 					},
 					{
-						url : '../demo/demo-images/6.jpg',
-						thumbUrl : '../demo/demo-images/thumbs/6.jpg',
-						bubbleUrl : '../demo/demo-images/bubbles/6.jpg',
+						url : '/demo/demo-images/6.jpg',
+						thumbUrl : '/demo/demo-images/thumbs/6.jpg',
+						bubbleUrl : '/demo/demo-images/bubbles/6.jpg',
 					},
 					{
 						title : 'My seventh image',
 						alt : 'photo7',
-						url : '../demo/demo-images/7.jpg',
-						thumbUrl : '../demo/demo-images/thumbs/7.jpg',
-						bubbleUrl : '../demo/demo-images/bubbles/7.jpg',
+						url : '/demo/demo-images/7.jpg',
+						thumbUrl : '/demo/demo-images/thumbs/7.jpg',
+						bubbleUrl : '/demo/demo-images/bubbles/7.jpg',
 					},
 					{
-						url : '../demo/demo-images/8.jpg',
-						thumbUrl : '../demo/demo-images/thumbs/8.jpg',
-						bubbleUrl : '../demo/demo-images/bubbles/8.jpg',
+						url : '/demo/demo-images/8.jpg',
+						thumbUrl : '/demo/demo-images/thumbs/8.jpg',
+						bubbleUrl : '/demo/demo-images/bubbles/8.jpg',
 						extUrl : 'http://google.com/image/8'
 					},
 					{
 						title : 'My 9th image',
 						alt : 'photo9',
-						url : '../demo/demo-images/9.jpg',
-						thumbUrl : '../demo/demo-images/thumbs/9.jpg',
-						bubbleUrl : '../demo/demo-images/bubbles/9.jpg',
+						url : '/demo/demo-images/9.jpg',
+						thumbUrl : '/demo/demo-images/thumbs/9.jpg',
+						bubbleUrl : '/demo/demo-images/bubbles/9.jpg',
 					}
 				];
 
 				$scope.moreImages = [
 					{
-						url : '../demo/demo-images/10.jpg',
-						thumbUrl : '../demo/demo-images/thumbs/10.jpg',
-						bubbleUrl : '../demo/demo-images/bubbles/10.jpg',
+						url : '/demo/demo-images/10.jpg',
+						thumbUrl : '/demo/demo-images/thumbs/10.jpg',
+						bubbleUrl : '/demo/demo-images/bubbles/10.jpg',
 					},
 					{
-						url : '../demo/demo-images/11.jpg',
-						thumbUrl : '../demo/demo-images/thumbs/11.jpg',
-						bubbleUrl : '../demo/demo-images/bubbles/11.jpg',
+						url : '/demo/demo-images/11.jpg',
+						thumbUrl : '/demo/demo-images/thumbs/11.jpg',
+						bubbleUrl : '/demo/demo-images/bubbles/11.jpg',
 						extUrl : 'http://google.com/image/11'
 					},
 					{
 						title : 'My twelth image',
 						alt : 'photo12',
-						url : '../demo/demo-images/12.jpg',
-						thumbUrl : '../demo/demo-images/thumbs/12.jpg',
-						bubbleUrl : '../demo/demo-images/bubbles/12.jpg',
+						url : '/demo/demo-images/12.jpg',
+						thumbUrl : '/demo/demo-images/thumbs/12.jpg',
+						bubbleUrl : '/demo/demo-images/bubbles/12.jpg',
 					},
 					{
-						url : '../demo/demo-images/13.jpg',
-						thumbUrl : '../demo/demo-images/thumbs/13.jpg',
-						bubbleUrl : '../demo/demo-images/bubbles/13.jpg'
+						url : '/demo/demo-images/13.jpg',
+						thumbUrl : '/demo/demo-images/thumbs/13.jpg',
+						bubbleUrl : '/demo/demo-images/bubbles/13.jpg'
 					}
 				];
 
@@ -171,9 +169,9 @@
 					var n = Math.floor(Math.random() * 13) + 1;
 					$scope.images.push(
 						{
-							url : '../demo/demo-images/' + n + '.jpg',
-							thumbUrl : '../demo/demo-images/thumbs/' + n + '.jpg',
-							bubbleUrl : '../demo/demo-images/bubbles/' + n + '.jpg'
+							url : '/demo/demo-images/' + n + '.jpg',
+							thumbUrl : '/demo/demo-images/thumbs/' + n + '.jpg',
+							bubbleUrl : '/demo/demo-images/bubbles/' + n + '.jpg'
 						}
 					);
 				}

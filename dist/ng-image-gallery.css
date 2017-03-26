@@ -127,16 +127,62 @@
     clear: both; }
   .ng-image-gallery .ng-image-gallery-thumbnails .thumb {
     float: left;
-    width: 50px;
-    height: 50px;
     overflow: hidden;
-    border-radius: 3px;
     background-size: cover;
     background-position: center center;
-    cursor: pointer; }
+    cursor: pointer;
+    background-color: #eee;
+    position: relative; }
     .ng-image-gallery .ng-image-gallery-thumbnails .thumb:not(:last-child) {
       margin-right: 5px;
       margin-bottom: 5px; }
+    .ng-image-gallery .ng-image-gallery-thumbnails .thumb > .loader {
+      position: absolute;
+      left: 10%;
+      top: 10%;
+      right: 10%;
+      bottom: 10%;
+      -webkit-animation: thumb-load 1.4s infinite linear;
+              animation: thumb-load 1.4s infinite linear;
+      -webkit-transform: translateZ(0);
+              transform: translateZ(0); }
+
+@-webkit-keyframes thumb-load {
+  0% {
+    -webkit-transform: rotate(0deg);
+            transform: rotate(0deg); }
+  100% {
+    -webkit-transform: rotate(360deg);
+            transform: rotate(360deg); } }
+
+@keyframes thumb-load {
+  0% {
+    -webkit-transform: rotate(0deg);
+            transform: rotate(0deg); }
+  100% {
+    -webkit-transform: rotate(360deg);
+            transform: rotate(360deg); } }
+      .ng-image-gallery .ng-image-gallery-thumbnails .thumb > .loader:before {
+        width: 50%;
+        height: 50%;
+        background: #ccc;
+        border-radius: 100% 0 0 0;
+        position: absolute;
+        top: 0;
+        left: 0;
+        content: ''; }
+      .ng-image-gallery .ng-image-gallery-thumbnails .thumb > .loader:after {
+        background: #eee;
+        width: 75%;
+        height: 75%;
+        border-radius: 50%;
+        content: '';
+        margin: auto;
+        position: absolute;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0; }
   .ng-image-gallery .ng-image-gallery-modal {
     position: fixed;
     z-index: 5000;
@@ -421,62 +467,50 @@
                     animation: revolve-out-backward;
             -webkit-animation-duration: 0.3s;
                     animation-duration: 0.3s; }
-        .ng-image-gallery .ng-image-gallery-modal .ng-image-gallery-content .galleria .galleria-bubbles {
+        .ng-image-gallery .ng-image-gallery-modal .ng-image-gallery-content .galleria .galleria-bubbles-wrapper {
           -webkit-box-flex: 0;
-              -ms-flex: 0 0 50px;
-                  flex: 0 0 50px;
-          text-align: center;
+              -ms-flex: none;
+                  flex: none;
+          margin: 20px 0;
           overflow: hidden;
-          display: -webkit-box;
-          display: -ms-flexbox;
-          display: flex;
-          -webkit-box-orient: horizontal;
-          -webkit-box-direction: normal;
-              -ms-flex-direction: row;
-                  flex-direction: row;
-          -webkit-box-pack: center;
-              -ms-flex-pack: center;
-                  justify-content: center;
-          -webkit-box-align: center;
-              -ms-flex-align: center;
-                  align-items: center;
-          -ms-flex-line-pack: center;
-              align-content: center;
-          -ms-flex-wrap: wrap;
-              flex-wrap: wrap; }
-          .ng-image-gallery .ng-image-gallery-modal .ng-image-gallery-content .galleria .galleria-bubbles span {
-            -webkit-box-flex: 0;
-                -ms-flex: none;
-                    flex: none;
-            position: relative;
-            display: inline-block;
-            margin: 2px 4px;
-            cursor: pointer;
-            overflow: hidden;
-            border-radius: 100%;
-            background-size: cover;
-            background-position: center center;
-            vertical-align: middle; }
-            .ng-image-gallery .ng-image-gallery-modal .ng-image-gallery-content .galleria .galleria-bubbles span:not(.img-bubble) {
-              width: 12px;
-              height: 12px;
-              background-color: rgba(255, 255, 255, 0.5);
-              border-radius: 100%;
+          width: 100%; }
+          .ng-image-gallery .ng-image-gallery-modal .ng-image-gallery-content .galleria .galleria-bubbles-wrapper > .galleria-bubbles {
+            display: block;
+            text-align: center;
+            white-space: nowrap;
+            -webkit-transition: margin-left 0.3s;
+            transition: margin-left 0.3s; }
+            .ng-image-gallery .ng-image-gallery-modal .ng-image-gallery-content .galleria .galleria-bubbles-wrapper > .galleria-bubbles span {
+              -webkit-box-flex: 0;
+                  -ms-flex: none;
+                      flex: none;
+              position: relative;
+              display: inline-block;
+              margin: 0 5px;
+              cursor: pointer;
               overflow: hidden;
-              -webkit-transition: all 0.3s ease-in-out;
-              transition: all 0.3s ease-in-out; }
-              .ng-image-gallery .ng-image-gallery-modal .ng-image-gallery-content .galleria .galleria-bubbles span:not(.img-bubble).active {
-                background-color: #fff; }
-            .ng-image-gallery .ng-image-gallery-modal .ng-image-gallery-content .galleria .galleria-bubbles span.img-bubble {
-              box-sizing: border-box;
-              width: 12px;
-              height: 12px;
-              margin: 2px 4px;
-              border: 1px solid transparent;
-              -webkit-transition: border 0.3s ease-in-out;
-              transition: border 0.3s ease-in-out; }
-              .ng-image-gallery .ng-image-gallery-modal .ng-image-gallery-content .galleria .galleria-bubbles span.img-bubble.active {
-                border: 1px solid #fff; }
+              border-radius: 100%;
+              background-size: cover;
+              background-position: center center;
+              vertical-align: middle;
+              background-color: #999; }
+              .ng-image-gallery .ng-image-gallery-modal .ng-image-gallery-content .galleria .galleria-bubbles-wrapper > .galleria-bubbles span:not(.img-bubble) {
+                width: 12px;
+                height: 12px;
+                background-color: rgba(255, 255, 255, 0.5);
+                border-radius: 100%;
+                overflow: hidden;
+                -webkit-transition: all 0.3s ease-in-out;
+                transition: all 0.3s ease-in-out; }
+                .ng-image-gallery .ng-image-gallery-modal .ng-image-gallery-content .galleria .galleria-bubbles-wrapper > .galleria-bubbles span:not(.img-bubble).active {
+                  background-color: #fff; }
+              .ng-image-gallery .ng-image-gallery-modal .ng-image-gallery-content .galleria .galleria-bubbles-wrapper > .galleria-bubbles span.img-bubble {
+                box-sizing: border-box;
+                border: 1px solid transparent;
+                -webkit-transition: border 0.3s ease-in-out, margin 0.3s ease-in-out;
+                transition: border 0.3s ease-in-out, margin 0.3s ease-in-out; }
+                .ng-image-gallery .ng-image-gallery-modal .ng-image-gallery-content .galleria .galleria-bubbles-wrapper > .galleria-bubbles span.img-bubble.active {
+                  border: 1px solid #fff; }
     .ng-image-gallery .ng-image-gallery-modal .ng-image-gallery-loader {
       position: absolute;
       top: 0;
