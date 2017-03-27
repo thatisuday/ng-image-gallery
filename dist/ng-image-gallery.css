@@ -218,12 +218,13 @@
       bottom: 0;
       left: 0;
       z-index: 2; }
-      .ng-image-gallery .ng-image-gallery-modal .ng-image-gallery-content .destroy-icons-container {
+      .ng-image-gallery .ng-image-gallery-modal .ng-image-gallery-content .actions-icons-container {
         position: absolute;
-        right: 10px;
+        left: 10px;
         top: 20px; }
-        .ng-image-gallery .ng-image-gallery-modal .ng-image-gallery-content .destroy-icons-container .ext-url,
-        .ng-image-gallery .ng-image-gallery-modal .ng-image-gallery-content .destroy-icons-container .close {
+        .ng-image-gallery .ng-image-gallery-modal .ng-image-gallery-content .actions-icons-container .delete-img {
+          -webkit-transition: background-color 0.3s ease-in-out;
+          transition: background-color 0.3s ease-in-out;
           position: relative;
           display: inline-block;
           width: 30px;
@@ -233,13 +234,11 @@
           text-decoration: none;
           color: #fff;
           vertical-align: bottom; }
-          .ng-image-gallery .ng-image-gallery-modal .ng-image-gallery-content .destroy-icons-container .ext-url:hover,
-          .ng-image-gallery .ng-image-gallery-modal .ng-image-gallery-content .destroy-icons-container .close:hover {
-            -webkit-transition: background-color 0.3s ease-in-out;
-            transition: background-color 0.3s ease-in-out;
+          .ng-image-gallery .ng-image-gallery-modal .ng-image-gallery-content .actions-icons-container .delete-img.ng-leave-active {
+            display: none; }
+          .ng-image-gallery .ng-image-gallery-modal .ng-image-gallery-content .actions-icons-container .delete-img:hover {
             background-color: rgba(255, 255, 255, 0.1); }
-          .ng-image-gallery .ng-image-gallery-modal .ng-image-gallery-content .destroy-icons-container .ext-url:before,
-          .ng-image-gallery .ng-image-gallery-modal .ng-image-gallery-content .destroy-icons-container .close:before {
+          .ng-image-gallery .ng-image-gallery-modal .ng-image-gallery-content .actions-icons-container .delete-img:before {
             content: "";
             display: block;
             position: absolute;
@@ -249,9 +248,45 @@
             left: 5px;
             background-size: 100% 100%;
             background-repeat: no-repeat; }
-        .ng-image-gallery .ng-image-gallery-modal .ng-image-gallery-content .destroy-icons-container .ext-url:before {
+        .ng-image-gallery .ng-image-gallery-modal .ng-image-gallery-content .actions-icons-container .delete-img:before {
+          background-image: url(../res/icons/delete.svg); }
+      .ng-image-gallery .ng-image-gallery-modal .ng-image-gallery-content .control-icons-container {
+        position: absolute;
+        right: 10px;
+        top: 20px; }
+        .ng-image-gallery .ng-image-gallery-modal .ng-image-gallery-content .control-icons-container .ext-url,
+        .ng-image-gallery .ng-image-gallery-modal .ng-image-gallery-content .control-icons-container .close {
+          -webkit-transition: background-color 0.3s ease-in-out;
+          transition: background-color 0.3s ease-in-out;
+          position: relative;
+          display: inline-block;
+          width: 30px;
+          height: 30px;
+          overflow: hidden;
+          cursor: pointer;
+          text-decoration: none;
+          color: #fff;
+          vertical-align: bottom; }
+          .ng-image-gallery .ng-image-gallery-modal .ng-image-gallery-content .control-icons-container .ext-url.ng-leave-active,
+          .ng-image-gallery .ng-image-gallery-modal .ng-image-gallery-content .control-icons-container .close.ng-leave-active {
+            display: none; }
+          .ng-image-gallery .ng-image-gallery-modal .ng-image-gallery-content .control-icons-container .ext-url:hover,
+          .ng-image-gallery .ng-image-gallery-modal .ng-image-gallery-content .control-icons-container .close:hover {
+            background-color: rgba(255, 255, 255, 0.1); }
+          .ng-image-gallery .ng-image-gallery-modal .ng-image-gallery-content .control-icons-container .ext-url:before,
+          .ng-image-gallery .ng-image-gallery-modal .ng-image-gallery-content .control-icons-container .close:before {
+            content: "";
+            display: block;
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            bottom: 5px;
+            left: 5px;
+            background-size: 100% 100%;
+            background-repeat: no-repeat; }
+        .ng-image-gallery .ng-image-gallery-modal .ng-image-gallery-content .control-icons-container .ext-url:before {
           background-image: url(../res/icons/external-link.svg); }
-        .ng-image-gallery .ng-image-gallery-modal .ng-image-gallery-content .destroy-icons-container .close:before {
+        .ng-image-gallery .ng-image-gallery-modal .ng-image-gallery-content .control-icons-container .close:before {
           background-image: url(../res/icons/close.svg); }
       .ng-image-gallery .ng-image-gallery-modal .ng-image-gallery-content .prev,
       .ng-image-gallery .ng-image-gallery-modal .ng-image-gallery-content .next {
@@ -471,7 +506,7 @@
               -ms-flex: none;
                   flex: none; }
           .ng-image-gallery .ng-image-gallery-modal .ng-image-gallery-content .galleria .galleria-title-description-wrapper > div {
-            padding-top: 20px;
+            padding: 20px 0;
             text-align: center;
             color: #fff; }
             .ng-image-gallery .ng-image-gallery-modal .ng-image-gallery-content .galleria .galleria-title-description-wrapper > div .title {
@@ -508,6 +543,8 @@
               background-position: center center;
               vertical-align: middle;
               background-color: #999; }
+              .ng-image-gallery .ng-image-gallery-modal .ng-image-gallery-content .galleria .galleria-bubbles-wrapper > .galleria-bubbles span.ng-leave-active {
+                display: none; }
               .ng-image-gallery .ng-image-gallery-modal .ng-image-gallery-content .galleria .galleria-bubbles-wrapper > .galleria-bubbles span:not(.img-bubble) {
                 background-color: rgba(255, 255, 255, 0.5);
                 border-radius: 100%;
@@ -577,11 +614,17 @@
     overflow: hidden;
     width: 100%;
     height: 300px; }
-    .ng-image-gallery.inline .ng-image-gallery-modal .ng-image-gallery-content .destroy-icons-container {
+    .ng-image-gallery.inline .ng-image-gallery-modal .ng-image-gallery-content .actions-icons-container {
       top: 0; }
-      .ng-image-gallery.inline .ng-image-gallery-modal .ng-image-gallery-content .destroy-icons-container .ext-url {
+      .ng-image-gallery.inline .ng-image-gallery-modal .ng-image-gallery-content .actions-icons-container .delete-img {
         margin: 0; }
-        .ng-image-gallery.inline .ng-image-gallery-modal .ng-image-gallery-content .destroy-icons-container .ext-url:before {
+        .ng-image-gallery.inline .ng-image-gallery-modal .ng-image-gallery-content .actions-icons-container .delete-img:before {
+          background-image: url(../res/icons/delete-inline.svg); }
+    .ng-image-gallery.inline .ng-image-gallery-modal .ng-image-gallery-content .control-icons-container {
+      top: 0; }
+      .ng-image-gallery.inline .ng-image-gallery-modal .ng-image-gallery-content .control-icons-container .ext-url {
+        margin: 0; }
+        .ng-image-gallery.inline .ng-image-gallery-modal .ng-image-gallery-content .control-icons-container .ext-url:before {
           background-image: url(../res/icons/external-link-inline.svg); }
     .ng-image-gallery.inline .ng-image-gallery-modal .ng-image-gallery-content .prev {
       background-image: url(../res/icons/prev-inline.svg); }

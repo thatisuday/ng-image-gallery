@@ -53,15 +53,18 @@ var myTestApp = angular.module('test', ['thatisuday.ng-image-gallery']);
 	images="images"
 	methods="methods"
 	thumbnails="true | false | boolean-model"
+	thumb-size="integer | model"
 	inline="true | false | boolean-model"
+	bubbles="true | false | boolean-model"
+	bubble-size="integer | model"
 	img-bubbles="true | false | boolean-model"
 	bg-close="true | false | boolean-model"
-	bubbles="true | false | boolean-model"
 	piracy="true | false | boolean-model"
 	img-anim="fadeup"
 	conf="conf"
 	on-open="opened();"
 	on-close="closed();"
+	on-delete="delete(img, cb)"
 ></ng-image-gallery>
 ```
 
@@ -74,13 +77,15 @@ You can set up `ng-image-gallery` options once and for all using `ngImageGallery
 ```
 myApp.config(function(ngImageGalleryOptsProvider){
 	ngImageGalleryOptsProvider.setOpts({
-		thumbnails  :   true,   
-		inline      :   false,
-		imgBubbles  :   false, 
-		bgClose     :   true
-		bubbles     :   true, 
-		piracy      :   false, 
-		imgAnim 	: 	'fadeup',
+		thumbnails  	:   true,
+		thumbSize		: 	80,
+		inline      	:   false,
+		bubbles     	:   true,
+		bubbleSize		: 	20,  
+		imgBubbles  	:   false,
+		bgClose     	:   false,
+		piracy 			: 	false,
+		imgAnim 		: 	'fadeup',
 	});
 })
 ```
@@ -90,13 +95,14 @@ myApp.config(function(ngImageGalleryOptsProvider){
 ***
 
 ## Set options in runtime (attributes)
-### 1. images
+### images
 **images** is a JavaScript array that contains objects with image url(s) of the images to be loaded into the gallery. This object can be dynamic, means images can be pushed into this array at any time. This array looks like below...
 
 ```
 // inside your app controller
 $scope.images = [
 	{
+		id : 1,
 		title : 'This is amazing photo of nature',
 		alt : 'amazing nature photo',
 		thumbUrl : 'https://pixabay.com/static/uploads/photo/2016/06/13/07/32/cactus-1453793__340.jpg',
@@ -104,14 +110,21 @@ $scope.images = [
 		extUrl : 'http://mywebsitecpm/photo/1453793'
 	},
 	{
-		url : 'https://pixabay.com/static/uploads/photo/2016/06/10/22/25/ortler-1449018_960_720.jpg'
+		id : 2,
+		url : 'https://pixabay.com/static/uploads/photo/2016/06/10/22/25/ortler-1449018_960_720.jpg',
+		deletable : true,
 	},
 	{
+		id : 3,
 		thumbUrl : 'https://pixabay.com/static/uploads/photo/2016/04/11/18/53/aviator-1322701__340.jpg',
 		url : 'https://pixabay.com/static/uploads/photo/2016/04/11/18/53/aviator-1322701_960_720.jpg'
 	}
 ];
 ```
+> `id` is unique field which is mandatory after v2.1.0. This help angular keep track of images.
+
+> `deletable` is boolean field which provide delete icon on gallery to delete the image. Read `on-delete` attribute.
+
 > `thumbUrl` is not absolutely necessary. If `thumbUrl` url is empty, thumbnail will use `url` instead to show preview.
 
 > `extUrl` is also **optional**, it is external link of current image. An `external link' icon with anchor link will be added beside close button.
@@ -120,7 +133,7 @@ $scope.images = [
 
 --
 
-### 2. methods (optional)
+### methods (optional)
 **methods** is a communication gateway between your app and image gallery methods. It's a JavaScript object which can be used to `open` or `close` the modal as well as change images inside gallery using `prev` and `next` key. This can be done as follows...
 
 ```
@@ -156,67 +169,75 @@ $scope.prevImg = function(){
 
 --
 
-### 3. thumbnails (optional) _[default : true]_
+### thumbnails (optional) _[default : true]_
 thumbnails attribute is used when you need to generate thumbnails on the page of the gallery images. When user clicks on any thumbnail, gallery modal is opened with that image as visible image.
 
 --
 
-### 4. inline (optional) _[default : false]_
+### thumb-size (optional) _[default : 80]_
+Sets the size of thumbnails in pixels. You just need to add integer values.
+
+--
+
+### inline (optional) _[default : false]_
 inline attribute is used when you need to inline image gallery instead in modal. When gallery is inline, no thumbnails will be generated and gallery will be launched automatically.
 
 --
 
-### 5. img-bubbles (optional) _[default : false]_
-To create image bubbles instead of simple circles. by default, bubble image url will be `thumbUrl` or `url`. But you can also add `bubbleUrl` (of small sizes images) to minimize request playload.
+### bubbles (optional) _[default : true]_
+Turn on/off bubbles.
+
+--
+
+### bubble-size (optional) _[default : 20]_
+Sets the size of navigational bubbles in pixels. You just need to add integer values.
+
+--
+
+### img-bubbles (optional) _[default : false]_
+To create image bubbles instead of simple circles. by default, bubble image url will be `thumbUrl` or `url`. But you can also add `bubbleUrl` (of small sizes images) to minimize request payload.
 
 > Not recommend if bubbles url defaults to `url` as it will download heavy images all at once.
 
 --
 
-### 6. bg-close (optional) _[default : false]_
+### bg-close (optional) _[default : false]_
 close gallery on background click. This can be very sensitivity in mobile devices. This will not work in inline gallery.
 
---
-
-### 7. bubbles (optional) _[default : true]_
-Turn on/off bubbles.
 
 --
 
-### 8. img-anim (optional) _[default : 'fadeup']_
+### piracy  (optional) _[default : false]_
+Allow user to save image by right click on it.
+
+--
+
+### img-anim (optional) _[default : 'fadeup']_
 Set animation for image transition. Possible animation classes : `fade`, `fadeup`, `zoom`, `slide`, `pop`, `revolve`.
 
 --
 
-### 9. conf
-`conf` attribute contains JavaScript object (bound to scope) which override following options.
-
-| property name | alias for |
-| ---------------- | --------- |
-|thumbnails|thumbnails|
-|inline|inline|
-|bubbles|bubbles|
-|imgBubbles|img-bubbles|
-|bgClose|bg-close|
-|imgAnim|img-anim|
-|piracy|piracy|
+### conf
+`conf` attribute contains JavaScript object (bound to scope) which override global options.
 
 Not a big fan of inline options, use `conf`
 ```
 $scope.conf = {
-	thumbnails 	: 	true,	
-	inline		: 	false,
-	bubbles		: 	true,
-	imgBubbles 	: 	false,	
-	bgClose		: 	false,
-	piracy		: 	true,
-	imgAnim		: 	'fadeup'
+	thumbnails  	:   true,
+	thumbSize		: 	80,
+	inline      	:   false,
+	bubbles     	:   true,
+	bubbleSize		: 	20,  
+	imgBubbles  	:   false,
+	bgClose     	:   false,
+	piracy 			: 	false,
+	imgAnim 		: 	'fadeup',
 };
 ```
 
 --
 
-### 10. on-open (optional) _[default : noop]_
+### on-open (optional) _[default : noop]_
 This is the callback function that must be executed after gallery modal is opened. Function in the controller will look like below
 
 ```
@@ -227,14 +248,14 @@ $scope.opened = function(){
 
 --
 
-### 11. on-close (optional) _[default : noop]_
+### on-close (optional) _[default : noop]_
 Similar to `on-open` attribute but will be called when gallery modal closes.
-
 
 --
 
-### 12. piracy  (optional) _[default : false]_
-Allow user to save image by right click on it.
+### on-delete (optional) _[default : noop]_
+Callback function when user deletes the image. This function receives two arguments. The image that is requested to delete and a callback function.
+Once you dealt with image, make sire to call callback function, which will remove that image from gallery and refresh the UI.
 
 
 ***
@@ -278,6 +299,7 @@ You can build this directive with your own customization using gulp.
 2. Make sure you have gulp install globally. Else use `npm install -g gulp` to install gulp globally.
 3. All css for this repository has been generated using sass (.scss), so you need to spend 5 mins to learn basics of sass.
 4. To build or watch the changes, use command `gulp build` or `gulp watch`
+5. run `node demo-server.js` to lauch demo of the plugin.
 
 ***
 

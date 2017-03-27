@@ -127,15 +127,17 @@
 			left:0;
 			z-index: 2;
 
-			.destroy-icons-container{
+			.actions-icons-container{
 				position:absolute;
-				right: 10px;
+				left: 10px;
 				top:20px;
 
-				.ext-url,
-				.close{
+				.delete-img{
+					&.ng-leave-active{
+						display: none;
+					}
+
 					&:hover{
-						transition: background-color 0.3s ease-in-out;
 						background-color: rgba(255,255,255,0.1);
 					}
 
@@ -151,6 +153,51 @@
 						background-repeat:no-repeat;
 					}
 
+					transition: background-color 0.3s ease-in-out;
+					position: relative;
+					display: inline-block;
+					width:30px;
+					height:30px;
+					overflow: hidden;
+					cursor: pointer;
+					text-decoration: none;
+					color:#fff;
+					vertical-align: bottom;
+				}
+
+				.delete-img:before{
+					background-image:url(../res/icons/delete.svg);
+				}
+			}
+
+			.control-icons-container{
+				position:absolute;
+				right: 10px;
+				top:20px;
+
+				.ext-url,
+				.close{
+					&.ng-leave-active{
+						display: none;
+					}
+
+					&:hover{
+						background-color: rgba(255,255,255,0.1);
+					}
+
+					&:before{
+						content : "";
+						display: block;
+						position: absolute;
+						top : 5px;
+						right: 5px;
+						bottom:5px;
+						left:5px;
+						background-size:100% 100%;
+						background-repeat:no-repeat;
+					}
+
+					transition: background-color 0.3s ease-in-out;
 					position: relative;
 					display: inline-block;
 					width:30px;
@@ -424,7 +471,7 @@
 					flex: none;
 
 					>div{
-						padding-top: 20px;
+						padding: 20px 0;
 						text-align: center;
 						color: #fff;
 
@@ -465,6 +512,10 @@
 							background-position: center center;
 							vertical-align: middle;
 							background-color: $bubble-background-color;
+
+							&.ng-leave-active{
+								display: none;
+							}
 
 							&:not(.img-bubble){
 								background-color : rgba(255,255,255,0.5);
@@ -565,7 +616,19 @@
 			height:300px;
 
 			.ng-image-gallery-content{
-				.destroy-icons-container{
+				.actions-icons-container{
+					top:0;
+
+					.delete-img{
+						margin:0;
+
+						&:before{
+							background-image:url(../res/icons/delete-inline.svg);
+						}
+					}
+				}
+
+				.control-icons-container{
 					top:0;
 
 					.ext-url{
@@ -575,8 +638,6 @@
 							background-image:url(../res/icons/external-link-inline.svg);
 						}
 					}
-
-
 				}
 
 				.prev{

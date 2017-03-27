@@ -14,7 +14,7 @@
 	.provider('ngImageGalleryOpts', function(){
 		var defOpts = {
 			thumbnails  	:   true,
-			thumbSize		: 	100,
+			thumbSize		: 	80,
 			inline      	:   false,
 			bubbles     	:   true,
 			bubbleSize		: 	20,  
@@ -92,7 +92,7 @@
 						scope._finalBubbleSpace = finalBubbleSpace;
 						scope._bubbleMargin = '0 ' + (bubbleMargin/2) + 'px';
 
-						scope.safeApply(angular.noop);
+						scope._safeApply(angular.noop);
 					};
 
 					$timeout(autoFitBubbles);
@@ -176,16 +176,15 @@
 				imgAnim 		: 	'@?',		// {name}
 
 				onOpen 			: 	'&?',		// function
-				onClose 		: 	'&?'		// function
+				onClose 		: 	'&?',		// function,
+				onDelete		: 	'&?'
 			},
-			template : 	'<div class="ng-image-gallery img-move-dir-{{_imgMoveDirection}}" ng-class="{inline:inline}">'+
+			template : 	'<div class="ng-image-gallery img-move-dir-{{_imgMoveDirection}}" ng-class="{inline:inline}" ng-hide="images.length == 0">'+
 							
 							// Thumbnails container
 							//  Hide for inline gallery
-							
-
 							'<div ng-if="thumbnails && !inline" class="ng-image-gallery-thumbnails">' +
- 								'<div class="thumb" ng-repeat="image in images track by $index" ng-click="methods.open($index);" show-image-async="{{image.thumbUrl || image.url}}" async-kind="thumb" ng-style="{\'width\' : thumbSize+\'px\', \'height\' : thumbSize+\'px\'}">'+
+ 								'<div class="thumb" ng-repeat="image in images track by image.url" ng-click="methods.open($index);" show-image-async="{{image.thumbUrl || image.url}}" async-kind="thumb" ng-style="{\'width\' : thumbSize+\'px\', \'height\' : thumbSize+\'px\'}">'+
  									'<div class="loader"></div>'+
  								'</div>' +
  							'</div>' +
@@ -201,11 +200,17 @@
 								// Gallery contents container
 								// (hide when image is loading)
 								'<div class="ng-image-gallery-content" ng-show="!imgLoading" ng-click="backgroundClose($event);">'+
+
+									// actions icons container
+									'<div class="actions-icons-container">'+
+										// Delete image icon
+										'<div class="delete-img" ng-repeat="image in images track by image.id" ng-if="_activeImg == image && image.deletable" title="Delete this image..." ng-click="_deleteImg(image)"></div>'+
+									'</div>'+
 									
-									// destroy icons container
-									'<div class="destroy-icons-container">'+
+									// control icons container
+									'<div class="control-icons-container">'+
 										// External link icon
-										'<a class="ext-url" ng-repeat="image in images track by $index" ng-if="_activeImg == image && image.extUrl" href="{{image.extUrl}}"></a>'+
+										'<a class="ext-url" ng-repeat="image in images track by image.id" ng-if="_activeImg == image && image.extUrl" href="{{image.extUrl}}" target="_blank" title="Open image in new tab..."></a>'+
 
 										// Close Icon (hidden in inline gallery)
 										'<div class="close" ng-click="methods.close();" ng-if="!inline"></div>'+
@@ -221,28 +226,28 @@
 										
 										// Images container
 										'<div class="galleria-images img-anim-{{imgAnim}} img-move-dir-{{_imgMoveDirection}}">'+
-											'<img class="galleria-image" ng-right-click ng-repeat="image in images track by $index" ng-if="_activeImg == image" ng-src="{{image.url}}" ondragstart="return false;" ng-attr-alt="{{image.alt || undefined}}"/>'+
+											'<img class="galleria-image" ng-right-click ng-repeat="image in images track by image.id" ng-if="_activeImg == image" ng-src="{{image.url}}" ondragstart="return false;" ng-attr-alt="{{image.alt || undefined}}"/>'+
 										'</div>'+
 
 										// Image description container
 										'<div class="galleria-title-description-wrapper">'+
-											'<div ng-repeat="image in images track by $index" ng-if="(image.title || image.desc) && (_activeImg == image)">'+
+											'<div ng-repeat="image in images track by image.id" ng-if="(image.title || image.desc) && (_activeImg == image)">'+
 												'<div class="title" ng-if="image.title">{{image.title}}</div>'+
 												'<div class="desc" ng-if="image.desc">{{image.desc}}</div>'+
 											'</div>'+
 										'</div>'+
 
 										// Bubble navigation container
-										'<div class="galleria-bubbles-wrapper" ng-if="bubbles && !imgBubbles"  ng-hide="images.length == 1" ng-style="{\'height\' : bubbleSize+\'px\'}" bubble-auto-fit>'+
+										'<div class="galleria-bubbles-wrapper" ng-if="bubbles && !imgBubbles" ng-hide="images.length == 1" ng-style="{\'height\' : bubbleSize+\'px\'}" bubble-auto-fit>'+
 											'<div class="galleria-bubbles" bubble-auto-scroll ng-style="{\'margin-left\': _bubblesContainerMarginLeft}">'+
-												'<span class="galleria-bubble" ng-click="setActiveImg(image);" ng-repeat="image in images track by $index" ng-class="{active : (_activeImg == image)}" ng-style="{\'width\' : bubbleSize+\'px\', \'height\' : bubbleSize+\'px\', margin: _bubbleMargin}"></span>'+
+												'<span class="galleria-bubble" ng-click="_setActiveImg(image);" ng-repeat="image in images track by image.id" ng-class="{active : (_activeImg == image)}" ng-style="{\'width\' : bubbleSize+\'px\', \'height\' : bubbleSize+\'px\', margin: _bubbleMargin}"></span>'+
 											'</div>'+
 										'</div>'+
 
 										// Image bubble navigation container
 										'<div class="galleria-bubbles-wrapper" ng-if="bubbles && imgBubbles" ng-hide="images.length == 1" ng-style="{\'height\' : bubbleSize+\'px\'}" bubble-auto-fit>'+
 											'<div class="galleria-bubbles" bubble-auto-scroll ng-style="{\'margin-left\': _bubblesContainerMarginLeft}">'+
-												'<span class="galleria-bubble img-bubble" ng-click="setActiveImg(image);" ng-repeat="image in images track by $index" ng-class="{active : (_activeImg == image)}" show-image-async="{{image.bubbleUrl || image.thumbUrl || image.url}}" async-kind="bubble" ng-style="{\'width\' : bubbleSize+\'px\', \'height\' : bubbleSize+\'px\', \'border-width\' : bubbleSize/10+\'px\', margin: _bubbleMargin}"></span>'+
+												'<span class="galleria-bubble img-bubble" ng-click="_setActiveImg(image);" ng-repeat="image in images track by image.id" ng-class="{active : (_activeImg == image)}" show-image-async="{{image.bubbleUrl || image.thumbUrl || image.url}}" async-kind="bubble" ng-style="{\'width\' : bubbleSize+\'px\', \'height\' : bubbleSize+\'px\', \'border-width\' : bubbleSize/10+\'px\', margin: _bubbleMargin}"></span>'+
 											'</div>'+
 										'</div>'+
 
@@ -272,17 +277,17 @@
 					**/
 
 					// Show gallery loader
-					scope.showLoader = function(){
+					scope._showLoader = function(){
 						scope.imgLoading = true;
 					}
 
 					// Hide gallery loader
-					scope.hideLoader = function(){
+					scope._hideLoader = function(){
 						scope.imgLoading = false;
 					}
 
 					// Image load complete promise
-					scope.loadImg = function(imgObj){
+					scope._loadImg = function(imgObj){
 						
 						// Return rejected promise
 						// if not image object received
@@ -291,14 +296,14 @@
 						var deferred =  $q.defer();
 
 						// Show loder
-						if(!imgObj.hasOwnProperty('cached')) scope.showLoader();
+						if(!imgObj.hasOwnProperty('cached')) scope._showLoader();
 
 						// Process image
 						var img = new Image();
 						img.src = imgObj.url;
 						img.onload = function(){
 							// Hide loder
-							if(!imgObj.hasOwnProperty('cached')) scope.hideLoader();
+							if(!imgObj.hasOwnProperty('cached')) scope._hideLoader();
 
 							// Cache image
 							if(!imgObj.hasOwnProperty('cached')) imgObj.cached = true;
@@ -309,7 +314,7 @@
 						return deferred.promise;
 					}
 
-					scope.setActiveImg = function(imgObj){
+					scope._setActiveImg = function(imgObj){
 						// Get images move direction
 						if(
 							scope.images.indexOf(scope._activeImg) - scope.images.indexOf(imgObj) == (scope.images.length - 1) ||
@@ -326,13 +331,13 @@
 						}
 
 						// Load image
-						scope.loadImg(imgObj).then(function(imgObj){
+						scope._loadImg(imgObj).then(function(imgObj){
 							scope._activeImg = imgObj;
 							scope._activeImageIndex = scope.images.indexOf(imgObj);
 						});
 					}
 
-					scope.safeApply = function(fn){
+					scope._safeApply = function(fn){
 						var phase = this.$root.$$phase;
 						if(phase == '$apply' || phase == '$digest'){
 							if(fn && (typeof(fn) === 'function')){
@@ -342,6 +347,19 @@
 							this.$apply(fn);
 						}
 					};
+
+					scope._deleteImg = function(img){
+						var _deleteImgCallback = function(){
+							var index = scope.images.indexOf(img);
+							console.log(index);
+							scope.images.splice(index, 1);
+							scope._activeImageIndex = 0;
+
+							/**/
+						}
+
+						scope.onDelete({img: img, cb: _deleteImgCallback});
+					}
 
 
 					/***************************************************/
@@ -369,18 +387,19 @@
 						scope.imgAnim 	 	 = 	(conf.imgAnim 		!= undefined) ? conf.imgAnim 	 	: 	(scope.imgAnim 		!= undefined) 	?  scope.imgAnim		: 	ngImageGalleryOpts.imgAnim;
 					});
 
-					scope.onOpen 	 	 = 	(scope.onOpen 		!= undefined) ? scope.onOpen 	 : 	angular.noop;
-					scope.onClose 	 	 = 	(scope.onClose 		!= undefined) ? scope.onClose 	 : 	angular.noop;
+					scope.onOpen 	 = 	(scope.onOpen 	!= undefined) ? scope.onOpen 	 : 	angular.noop;
+					scope.onClose 	 = 	(scope.onClose 	!= undefined) ? scope.onClose 	 : 	angular.noop;
+					scope.onDelete 	 = 	(scope.onDelete != undefined) ? scope.onDelete 	 : 	angular.noop;
 					
 					// If images populate dynamically, reset gallery
 					var imagesFirstWatch = true;
-					scope.$watch('images', function(){
+					scope.$watchCollection('images', function(){
 						if(imagesFirstWatch){
 							imagesFirstWatch = false;
 						}
-						else if(scope.images.length) scope.setActiveImg(
-							scope.images[scope._activeImageIndex || 0]
-						);
+						else if(scope.images.length){
+							scope._setActiveImg(scope.images[scope._activeImageIndex || 0]);
+						}
 					});
 
 					// Watch index of visible/active image
@@ -391,7 +410,7 @@
 							activeImageIndexFirstWatch = false;
 						}
 						else if(scope.images.length){
-							scope.setActiveImg(
+							scope._setActiveImg(
 								scope.images[newImgIndex]
 							);
 						}
