@@ -202,9 +202,10 @@
 				
 				$scope.addPhoto = function(){
 					var n = Math.floor(Math.random() * 13) + 1;
+					var id = Math.floor(Math.random() * 9999999999) + 1;
 					$scope.images.push(
 						{
-							id : (Math.random() * 100000) + 1,
+							id : id,
 							url : '../demo/demo-images/' + n + '.jpg',
 							thumbUrl : '../demo/demo-images/thumbs/' + n + '.jpg',
 							bubbleUrl : '../demo/demo-images/bubbles/' + n + '.jpg'
