@@ -1,6 +1,6 @@
  (function(){
 	'use strict';
-	
+
 	// Key codes
 	var keys = {
 		enter : 13,
@@ -17,7 +17,7 @@
 			thumbSize		: 	80,
 			inline      	:   false,
 			bubbles     	:   true,
-			bubbleSize		: 	20,  
+			bubbleSize		: 	20,
 			imgBubbles  	:   false,
 			bgClose     	:   false,
 			piracy 			: 	false,
@@ -26,7 +26,7 @@
 
 		return{
 			setOpts : function(newOpts){
-				angular.extend(defOpts, newOpts); 
+				angular.extend(defOpts, newOpts);
 			},
 			$get : function(){
 				return defOpts;
@@ -118,10 +118,10 @@
 			restrict: "A",
 			scope: false,
 			link: function (scope, element, attributes){
-				
+
 				var indexCalc = function(){
 					var relativeIndexToBubbleWrapper = scope._bubblesInView - (scope._bubblesInView - scope._activeImageIndex);
-					
+
 					$timeout(function(){
 						if(relativeIndexToBubbleWrapper > scope._bubblesInView - 2){
 							var outBubbles = ((scope._activeImageIndex+1) - scope._bubblesInView) + 1;
@@ -180,7 +180,7 @@
 				onDelete		: 	'&?'
 			},
 			template : 	'<div class="ng-image-gallery img-move-dir-{{_imgMoveDirection}}" ng-class="{inline:inline}" ng-hide="images.length == 0">'+
-							
+
 							// Thumbnails container
 							//  Hide for inline gallery
 							'<div ng-if="thumbnails && !inline" class="ng-image-gallery-thumbnails">' +
@@ -192,11 +192,11 @@
 							// Modal container
 							// (inline container for inline modal)
 							'<div class="ng-image-gallery-modal" ng-if="opened" ng-cloak>' +
-								
+
 								// Gallery backdrop container
 								// (hide for inline gallery)
 								'<div class="ng-image-gallery-backdrop" ng-if="!inline"></div>'+
-								
+
 								// Gallery contents container
 								// (hide when image is loading)
 								'<div class="ng-image-gallery-content" ng-show="!imgLoading" ng-click="backgroundClose($event);">'+
@@ -206,7 +206,7 @@
 										// Delete image icon
 										'<div class="delete-img" ng-repeat="image in images track by image.id" ng-if="_activeImg == image && image.deletable" title="Delete this image..." ng-click="_deleteImg(image)"></div>'+
 									'</div>'+
-									
+
 									// control icons container
 									'<div class="control-icons-container">'+
 										// External link icon
@@ -223,7 +223,7 @@
 
 									// Galleria container
 									'<div class="galleria">'+
-										
+
 										// Images container
 										'<div class="galleria-images img-anim-{{imgAnim}} img-move-dir-{{_imgMoveDirection}}">'+
 											'<img class="galleria-image" ng-right-click ng-repeat="image in images track by image.id" ng-if="_activeImg == image" ng-src="{{image.url}}" ondragstart="return false;" ng-attr-alt="{{image.alt || undefined}}"/>'+
@@ -232,8 +232,8 @@
 										// Image description container
 										'<div class="galleria-title-description-wrapper">'+
 											'<div ng-repeat="image in images track by image.id" ng-if="(image.title || image.desc) && (_activeImg == image)">'+
-												'<div class="title" ng-if="image.title">{{image.title}}</div>'+
-												'<div class="desc" ng-if="image.desc">{{image.desc}}</div>'+
+												'<div class="title" ng-if="image.title" ng-bind-html="image.title"></div>'+
+												'<div class="desc" ng-if="image.desc" ng-bind-html="image.desc"></div>'+
 											'</div>'+
 										'</div>'+
 
@@ -254,7 +254,7 @@
 									'</div>'+
 
 								'</div>'+
-								
+
 								// Loading animation overlay container
 								// (show when image is loading)
 								'<div class="ng-image-gallery-loader" ng-show="imgLoading">'+
@@ -268,10 +268,10 @@
 								'</div>'+
 							'</div>'+
 						'</div>',
-						
+
 			link : {
 				pre : function(scope, elem, attr){
-					
+
 					/*
 					 *	Operational functions
 					**/
@@ -288,7 +288,7 @@
 
 					// Image load complete promise
 					scope._loadImg = function(imgObj){
-						
+
 						// Return rejected promise
 						// if not image object received
 						if(!imgObj) return $q.reject();
@@ -319,10 +319,10 @@
 						if(
 							scope.images.indexOf(scope._activeImg) - scope.images.indexOf(imgObj) == (scope.images.length - 1) ||
 							(
-								scope.images.indexOf(scope._activeImg) - scope.images.indexOf(imgObj) <= 0 && 
+								scope.images.indexOf(scope._activeImg) - scope.images.indexOf(imgObj) <= 0 &&
 								scope.images.indexOf(scope._activeImg) - scope.images.indexOf(imgObj) != -(scope.images.length - 1)
 							)
-							
+
 						){
 							scope._imgMoveDirection = 'forward';
 						}
@@ -363,7 +363,7 @@
 
 
 					/***************************************************/
-					
+
 
 					/*
 					 *	Gallery settings
@@ -390,7 +390,7 @@
 					scope.onOpen 	 = 	(scope.onOpen 	!= undefined) ? scope.onOpen 	 : 	angular.noop;
 					scope.onClose 	 = 	(scope.onClose 	!= undefined) ? scope.onClose 	 : 	angular.noop;
 					scope.onDelete 	 = 	(scope.onDelete != undefined) ? scope.onDelete 	 : 	angular.noop;
-					
+
 					// If images populate dynamically, reset gallery
 					var imagesFirstWatch = true;
 					scope.$watchCollection('images', function(){
@@ -422,7 +422,7 @@
 							if(scope.inline) scope.methods.open();
 						});
 					});
-					
+
 
 					/***************************************************/
 
@@ -566,11 +566,11 @@
 					/*
 					 *	Actions on angular events
 					**/
-					
+
 					var removeClassFromDocumentBody = function(){
 						angular.element(document.body).removeClass('body-overflow-hidden');
 					};
-					
+
 					$rootScope.$on('$stateChangeSuccess', removeClassFromDocumentBody);
 					$rootScope.$on('$routeChangeSuccess', removeClassFromDocumentBody);
 
