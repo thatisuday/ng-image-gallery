@@ -33,7 +33,13 @@
 			}
 		}
 	})
-	.directive('ngRightClick', ['$parse', function($parse){
+	.filter('ngImageGalleryTrust', ['$sce', function($sce) {
+      return function(value, type) {
+        // Defaults to treating trusted value as `html`
+        return $sce.trustAs(type || 'html', value);
+      }
+    }])
+    .directive('ngRightClick', ['$parse', function($parse){
 	    return {
 	    	restrict: "A",
 			scope : false,
@@ -232,8 +238,8 @@
 										// Image description container
 										'<div class="galleria-title-description-wrapper">'+
 											'<div ng-repeat="image in images track by image.id" ng-if="(image.title || image.desc) && (_activeImg == image)">'+
-												'<div class="title" ng-if="image.title" ng-bind-html="image.title"></div>'+
-												'<div class="desc" ng-if="image.desc" ng-bind-html="image.desc"></div>'+
+												'<div class="title" ng-if="image.title" ng-bind-html="image.title | ngImageGalleryTrust"></div>'+
+												'<div class="desc" ng-if="image.desc" ng-bind-html="image.desc | ngImageGalleryTrust"></div>'+
 											'</div>'+
 										'</div>'+
 
