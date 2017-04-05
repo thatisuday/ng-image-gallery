@@ -2,7 +2,7 @@
 
 # ng-image-gallery ![bower](https://img.shields.io/bower/v/ng-image-gallery.svg?style=flat-square) [![npm downloads](https://img.shields.io/npm/dt/ng-image-gallery.svg?style=flat-square)](https://www.npmjs.com/package/ng-image-gallery) [![preview](https://img.shields.io/badge/preview-click_here-green.svg?style=flat-square)](https://rawgit.com/thatisuday/ng-image-gallery/master/demo/main.html)
 
-Angular directive for image gallery in **modal** with **thumbnails** or **inline** like carousel 
+Angular directive for image gallery in **modal** with **thumbnails** or **inline** like carousel
 
 ***
 
@@ -30,7 +30,7 @@ npm install --save ng-image-gallery
 >
 > Include `hammer.js` for touch support (optional).
 
-### → Manual 
+### → Manual
 1. Install AngularJS or include `<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular.min.js"></script>`
 2. Install ngAnimate or include `<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular-animate.js"></script>`
 3. Include `ng-image-gallery.min.js` and `ng-image-gallery.min.css` from `dist` folder of this repository.
@@ -75,19 +75,19 @@ var myTestApp = angular.module('test', ['thatisuday.ng-image-gallery']);
 You can set up `ng-image-gallery` options once and for all using `ngImageGalleryOptsProvider`.
 
 ```
-myApp.config(function(ngImageGalleryOptsProvider){
+myApp.config(['ngImageGalleryOptsProvider', function(ngImageGalleryOptsProvider){
 	ngImageGalleryOptsProvider.setOpts({
 		thumbnails  	:   true,
 		thumbSize		: 	80,
 		inline      	:   false,
 		bubbles     	:   true,
-		bubbleSize		: 	20,  
+		bubbleSize		: 	20,
 		imgBubbles  	:   false,
 		bgClose     	:   false,
 		piracy 			: 	false,
 		imgAnim 		: 	'fadeup',
 	});
-})
+}])
 ```
 
 > See runtime options for explanation
@@ -147,10 +147,10 @@ $scope.methods = {};
 // to open this gallery like ng-click="openGallery();"
 $scope.openGallery = function(){
 	$scope.methods.open();
-	
+
 	// You can also open gallery model with visible image index
 	// Image at that index will be shown when gallery modal opens
-	//scope.methods.open(index); 
+	//scope.methods.open(index);
 };
 
 // Similar to above function
@@ -227,7 +227,7 @@ $scope.conf = {
 	thumbSize		: 	80,
 	inline      	:   false,
 	bubbles     	:   true,
-	bubbleSize		: 	20,  
+	bubbleSize		: 	20,
 	imgBubbles  	:   false,
 	bgClose     	:   false,
 	piracy 			: 	false,
