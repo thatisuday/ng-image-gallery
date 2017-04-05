@@ -103,7 +103,7 @@ myApp.config(function(ngImageGalleryOptsProvider){
 $scope.images = [
 	{
 		id : 1,
-		title : 'This is amazing photo of nature',
+		title : 'This is <b>amazing photo</b> of <i>nature</i>',
 		alt : 'amazing nature photo',
 		thumbUrl : 'https://pixabay.com/static/uploads/photo/2016/06/13/07/32/cactus-1453793__340.jpg',
 		url : 'https://pixabay.com/static/uploads/photo/2016/06/13/07/32/cactus-1453793_960_720.jpg',
