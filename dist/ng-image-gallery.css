@@ -560,6 +560,26 @@
                 transition: border 0.3s ease-in-out, margin 0.3s ease-in-out; }
                 .ng-image-gallery .ng-image-gallery-modal .ng-image-gallery-content .galleria .galleria-bubbles-wrapper > .galleria-bubbles span.img-bubble.active {
                   border: 1px solid #fff; }
+    .ng-image-gallery .ng-image-gallery-modal .ng-image-gallery-errorplaceholder {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 80px;
+      right: 80px;
+      z-index: 1;
+      display: -webkit-box;
+      display: -ms-flexbox;
+      display: flex;
+      -webkit-box-orient: horizontal;
+      -webkit-box-direction: normal;
+          -ms-flex-direction: row;
+              flex-direction: row;
+      -webkit-box-pack: center;
+          -ms-flex-pack: center;
+              justify-content: center;
+      -webkit-box-align: center;
+          -ms-flex-align: center;
+              align-items: center; }
     .ng-image-gallery .ng-image-gallery-modal .ng-image-gallery-loader {
       position: absolute;
       top: 0;

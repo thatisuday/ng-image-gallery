@@ -22,6 +22,7 @@
 			bgClose     	:   false,
 			piracy 			: 	false,
 			imgAnim 		: 	'fadeup',
+			errorPlaceHolder:   'Error when loading the image!'
 		};
 
 		return{
@@ -71,6 +72,9 @@
 						}
 					});
 				};
+				image.onerror = function(){
+					element.empty(); // remove loading animation element
+				}
 			}
 		};
 	}])
@@ -180,6 +184,7 @@
 				bgClose 		: 	'=?',		// true|false
 				piracy			: 	'=?',		// true|false
 				imgAnim 		: 	'@?',		// {name}
+				errorPlaceHolder: 	'@?',		// {name}
 
 				onOpen 			: 	'&?',		// function
 				onClose 		: 	'&?',		// function,
@@ -272,6 +277,11 @@
 										'<div class="rect5"></div>'+
 									'</div>'+
 								'</div>'+
+
+								// (show when image cannot be loaded)
+								'<div class="ng-image-gallery-errorplaceholder" ng-show="imgError">'+
+									'<div class="ng-image-gallery-error-placeholder" ng-bind-html="errorPlaceHolder | ngImageGalleryTrust"></div>'+
+								'</div>'+
 							'</div>'+
 						'</div>',
 
@@ -314,7 +324,12 @@
 							// Cache image
 							if(!imgObj.hasOwnProperty('cached')) imgObj.cached = true;
 
-							return deferred.resolve(imgObj);
+							deferred.resolve(imgObj);
+						}
+						img.onerror = function(){
+							if(!imgObj.hasOwnProperty('cached')) scope._hideLoader();
+
+							deferred.reject('Error when loading img');
 						}
 
 						return deferred.promise;
@@ -340,7 +355,13 @@
 						scope._loadImg(imgObj).then(function(imgObj){
 							scope._activeImg = imgObj;
 							scope._activeImageIndex = scope.images.indexOf(imgObj);
-						});
+							scope.imgError = false;
+						}, function(){
+							scope._activeImg = null;
+							scope._activeImageIndex = scope.images.indexOf(imgObj);
+							scope.imgError = true;
+						})
+						;
 					}
 
 					scope._safeApply = function(fn){
@@ -391,6 +412,7 @@
 						scope.bgClose 	 	 = 	(conf.bgClose 		!= undefined) ? conf.bgClose 	 	: 	(scope.bgClose 		!= undefined) 	?  scope.bgClose		: 	ngImageGalleryOpts.bgClose;
 						scope.piracy 	 	 = 	(conf.piracy 		!= undefined) ? conf.piracy 	 	: 	(scope.piracy 		!= undefined) 	?  scope.piracy			: 	ngImageGalleryOpts.piracy;
 						scope.imgAnim 	 	 = 	(conf.imgAnim 		!= undefined) ? conf.imgAnim 	 	: 	(scope.imgAnim 		!= undefined) 	?  scope.imgAnim		: 	ngImageGalleryOpts.imgAnim;
+						scope.errorPlaceHolder = (conf.errorPlaceHolder != undefined) ? conf.errorPlaceHolder : (scope.errorPlaceHolder != undefined) ? scope.errorPlaceHolder : ngImageGalleryOpts.errorPlaceHolder;
 					});
 
 					scope.onOpen 	 = 	(scope.onOpen 	!= undefined) ? scope.onOpen 	 : 	angular.noop;
