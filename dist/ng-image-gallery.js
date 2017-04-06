@@ -66,6 +66,9 @@
 						}
 					});
 				};
+				image.onerror = function(){
+					element.empty(); // remove loading animation element
+				}
 			}
 		};
 	}])
