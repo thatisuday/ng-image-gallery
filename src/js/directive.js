@@ -15,6 +15,7 @@
 		var defOpts = {
 			thumbnails  	:   true,
 			thumbSize		: 	80,
+			thumbLimit		: 	false,
 			inline      	:   false,
 			bubbles     	:   true,
 			bubbleSize		: 	20,
@@ -177,6 +178,7 @@
 
 				thumbnails 		: 	'=?',		// true|false
 				thumbSize		: 	'=?', 		// px
+				thumbLimit		: 	'=?', 		// px
 				inline 			: 	'=?',		// true|false
 				bubbles 		: 	'=?',		// true|false
 				bubbleSize 		: 	'=?',		// px
@@ -195,7 +197,7 @@
 							// Thumbnails container
 							//  Hide for inline gallery
 							'<div ng-if="thumbnails && !inline" class="ng-image-gallery-thumbnails">' +
- 								'<div class="thumb" ng-repeat="image in images track by image.id" ng-click="methods.open($index);" show-image-async="{{image.thumbUrl || image.url}}" async-kind="thumb" ng-style="{\'width\' : thumbSize+\'px\', \'height\' : thumbSize+\'px\'}">'+
+ 								'<div class="thumb" ng-repeat="image in images track by image.id" ng-if="thumbLimit ? $index < thumbLimit : true" ng-click="methods.open($index);" show-image-async="{{image.thumbUrl || image.url}}" async-kind="thumb" ng-style="{\'width\' : thumbSize+\'px\', \'height\' : thumbSize+\'px\'}">'+
  									'<div class="loader"></div>'+
  								'</div>' +
  							'</div>' +
@@ -405,6 +407,7 @@
 					scope.$watchCollection('conf', function(conf){
 						scope.thumbnails 	 = 	(conf.thumbnails 	!= undefined) ? conf.thumbnails 	: 	(scope.thumbnails 	!= undefined) 	?  scope.thumbnails		: 	ngImageGalleryOpts.thumbnails;
 						scope.thumbSize 	 = 	(conf.thumbSize 	!= undefined) ? conf.thumbSize 		: 	(scope.thumbSize 	!= undefined) 	?  scope.thumbSize		: 	ngImageGalleryOpts.thumbSize;
+						scope.thumbLimit 	 = 	(conf.thumbLimit 	!= undefined) ? conf.thumbLimit 		: 	(scope.thumbLimit	!= undefined) 	?  scope.thumbLimit		: 	ngImageGalleryOpts.thumbLimit;
 						scope.inline 	 	 = 	(conf.inline 		!= undefined) ? conf.inline 	 	: 	(scope.inline 		!= undefined) 	?  scope.inline			: 	ngImageGalleryOpts.inline;
 						scope.bubbles 	 	 = 	(conf.bubbles 		!= undefined) ? conf.bubbles 	 	: 	(scope.bubbles 		!= undefined) 	?  scope.bubbles		: 	ngImageGalleryOpts.bubbles;
 						scope.bubbleSize 	 = 	(conf.bubbleSize 	!= undefined) ? conf.bubbleSize 	 : 	(scope.bubbleSize 	!= undefined) 	?  scope.bubbleSize		: 	ngImageGalleryOpts.bubbleSize;
