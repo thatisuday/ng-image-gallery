@@ -191,7 +191,6 @@
     bottom: 0;
     left: 0;
     overflow: hidden;
-    -webkit-transition: opacity 0.3s ease-in-out;
     transition: opacity 0.3s ease-in-out;
     backface-visibility: hidden;
     -webkit-backface-visibility: hidden; }
@@ -223,7 +222,6 @@
         left: 10px;
         top: 20px; }
         .ng-image-gallery .ng-image-gallery-modal .ng-image-gallery-content .actions-icons-container .delete-img {
-          -webkit-transition: background-color 0.3s ease-in-out;
           transition: background-color 0.3s ease-in-out;
           position: relative;
           display: inline-block;
@@ -256,7 +254,6 @@
         top: 20px; }
         .ng-image-gallery .ng-image-gallery-modal .ng-image-gallery-content .control-icons-container .ext-url,
         .ng-image-gallery .ng-image-gallery-modal .ng-image-gallery-content .control-icons-container .close {
-          -webkit-transition: background-color 0.3s ease-in-out;
           transition: background-color 0.3s ease-in-out;
           position: relative;
           display: inline-block;
@@ -355,7 +352,6 @@
             -ms-user-select: none;
             user-select: none; }
           .ng-image-gallery .ng-image-gallery-modal .ng-image-gallery-content .galleria .galleria-images.img-anim-fade .galleria-image.ng-enter {
-            -webkit-transition: opacity 0.3s ease-in-out;
             transition: opacity 0.3s ease-in-out;
             opacity: 0; }
           .ng-image-gallery .ng-image-gallery-modal .ng-image-gallery-content .galleria .galleria-images.img-anim-fade .galleria-image.ng-enter-active {
@@ -363,7 +359,6 @@
           .ng-image-gallery .ng-image-gallery-modal .ng-image-gallery-content .galleria .galleria-images.img-anim-fade .galleria-image.ng-leave-active {
             opacity: 0; }
           .ng-image-gallery .ng-image-gallery-modal .ng-image-gallery-content .galleria .galleria-images.img-anim-fadeup .galleria-image.ng-enter {
-            -webkit-transition: opacity 0.3s ease-in-out, -webkit-transform 0.3s ease-in-out;
             transition: opacity 0.3s ease-in-out, -webkit-transform 0.3s ease-in-out;
             transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
             transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out, -webkit-transform 0.3s ease-in-out;
@@ -377,7 +372,6 @@
           .ng-image-gallery .ng-image-gallery-modal .ng-image-gallery-content .galleria .galleria-images.img-anim-fadeup .galleria-image.ng-leave-active {
             opacity: 0; }
           .ng-image-gallery .ng-image-gallery-modal .ng-image-gallery-content .galleria .galleria-images.img-anim-zoom .galleria-image.ng-enter {
-            -webkit-transition: opacity 0.3s ease-in-out, -webkit-transform 0.3s ease-in-out;
             transition: opacity 0.3s ease-in-out, -webkit-transform 0.3s ease-in-out;
             transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
             transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out, -webkit-transform 0.3s ease-in-out;
@@ -389,7 +383,6 @@
             -webkit-transform: scale(1);
                     transform: scale(1); }
           .ng-image-gallery .ng-image-gallery-modal .ng-image-gallery-content .galleria .galleria-images.img-anim-zoom .galleria-image.ng-leave {
-            -webkit-transition: opacity 0.3s ease-in-out, -webkit-transform 0.3s ease-in-out;
             transition: opacity 0.3s ease-in-out, -webkit-transform 0.3s ease-in-out;
             transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
             transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out, -webkit-transform 0.3s ease-in-out; }
@@ -398,7 +391,6 @@
             -webkit-transform: scale(0);
                     transform: scale(0); }
           .ng-image-gallery .ng-image-gallery-modal .ng-image-gallery-content .galleria .galleria-images.img-anim-slide.img-move-dir-backward .galleria-image.ng-enter {
-            -webkit-transition: opacity 0.3s ease-in-out, -webkit-transform 0.3s ease-in-out;
             transition: opacity 0.3s ease-in-out, -webkit-transform 0.3s ease-in-out;
             transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
             transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out, -webkit-transform 0.3s ease-in-out;
@@ -410,7 +402,6 @@
                     transform: translateX(0px);
             opacity: 1; }
           .ng-image-gallery .ng-image-gallery-modal .ng-image-gallery-content .galleria .galleria-images.img-anim-slide.img-move-dir-backward .galleria-image.ng-leave {
-            -webkit-transition: opacity 0.3s ease-in-out, -webkit-transform 0.3s ease-in-out;
             transition: opacity 0.3s ease-in-out, -webkit-transform 0.3s ease-in-out;
             transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
             transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out, -webkit-transform 0.3s ease-in-out; }
@@ -419,7 +410,6 @@
             -webkit-transform: translateX(100%);
                     transform: translateX(100%); }
           .ng-image-gallery .ng-image-gallery-modal .ng-image-gallery-content .galleria .galleria-images.img-anim-slide.img-move-dir-forward .galleria-image.ng-enter {
-            -webkit-transition: opacity 0.3s ease-in-out, -webkit-transform 0.3s ease-in-out;
             transition: opacity 0.3s ease-in-out, -webkit-transform 0.3s ease-in-out;
             transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
             transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out, -webkit-transform 0.3s ease-in-out;
@@ -431,7 +421,6 @@
                     transform: translateX(0px);
             opacity: 1; }
           .ng-image-gallery .ng-image-gallery-modal .ng-image-gallery-content .galleria .galleria-images.img-anim-slide.img-move-dir-forward .galleria-image.ng-leave {
-            -webkit-transition: opacity 0.3s ease-in-out, -webkit-transform 0.3s ease-in-out;
             transition: opacity 0.3s ease-in-out, -webkit-transform 0.3s ease-in-out;
             transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
             transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out, -webkit-transform 0.3s ease-in-out; }
@@ -440,7 +429,6 @@
             -webkit-transform: translateX(-100%);
                     transform: translateX(-100%); }
           .ng-image-gallery .ng-image-gallery-modal .ng-image-gallery-content .galleria .galleria-images.img-anim-pop.img-move-dir-backward .galleria-image.ng-enter {
-            -webkit-transition: opacity 0.3s ease-in-out, -webkit-transform 0.3s ease-in-out;
             transition: opacity 0.3s ease-in-out, -webkit-transform 0.3s ease-in-out;
             transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
             transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out, -webkit-transform 0.3s ease-in-out;
@@ -452,7 +440,6 @@
                     transform: translateX(0px) scale(1, 1);
             opacity: 1; }
           .ng-image-gallery .ng-image-gallery-modal .ng-image-gallery-content .galleria .galleria-images.img-anim-pop.img-move-dir-backward .galleria-image.ng-leave {
-            -webkit-transition: opacity 0.3s ease-in-out, -webkit-transform 0.3s ease-in-out;
             transition: opacity 0.3s ease-in-out, -webkit-transform 0.3s ease-in-out;
             transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
             transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out, -webkit-transform 0.3s ease-in-out; }
@@ -461,7 +448,6 @@
             -webkit-transform: translateX(100%) scale(0, 0);
                     transform: translateX(100%) scale(0, 0); }
           .ng-image-gallery .ng-image-gallery-modal .ng-image-gallery-content .galleria .galleria-images.img-anim-pop.img-move-dir-forward .galleria-image.ng-enter {
-            -webkit-transition: opacity 0.3s ease-in-out, -webkit-transform 0.3s ease-in-out;
             transition: opacity 0.3s ease-in-out, -webkit-transform 0.3s ease-in-out;
             transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
             transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out, -webkit-transform 0.3s ease-in-out;
@@ -473,7 +459,6 @@
                     transform: translateX(0px) scale(1, 1);
             opacity: 1; }
           .ng-image-gallery .ng-image-gallery-modal .ng-image-gallery-content .galleria .galleria-images.img-anim-pop.img-move-dir-forward .galleria-image.ng-leave {
-            -webkit-transition: opacity 0.3s ease-in-out, -webkit-transform 0.3s ease-in-out;
             transition: opacity 0.3s ease-in-out, -webkit-transform 0.3s ease-in-out;
             transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
             transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out, -webkit-transform 0.3s ease-in-out; }
@@ -527,7 +512,6 @@
             display: block;
             text-align: center;
             white-space: nowrap;
-            -webkit-transition: margin-left 0.3s;
             transition: margin-left 0.3s; }
             .ng-image-gallery .ng-image-gallery-modal .ng-image-gallery-content .galleria .galleria-bubbles-wrapper > .galleria-bubbles span {
               -webkit-box-flex: 0;
@@ -549,14 +533,12 @@
                 background-color: rgba(255, 255, 255, 0.5);
                 border-radius: 100%;
                 overflow: hidden;
-                -webkit-transition: all 0.3s ease-in-out;
                 transition: all 0.3s ease-in-out; }
                 .ng-image-gallery .ng-image-gallery-modal .ng-image-gallery-content .galleria .galleria-bubbles-wrapper > .galleria-bubbles span:not(.img-bubble).active {
                   background-color: #fff; }
               .ng-image-gallery .ng-image-gallery-modal .ng-image-gallery-content .galleria .galleria-bubbles-wrapper > .galleria-bubbles span.img-bubble {
                 box-sizing: border-box;
                 border: 1px solid transparent;
-                -webkit-transition: border 0.3s ease-in-out, margin 0.3s ease-in-out;
                 transition: border 0.3s ease-in-out, margin 0.3s ease-in-out; }
                 .ng-image-gallery .ng-image-gallery-modal .ng-image-gallery-content .galleria .galleria-bubbles-wrapper > .galleria-bubbles span.img-bubble.active {
                   border: 1px solid #fff; }
