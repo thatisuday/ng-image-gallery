@@ -63,6 +63,7 @@ var myTestApp = angular.module('test', ['thatisuday.ng-image-gallery']);
 	img-anim="fadeup"
 	conf="conf"
 	on-open="opened();"
+	on-image-open="imageOpen(i, img);"
 	on-close="closed();"
 	on-delete="delete(img, cb)"
 ></ng-image-gallery>
@@ -243,6 +244,17 @@ This is the callback function that must be executed after gallery modal is opene
 ```
 $scope.opened = function(){
 	alert('Gallery opened'); // or do something else
+}
+```
+
+--
+
+### on-image-open (optional) _[default : noop]_
+Callback function when image is opened. This function receives two arguments. Index of opened image and object of image. Useful for tracking user engagement.
+
+```
+$scope.imageOpen = function(i, img){
+	console.log('Image opened!', i, img); // or do something else
 }
 ```
 
