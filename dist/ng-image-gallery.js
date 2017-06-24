@@ -187,6 +187,7 @@
 				errorPlaceHolder: 	'@?',		// {name}
 
 				onOpen 			: 	'&?',		// function
+				onImageOpen		:	'&?',		// function
 				onClose 		: 	'&?',		// function,
 				onDelete		: 	'&?'
 			},
@@ -335,6 +336,8 @@
 						return deferred.promise;
 					}
 
+					scope.onImageOpen = (scope.onImageOpen != undefined) ? scope.onImageOpen : angular.noop;
+
 					scope._setActiveImg = function(imgObj){
 						// Get images move direction
 						if(
@@ -353,8 +356,13 @@
 
 						// Load image
 						scope._loadImg(imgObj).then(function(imgObj){
-							scope._activeImg = imgObj;
 							scope._activeImageIndex = scope.images.indexOf(imgObj);
+
+							// Fire onImageOpen method only if gallery is opened and image really changed
+							if(scope.opened && scope._activeImg !== imgObj){
+								scope.onImageOpen({i: scope._activeImageIndex, img: imgObj});
+							}
+							scope._activeImg = imgObj;
 							scope.imgError = false;
 						}, function(){
 							scope._activeImg = null;
@@ -485,7 +493,7 @@
 						// call close event after transition
 						$timeout(function(){
 							scope.onClose();
-							scope._activeImageIndex = 0; // Reset index
+							scope._activeImageIndex = null; // Reset index
 						}, 300);
 					}
 

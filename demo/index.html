@@ -69,7 +69,7 @@
 		<br/>
 		<br/>
 
-		<ng-image-gallery images="images" methods="methods" conf="conf" thumbnails="thumbnails" thumb-size="thumbSize" inline="inline" bubbles="bubbles" bubble-size="bubbleSize" img-bubbles="imgBubbles" bg-close="bgClose" piracy="true" on-open="opened();" on-close="closed();" on-delete="delete(img, cb)" bg-close="false"></ng-image-gallery>
+		<ng-image-gallery images="images" methods="methods" conf="conf" thumbnails="thumbnails" thumb-size="thumbSize" inline="inline" bubbles="bubbles" bubble-size="bubbleSize" img-bubbles="imgBubbles" bg-close="bgClose" piracy="true" on-open="opened();" on-image-open="imageOpen(i, img);" on-close="closed();" on-delete="delete(img, cb)" bg-close="false"></ng-image-gallery>
 
 		<script>
 			angular
@@ -254,6 +254,10 @@
 				// Gallery callbacks
 				$scope.opened = function(){
 					console.info('Gallery opened!');
+				}
+
+				$scope.imageOpen = function(index, image){
+					console.info('Image opened: ', index, image);
 				}
 
 				$scope.closed = function(){
