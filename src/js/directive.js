@@ -23,7 +23,13 @@
 			bgClose     	:   false,
 			piracy 			: 	false,
 			imgAnim 		: 	'fadeup',
-			errorPlaceHolder:   'Error when loading the image!'
+			textValues: {
+			    imageLoadErrorMsg       : 'Error when loading the image!',
+			    deleteButtonTitle       : 'Delete this image...',
+			    editButtonTitle         : 'Edit this image...',
+			    closeButtonTitle        : 'Close',
+			    externalLinkButtonTitle : 'Open image in new tab...'			    
+			}			
 		};
 
 		return{
@@ -186,18 +192,19 @@
 				bgClose 		: 	'=?',		// true|false
 				piracy			: 	'=?',		// true|false
 				imgAnim 		: 	'@?',		// {name}
-				errorPlaceHolder: 	'@?',		// {name}
+				textValues      :   '=?',		// {}
 
 				onOpen 			: 	'&?',		// function
 				onClose 		: 	'&?',		// function,
-				onDelete		: 	'&?'
+				onDelete        :   '&?',
+				onEdit          :   '&?'
 			},
 			template : 	'<div class="ng-image-gallery img-move-dir-{{_imgMoveDirection}}" ng-class="{inline:inline}" ng-hide="images.length == 0">'+
 
 							// Thumbnails container
 							//  Hide for inline gallery
 							'<div ng-if="thumbnails && !inline" class="ng-image-gallery-thumbnails">' +
- 								'<div class="thumb" ng-repeat="image in images track by image.id" ng-if="thumbLimit ? $index < thumbLimit : true" ng-click="methods.open($index);" show-image-async="{{image.thumbUrl || image.url}}" async-kind="thumb" ng-style="{\'width\' : thumbSize+\'px\', \'height\' : thumbSize+\'px\'}">'+
+ 								'<div class="thumb" ng-repeat="image in images track by image.id" ng-if="thumbLimit ? $index < thumbLimit : true" ng-click="methods.open($index);" show-image-async="{{image.thumbUrl || image.url}}" title="{{image.title}}" async-kind="thumb" ng-style="{\'width\' : thumbSize+\'px\', \'height\' : thumbSize+\'px\'}">'+
  									'<div class="loader"></div>'+
  								'</div>' +
  							'</div>' +
@@ -217,16 +224,19 @@
 									// actions icons container
 									'<div class="actions-icons-container">'+
 										// Delete image icon
-										'<div class="delete-img" ng-repeat="image in images track by image.id" ng-if="_activeImg == image && image.deletable" title="Delete this image..." ng-click="_deleteImg(image)"></div>'+
+										'<div class="delete-img" ng-repeat="image in images track by image.id" ng-if="_activeImg == image && image.deletable" title="{{textValues.deleteButtonTitle}}" ng-click="_deleteImg(image)"></div>' +
+
+                                        // Edit image icon
+										'<div class="edit-img" ng-repeat="image in images track by image.id" ng-if="_activeImg == image && image.editable" title="{{textValues.editButtonTitle}}" ng-click="_editImg(image)"></div>' +
 									'</div>'+
 
 									// control icons container
 									'<div class="control-icons-container">'+
 										// External link icon
-										'<a class="ext-url" ng-repeat="image in images track by image.id" ng-if="_activeImg == image && image.extUrl" href="{{image.extUrl}}" target="_blank" title="Open image in new tab..."></a>'+
+										'<a class="ext-url" ng-repeat="image in images track by image.id" ng-if="_activeImg == image && image.extUrl" href="{{image.extUrl}}" target="_blank" title="{{textValues.externalLinkButtonTitle}}"></a>' +
 
 										// Close Icon (hidden in inline gallery)
-										'<div class="close" ng-click="methods.close();" ng-if="!inline"></div>'+
+										'<div class="close" ng-click="methods.close();" ng-if="!inline"  title="{{textValues.closeButtonTitle}}"></div>' +
 									'</div>'+
 
 									// Prev-Next Icons
@@ -282,7 +292,7 @@
 
 								// (show when image cannot be loaded)
 								'<div class="ng-image-gallery-errorplaceholder" ng-show="imgError">'+
-									'<div class="ng-image-gallery-error-placeholder" ng-bind-html="errorPlaceHolder | ngImageGalleryTrust"></div>'+
+									'<div class="ng-image-gallery-error-placeholder" ng-bind-html="textValues.imageLoadErrorMsg | ngImageGalleryTrust"></div>' +
 								'</div>'+
 							'</div>'+
 						'</div>',
@@ -313,14 +323,14 @@
 
 						var deferred =  $q.defer();
 
-						// Show loder
+						// Show loader
 						if(!imgObj.hasOwnProperty('cached')) scope._showLoader();
 
 						// Process image
 						var img = new Image();
 						img.src = imgObj.url;
 						img.onload = function(){
-							// Hide loder
+							// Hide loader
 							if(!imgObj.hasOwnProperty('cached')) scope._hideLoader();
 
 							// Cache image
@@ -390,6 +400,12 @@
 						scope.onDelete({img: img, cb: _deleteImgCallback});
 					}
 
+					scope._editImg = function (img) {
+					    if (!scope.inline) scope.methods.close();
+
+					    scope.onEdit({ img: img });
+					}
+
 
 					/***************************************************/
 
@@ -415,12 +431,13 @@
 						scope.bgClose 	 	 = 	(conf.bgClose 		!= undefined) ? conf.bgClose 	 	: 	(scope.bgClose 		!= undefined) 	?  scope.bgClose		: 	ngImageGalleryOpts.bgClose;
 						scope.piracy 	 	 = 	(conf.piracy 		!= undefined) ? conf.piracy 	 	: 	(scope.piracy 		!= undefined) 	?  scope.piracy			: 	ngImageGalleryOpts.piracy;
 						scope.imgAnim 	 	 = 	(conf.imgAnim 		!= undefined) ? conf.imgAnim 	 	: 	(scope.imgAnim 		!= undefined) 	?  scope.imgAnim		: 	ngImageGalleryOpts.imgAnim;
-						scope.errorPlaceHolder = (conf.errorPlaceHolder != undefined) ? conf.errorPlaceHolder : (scope.errorPlaceHolder != undefined) ? scope.errorPlaceHolder : ngImageGalleryOpts.errorPlaceHolder;
+                        scope.textValues     =  (conf.textValues    != undefined) ? conf.textValues     :   (scope.textValues   != undefined)   ?  scope.textValues     :   ngImageGalleryOpts.textValues;
 					});
 
 					scope.onOpen 	 = 	(scope.onOpen 	!= undefined) ? scope.onOpen 	 : 	angular.noop;
 					scope.onClose 	 = 	(scope.onClose 	!= undefined) ? scope.onClose 	 : 	angular.noop;
 					scope.onDelete 	 = 	(scope.onDelete != undefined) ? scope.onDelete 	 : 	angular.noop;
+					scope.onEdit = (scope.onEdit != undefined) ? scope.onEdit : angular.noop;
 
 					// If images populate dynamically, reset gallery
 					var imagesFirstWatch = true;
