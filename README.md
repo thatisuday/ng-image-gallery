@@ -5,6 +5,10 @@
 Angular directive for image gallery in **modal** with **thumbnails** or **inline** like carousel
 
 ***
+# For Angular 4+
+[https://github.com/thatisuday/ngx-image-gallery](https://github.com/thatisuday/ngx-image-gallery)
+
+***
 
 # Dependencies
 1. AngularJS
