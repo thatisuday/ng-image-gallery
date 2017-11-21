@@ -5,7 +5,9 @@
 Angular directive for image gallery in **modal** with **thumbnails** or **inline** like carousel
 
 ***
-# For Angular 4+
+# This repository is no longer maintained. Although, this project is in good health, I recommend newer version of Angular. Hence I created below project similar to this one but for Angular 4+
+
+## For Angular 4+
 [https://github.com/thatisuday/ngx-image-gallery](https://github.com/thatisuday/ngx-image-gallery)
 
 ***
