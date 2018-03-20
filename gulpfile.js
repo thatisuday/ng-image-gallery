@@ -50,8 +50,17 @@ gulp.task('buildCSS', function(){
 });
 
 
+// copy files to docs folder
+gulp.task('docs', function(){
+	gulp
+	.src('./dist/**/*')
+	.pipe(gulp.dest('./docs/dist'))
+	;
+});
+
+
 // build all
-gulp.task('build', ['buildJS', 'buildCSS'], function(){
+gulp.task('build', ['buildJS', 'buildCSS', 'docs'], function(){
 	console.log('Build Success...');
 });
 
