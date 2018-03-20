@@ -3,7 +3,7 @@
 # ng-image-gallery 
 ![bower](https://img.shields.io/bower/v/ng-image-gallery.svg?style=flat-square) 
 [![npm downloads](https://img.shields.io/npm/dt/ng-image-gallery.svg?style=flat-square)](https://www.npmjs.com/package/ng-image-gallery) 
-[preview](https://github.com/thatisuday/ng-image-gallery)
+[preview](https://thatisuday.github.io/ng-image-gallery)
 
 Angular directive for image gallery in **modal** with **thumbnails** or **inline** like carousel
 
