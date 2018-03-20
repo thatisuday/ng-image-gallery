@@ -1,3 +1,5 @@
+@import 'variables';
+
 .body-overflow-hidden{
 	overflow: hidden !important;
 }
@@ -21,17 +23,55 @@
 
 		.thumb{
 			float:left;
-			width:50px;
-			height:50px;
 			overflow:hidden;
-			border-radius:3px;
 			background-size:cover;
 			background-position:center center;
 			cursor: pointer;
+			background-color: $thumb-background-color;
+			position: relative;
 
 			&:not(:last-child){
 				margin-right: 5px;
 				margin-bottom: 5px;
+			}
+
+			>.loader{
+				position: absolute;
+				left: 10%;
+				top: 10%;
+				right: 10%;
+				bottom: 10%;
+				animation: thumb-load 1.4s infinite linear;
+				transform: translateZ(0);
+
+				@keyframes thumb-load{
+					0% {transform: rotate(0deg);}
+					100% {transform: rotate(360deg);}
+				}
+
+				&:before{
+					width: 50%;
+					height: 50%;
+					background: #ccc;
+					border-radius: 100% 0 0 0;
+					position: absolute;
+					top: 0;
+					left: 0;
+					content: '';
+				}
+				&:after{
+					background: $thumb-background-color;
+					width: 75%;
+					height: 75%;
+					border-radius: 50%;
+					content: '';
+					margin: auto;
+					position: absolute;
+					top: 0;
+					left: 0;
+					bottom: 0;
+					right: 0;
+				}
 			}
 		}
 	}
@@ -54,7 +94,7 @@
 		&.ng-hide-add{
 			opacity : 1;
 		}
-		
+
 		&.ng-hide-add-active{
 			opacity : 0;
 		}
@@ -62,7 +102,7 @@
 		&.ng-hide-remove{
 			opacity : 0;
 		}
-		
+
 		&.ng-hide-remove-active{
 			opacity : 1;
 		}
@@ -87,15 +127,17 @@
 			left:0;
 			z-index: 2;
 
-			.destroy-icons-container{
+			.actions-icons-container{
 				position:absolute;
-				right: 10px;
+				left: 10px;
 				top:20px;
 
-				.ext-url,
-				.close{
+				.delete-img{
+					&.ng-leave-active{
+						display: none;
+					}
+
 					&:hover{
-						transition: background-color 0.3s ease-in-out;
 						background-color: rgba(255,255,255,0.1);
 					}
 
@@ -111,6 +153,51 @@
 						background-repeat:no-repeat;
 					}
 
+					transition: background-color 0.3s ease-in-out;
+					position: relative;
+					display: inline-block;
+					width:30px;
+					height:30px;
+					overflow: hidden;
+					cursor: pointer;
+					text-decoration: none;
+					color:#fff;
+					vertical-align: bottom;
+				}
+
+				.delete-img:before{
+					background-image:url(../res/icons/delete.svg);
+				}
+			}
+
+			.control-icons-container{
+				position:absolute;
+				right: 10px;
+				top:20px;
+
+				.ext-url,
+				.close{
+					&.ng-leave-active{
+						display: none;
+					}
+
+					&:hover{
+						background-color: rgba(255,255,255,0.1);
+					}
+
+					&:before{
+						content : "";
+						display: block;
+						position: absolute;
+						top : 5px;
+						right: 5px;
+						bottom:5px;
+						left:5px;
+						background-size:100% 100%;
+						background-repeat:no-repeat;
+					}
+
+					transition: background-color 0.3s ease-in-out;
 					position: relative;
 					display: inline-block;
 					width:30px;
@@ -130,14 +217,14 @@
 					background-image:url(../res/icons/close.svg);
 				}
 			}
-			
+
 
 			.prev,
 			.next{
 				position:absolute;
 				top: 50%;
 				margin-top:-25px;
-				
+
 				width:50px;
 				height:50px;
 				background-size:100% 100%;
@@ -378,57 +465,77 @@
 							}
 						}
 					}
-
-					/*****************************************************/
 				}
 
-				.galleria-bubbles{
-					flex: 0 0 50px;
-					text-align: center;
-					overflow:hidden;
+				.galleria-title-description-wrapper{
+					flex: none;
 
-					display: flex;
-					flex-direction: row;
-					justify-content: center;
-					align-items: center;
-					align-content: center;
-					flex-wrap: wrap;
+					>div{
+						padding: 20px 0;
+						text-align: center;
+						color: #fff;
 
-					span{
-						flex: none;
-						position:relative;
-						display: inline-block;
-						margin:2px 4px;
-						cursor: pointer;
-						overflow: hidden;
-						border-radius: 100%;
-						background-size: cover;
-						background-position: center center;
-						vertical-align: middle;
-
-						&:not(.img-bubble){
-							width:12px;
-							height:12px;
-							background-color : rgba(255,255,255,0.5);
-							border-radius:100%;
-							overflow: hidden;
-							transition: all 0.3s ease-in-out;
-
-							&.active{
-								background-color : #fff;
-							}
+						.title{
+							font-size: 18px;
+							margin-bottom: 10px;
 						}
 
-						&.img-bubble{
-							box-sizing:border-box;
-							width:12px;
-							height:12px;
-							margin:2px 4px;
-							border:1px solid transparent;
-							transition: border 0.3s ease-in-out;
+						.desc{
+							font-size: 12px;
+							line-height: 1.3;
+						}
+					}
+				}
 
-							&.active{
-								border:1px solid #fff;
+				.galleria-bubbles-wrapper{
+					flex: none;
+					margin: 20px 0;
+					overflow: hidden;
+					width: 100%;
+					font-size: 0;
+
+					>.galleria-bubbles{
+						display: block;
+						text-align: center;
+						white-space: nowrap;
+						transition: margin-left 0.3s;
+
+						span{
+							flex: none;
+							position:relative;
+							display: inline-block;
+							margin:0 5px;
+							cursor: pointer;
+							overflow: hidden;
+							border-radius: 100%;
+							background-size: cover;
+							background-position: center center;
+							vertical-align: middle;
+							background-color: $bubble-background-color;
+
+							&.ng-leave-active{
+								display: none;
+							}
+
+							&:not(.img-bubble){
+								background-color : rgba(255,255,255,0.5);
+								border-radius:100%;
+								overflow: hidden;
+								transition: all 0.3s ease-in-out;
+
+								&.active{
+									background-color : #fff;
+								}
+							}
+
+							&.img-bubble{
+								box-sizing:border-box;
+								border:1px solid transparent;
+								transition: border 0.3s ease-in-out, margin 0.3s ease-in-out;
+
+								&.active{
+									border:1px solid #fff;
+								}
 							}
 						}
 					}
@@ -436,6 +543,21 @@
 			}
 		}
 
+
+		// Image Error
+		.ng-image-gallery-errorplaceholder{
+			position : absolute;
+			top: 0;
+			bottom: 0;
+			left: 80px;
+			right: 80px;
+			z-index: 1;
+
+			display: flex;
+			flex-direction: row;
+			justify-content: center;
+			align-items: center;
+		}
 
 		// Image loading animation view
 		.ng-image-gallery-loader{
@@ -490,11 +612,11 @@
 					animation-delay: -0.8s;
 				}
 			}
-			
+
 		}
 	}
 
-	
+
 	/*****************************************************************
 								INLINE GALLERY
 	/*****************************************************************/
@@ -509,7 +631,19 @@
 			height:300px;
 
 			.ng-image-gallery-content{
-				.destroy-icons-container{
+				.actions-icons-container{
+					top:0;
+
+					.delete-img{
+						margin:0;
+
+						&:before{
+							background-image:url(../res/icons/delete-inline.svg);
+						}
+					}
+				}
+
+				.control-icons-container{
 					top:0;
 
 					.ext-url{
@@ -519,8 +653,6 @@
 							background-image:url(../res/icons/external-link-inline.svg);
 						}
 					}
-
-
 				}
 
 				.prev{
@@ -547,7 +679,7 @@
 									background-color : #333;
 								}
 							}
-							
+
 							&.img-bubble{
 								&.active{
 									border:1px solid #000;

@@ -1,6 +1,6 @@
 {
   "name": "ng-image-gallery",
-  "version": "v2.0.9",
+  "version": "v2.1.2",
   "description": "Probably the best angular inline and modal image gallery combined...",
   "main": "dist/ng-image-gallery.js",
   "directories": {
@@ -20,6 +20,7 @@
   },
   "homepage": "https://github.com/thatisuday/ng-image-gallery#readme",
   "devDependencies": {
+    "express": "^4.15.2",
     "gulp": "^3.9.1",
     "gulp-autoprefixer": "^3.1.0",
     "gulp-concat": "^2.6.0",
