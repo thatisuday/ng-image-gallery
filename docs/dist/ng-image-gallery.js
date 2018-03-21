@@ -22,7 +22,7 @@
 			imgBubbles  	:   false,
 			bgClose     	:   false,
 			piracy 			: 	false,
-			imgAnim         : 'fadeup',
+			imgAnim 		: 	'fadeup',
 			textValues: {
 			    imageLoadErrorMsg       : 'Error when loading the image!',
 			    deleteButtonTitle       : 'Delete this image...',
@@ -222,8 +222,8 @@
 								'<div class="ng-image-gallery-content" ng-show="!imgLoading" ng-click="backgroundClose($event);">'+
 
 									// actions icons container
-									'<div class="actions-icons-container">'+                                        
-                                        // Delete image icon
+									'<div class="actions-icons-container">'+
+										// Delete image icon
 										'<div class="delete-img" ng-repeat="image in images track by image.id" ng-if="_activeImg == image && image.deletable" title="{{textValues.deleteButtonTitle}}" ng-click="_deleteImg(image)"></div>' +
 
                                         // Edit image icon
@@ -436,7 +436,7 @@
 
 					scope.onOpen 	 = 	(scope.onOpen 	!= undefined) ? scope.onOpen 	 : 	angular.noop;
 					scope.onClose 	 = 	(scope.onClose 	!= undefined) ? scope.onClose 	 : 	angular.noop;
-					scope.onDelete = (scope.onDelete != undefined) ? scope.onDelete : angular.noop;
+					scope.onDelete 	 = 	(scope.onDelete != undefined) ? scope.onDelete 	 : 	angular.noop;
 					scope.onEdit = (scope.onEdit != undefined) ? scope.onEdit : angular.noop;
 
 					// If images populate dynamically, reset gallery

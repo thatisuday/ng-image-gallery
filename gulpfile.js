@@ -16,7 +16,7 @@ var
 
 // JavaScript
 gulp.task('buildJS', function(){
-	gulp
+	return gulp
 	.src('./src/js/**/*.js')
 	.pipe(concat('ng-image-gallery.js'))
 	.pipe(sourcemaps.init())
@@ -33,7 +33,7 @@ gulp.task('buildJS', function(){
 
 // Css / Sass(.scss)
 gulp.task('buildCSS', function(){
-	gulp
+	return gulp
 	.src('./src/sass/**/*.scss')
 	.pipe(concat('ng-image-gallery.scss'))
 	.pipe(sass().on('error', sass.logError))
@@ -52,7 +52,7 @@ gulp.task('buildCSS', function(){
 
 // copy files to docs folder
 gulp.task('docs', function(){
-	gulp
+	return gulp
 	.src('./dist/**/*')
 	.pipe(gulp.dest('./docs/dist'))
 	;
