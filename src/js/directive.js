@@ -29,7 +29,9 @@
 			    editButtonTitle         : 'Edit this image...',
 			    closeButtonTitle        : 'Close',
 			    externalLinkButtonTitle : 'Open image in new tab...'			    
-			}			
+			},
+			itemClass: 'thumb',
+			flexiAttributes: {}
 		};
 
 		return{
@@ -47,6 +49,35 @@
         return $sce.trustAs(type || 'html', value);
       }
     }])
+    .directive('ngGalleryFlexiAttributes', ['$parse', function($parse){
+	    return {
+	    	restrict: "A",
+			scope : false,
+			link : function(scope, element, attrs) {
+				var flexiAttributes = element.parent().scope().$parent.flexiAttributes;
+
+				if (flexiAttributes) {
+					for (var attribute of flexiAttributes) {
+						element.attr(attribute.name, attribute.value);
+					}
+				}
+			}
+	    };
+	}])
+    .directive('ngRightClick', ['$parse', function($parse){
+	    return {
+	    	restrict: "A",
+			scope : false,
+			link : function(scope, element, attrs){
+				element.bind('contextmenu', function(event){
+					if(scope.piracy == false){
+						event.preventDefault();
+						return scope.piracy;
+					}
+				});
+			}
+	    };
+	}])
     .directive('ngRightClick', ['$parse', function($parse){
 	    return {
 	    	restrict: "A",
@@ -197,14 +228,17 @@
 				onOpen 			: 	'&?',		// function
 				onClose 		: 	'&?',		// function,
 				onDelete        :   '&?',
-				onEdit          :   '&?'
+				onEdit          :   '&?',
+
+				itemClass		:   '@?',
+				flexiAttributes		:   '=?'
 			},
 			template : 	'<div class="ng-image-gallery img-move-dir-{{_imgMoveDirection}}" ng-class="{inline:inline}" ng-hide="images.length == 0">'+
 
 							// Thumbnails container
 							//  Hide for inline gallery
 							'<div ng-if="thumbnails && !inline" class="ng-image-gallery-thumbnails">' +
- 								'<div class="thumb" ng-repeat="image in images track by image.id" ng-if="thumbLimit ? $index < thumbLimit : true" ng-click="methods.open($index);" show-image-async="{{image.thumbUrl || image.url}}" title="{{image.title}}" async-kind="thumb" ng-style="{\'width\' : thumbSize+\'px\', \'height\' : thumbSize+\'px\'}">'+
+ 								'<div class="{{ itemClass }}" ng-gallery-flexi-attributes ng-repeat="image in images track by image.id" ng-if="thumbLimit ? $index < thumbLimit : true" ng-click="methods.open($index);" show-image-async="{{image.thumbUrl || image.url}}" title="{{image.title}}" async-kind="thumb" ng-style="{\'width\' : thumbSize+\'px\', \'height\' : thumbSize+\'px\'}">'+
  									'<div class="loader"></div>'+
  								'</div>' +
  							'</div>' +
@@ -432,6 +466,8 @@
 						scope.piracy 	 	 = 	(conf.piracy 		!= undefined) ? conf.piracy 	 	: 	(scope.piracy 		!= undefined) 	?  scope.piracy			: 	ngImageGalleryOpts.piracy;
 						scope.imgAnim 	 	 = 	(conf.imgAnim 		!= undefined) ? conf.imgAnim 	 	: 	(scope.imgAnim 		!= undefined) 	?  scope.imgAnim		: 	ngImageGalleryOpts.imgAnim;
                         scope.textValues     =  (conf.textValues    != undefined) ? conf.textValues     :   (scope.textValues   != undefined)   ?  scope.textValues     :   ngImageGalleryOpts.textValues;
+						scope.itemClass 	 	 = 	(conf.itemClass 		!= undefined) ? conf.itemClass 	 	: 	(scope.itemClass 		!= undefined) 	?  scope.itemClass		: 	ngImageGalleryOpts.itemClass;
+                        scope.flexiAttributes     =  (conf.flexiAttributes    != undefined) ? conf.flexiAttributes     :   (scope.flexiAttributes   != undefined)   ?  scope.flexiAttributes     :   ngImageGalleryOpts.flexiAttributes;
 					});
 
 					scope.onOpen 	 = 	(scope.onOpen 	!= undefined) ? scope.onOpen 	 : 	angular.noop;
