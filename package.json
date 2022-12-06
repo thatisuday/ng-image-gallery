@@ -20,7 +20,7 @@
   },
   "homepage": "https://github.com/thatisuday/ng-image-gallery#readme",
   "devDependencies": {
-    "express": "^4.15.2",
+    "express": "^4.18.2",
     "gulp": "^3.9.1",
     "gulp-autoprefixer": "^3.1.0",
     "gulp-concat": "^2.6.0",
